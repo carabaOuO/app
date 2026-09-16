@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>我的點數</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+
+    <main>
+
+        <!-- ==================== -->
+        <!-- 第一頁：總覽 -->
+        <!-- ==================== -->
+
+        <section id="page-home" class="page active">
+
+            <div class="points-area">
+                <div class="section-title">目前點數</div>
+
+                <div class="total-points">
+                    <span id="totalPoints">0</span>
+                    <span class="point-unit">點</span>
+                </div>
+            </div>
+
+
+            <div class="goal-area">
+
+                <div class="section-title">目標</div>
+
+                <div id="goalList">
+
+                    <!-- 之後由程式自動加入目標 -->
+
+                </div>
+
+            </div>
+
+
+            <button id="backupButton" class="backup-button">
+                資料備份
+            </button>
+
+        </section>
+
+
+
+        <!-- ==================== -->
+        <!-- 第二頁：加分 -->
+        <!-- ==================== -->
+
+        <section id="page-add" class="page">
+
+            <div class="section-title">今日進度</div>
+
+            <div class="daily-progress">
+
+                <span class="progress-light"></span>
+                <span class="progress-light"></span>
+                <span class="progress-light"></span>
+                <span class="progress-light"></span>
+                <span class="progress-light"></span>
+
+            </div>
+
+
+            <div class="section-title add-title">
+                加分選項
+            </div>
+
+            <div id="taskList">
+
+                <!-- 之後由程式自動產生 -->
+
+            </div>
+
+
+            <button id="undoButton" class="undo-button">
+                <span>取消上一筆</span>
+                <span>-1</span>
+            </button>
+
+        </section>
+
+
+
+        <!-- ==================== -->
+        <!-- 第三頁：管理 -->
+        <!-- ==================== -->
+
+        <section id="page-manage" class="page">
+
+            <div class="section-title">
+                設定目標
+            </div>
+
+            <div class="form-area">
+
+                <label>
+                    目標名稱
+                </label>
+
+                <input
+                    type="text"
+                    id="goalName"
+                    placeholder="輸入目標"
+                >
+
+
+                <label>
+                    所需點數
+                </label>
+
+                <input
+                    type="number"
+                    id="goalPoints"
+                    placeholder="輸入點數"
+                    min="1"
+                >
+
+
+                <button id="addGoalButton">
+                    確認
+                </button>
+
+            </div>
+
+
+
+            <div class="section-title manage-task-title">
+                設定加分事項
+            </div>
+
+            <div class="form-area">
+
+                <label>
+                    事項名稱
+                </label>
+
+                <input
+                    type="text"
+                    id="taskName"
+                    placeholder="輸入事項"
+                >
+
+
+                <button id="addTaskButton">
+                    確認
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==================== -->
+        <!-- 第四頁：紀錄 -->
+        <!-- ==================== -->
+
+        <section id="page-record" class="page">
+
+            <div class="week-navigation">
+
+                <button id="previousWeek">
+                    上一週
+                </button>
+
+                <button id="nextWeek">
+                    下一週
+                </button>
+
+            </div>
+
+
+            <div class="section-title">
+                本週紀錄
+            </div>
+
+            <div id="weekRange" class="week-range">
+            </div>
+
+
+            <div id="weeklyRecord">
+
+                <!-- 每週紀錄由程式產生 -->
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ==================== -->
+    <!-- 底部選單 -->
+    <!-- ==================== -->
+
+    <nav class="bottom-nav">
+
+        <button class="nav-button active" data-page="home">
+            總覽
+        </button>
+
+        <button class="nav-button" data-page="add">
+            加分
+        </button>
+
+        <button class="nav-button" data-page="manage">
+            管理
+        </button>
+
+        <button class="nav-button" data-page="record">
+            紀錄
+        </button>
+
+    </nav>
+
+
+    <script src="app.js"></script>
+
+</body>
+</html>
