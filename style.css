@@ -1,3 +1,9 @@
+/* =====================================================
+   我的點數 App
+   style.css
+===================================================== */
+
+
 /* =========================
    基本設定
 ========================= */
@@ -24,7 +30,17 @@ body {
 }
 
 body {
-    padding-bottom: 82px;
+    padding-bottom:
+        calc(
+            82px +
+            env(safe-area-inset-bottom)
+        );
+}
+
+button,
+input,
+select {
+    font: inherit;
 }
 
 
@@ -49,7 +65,7 @@ main {
     padding:
         32px
         22px
-        110px;
+        120px;
 }
 
 
@@ -70,9 +86,9 @@ main {
 }
 
 
-/* =========================
+/* =====================================================
    第一頁：總覽
-========================= */
+===================================================== */
 
 .points-area {
     margin-bottom: 46px;
@@ -121,11 +137,8 @@ main {
 .goal-item {
     display: flex;
 
-    justify-content:
-        space-between;
-
-    align-items:
-        center;
+    justify-content: space-between;
+    align-items: center;
 
     gap: 12px;
 
@@ -146,8 +159,7 @@ main {
 
     font-weight: 500;
 
-    word-break:
-        break-word;
+    word-break: break-word;
 }
 
 
@@ -180,11 +192,8 @@ main {
         8px
         14px;
 
-    background:
-        #222222;
-
-    color:
-        #ffffff;
+    background: #222222;
+    color: #ffffff;
 
     font-size: 14px;
 
@@ -193,25 +202,20 @@ main {
 
 
 .redeem-button:active {
-    transform:
-        scale(0.96);
+    transform: scale(0.96);
 }
 
 
 .redeem-button:disabled {
-    background:
-        #dddddd;
+    background: #dddddd;
+    color: #999999;
 
-    color:
-        #999999;
-
-    cursor:
-        default;
+    cursor: default;
 }
 
 
 /* =========================
-   第一頁：匯出紀錄
+   匯出紀錄
 ========================= */
 
 .backup-button {
@@ -219,15 +223,16 @@ main {
 
     right: 22px;
 
-    bottom: 98px;
+    bottom:
+        calc(
+            98px +
+            env(safe-area-inset-bottom)
+        );
 
     border: none;
 
-    background:
-        transparent;
-
-    color:
-        #666666;
+    background: transparent;
+    color: #666666;
 
     font-size: 14px;
 
@@ -242,18 +247,19 @@ main {
 }
 
 
+/* =====================================================
+   第二頁：加分
+===================================================== */
+
 /* =========================
-   第二頁：今日進度
+   今日進度
 ========================= */
 
 .daily-progress {
     display: flex;
 
-    justify-content:
-        space-between;
-
-    align-items:
-        center;
+    justify-content: space-between;
+    align-items: center;
 
     max-width: 360px;
 
@@ -263,8 +269,6 @@ main {
         50px;
 }
 
-
-/* 未完成燈 */
 
 .progress-light {
     width: 42px;
@@ -276,8 +280,7 @@ main {
         2px solid
         #999999;
 
-    background:
-        #ffffff;
+    background: #ffffff;
 
     transition:
         background 0.2s ease,
@@ -286,22 +289,16 @@ main {
 }
 
 
-/* 已完成燈 */
-
 .progress-light.active {
-    background:
-        #222222;
+    background: #222222;
+    border-color: #222222;
 
-    border-color:
-        #222222;
-
-    transform:
-        scale(1.04);
+    transform: scale(1.04);
 }
 
 
 /* =========================
-   第二頁：加分選項
+   加分選項
 ========================= */
 
 .add-title {
@@ -312,8 +309,7 @@ main {
 #taskList {
     display: flex;
 
-    flex-direction:
-        column;
+    flex-direction: column;
 
     gap: 14px;
 }
@@ -324,11 +320,8 @@ main {
 
     display: flex;
 
-    justify-content:
-        space-between;
-
-    align-items:
-        center;
+    justify-content: space-between;
+    align-items: center;
 
     padding:
         18px
@@ -340,11 +333,8 @@ main {
 
     border-radius: 12px;
 
-    background:
-        #ffffff;
-
-    color:
-        #222222;
+    background: #ffffff;
+    color: #222222;
 
     font-size: 18px;
 
@@ -353,16 +343,14 @@ main {
 
 
 .task-button:active {
-    transform:
-        scale(0.98);
+    transform: scale(0.98);
 
-    background:
-        #eeeeee;
+    background: #eeeeee;
 }
 
 
 /* =========================
-   第二頁：取消上一筆
+   取消上一筆
 ========================= */
 
 .undo-button {
@@ -370,11 +358,8 @@ main {
 
     display: flex;
 
-    justify-content:
-        space-between;
-
-    align-items:
-        center;
+    justify-content: space-between;
+    align-items: center;
 
     margin-top: 42px;
 
@@ -388,11 +373,8 @@ main {
 
     border-radius: 12px;
 
-    background:
-        #ffffff;
-
-    color:
-        #555555;
+    background: #ffffff;
+    color: #555555;
 
     font-size: 17px;
 
@@ -401,43 +383,90 @@ main {
 
 
 .undo-button:active {
-    transform:
-        scale(0.98);
+    transform: scale(0.98);
 
-    background:
-        #eeeeee;
+    background: #eeeeee;
+}
+
+
+/* =====================================================
+   第三頁：管理
+===================================================== */
+
+/* =========================
+   大區塊
+========================= */
+
+.manage-section {
+    margin-bottom: 58px;
+}
+
+
+.manage-main-title {
+    font-size: 23px;
+    font-weight: 700;
+
+    padding-bottom: 12px;
+    margin-bottom: 26px;
+
+    border-bottom:
+        1px solid
+        #d8d8d8;
 }
 
 
 /* =========================
-   第三頁：管理
+   小區塊
+========================= */
+
+.manage-subsection {
+    margin-bottom: 38px;
+}
+
+
+.manage-subtitle {
+    font-size: 17px;
+    font-weight: 600;
+
+    margin-bottom: 16px;
+
+    color: #333333;
+}
+
+
+/* =========================
+   新增表單
 ========================= */
 
 .form-area {
     display: flex;
 
-    flex-direction:
-        column;
+    flex-direction: column;
 
     gap: 10px;
 
-    margin-bottom: 48px;
+    margin-bottom: 0;
 }
 
 
 .form-area label {
-    font-size: 16px;
-
+    font-size: 15px;
     font-weight: 500;
 
     margin-top: 4px;
+
+    color: #444444;
 }
 
 
 .form-area input {
     width: 100%;
 
-    padding: 14px;
+    min-height: 48px;
+
+    padding:
+        12px
+        14px;
 
     border:
         1px solid
@@ -445,11 +474,8 @@ main {
 
     border-radius: 10px;
 
-    background:
-        #ffffff;
-
-    color:
-        #222222;
+    background: #ffffff;
+    color: #222222;
 
     font-size: 17px;
 
@@ -458,16 +484,23 @@ main {
 
 
 .form-area input:focus {
-    border-color:
-        #555555;
+    border-color: #555555;
 }
 
 
+.form-area input::placeholder {
+    color: #aaaaaa;
+}
+
+
+/* 新增按鈕 */
+
 .form-area button {
-    align-self:
-        flex-end;
+    align-self: flex-end;
 
     margin-top: 8px;
+
+    min-width: 76px;
 
     padding:
         10px
@@ -477,11 +510,8 @@ main {
 
     border-radius: 9px;
 
-    background:
-        #222222;
-
-    color:
-        #ffffff;
+    background: #222222;
+    color: #ffffff;
 
     font-size: 16px;
 
@@ -490,38 +520,124 @@ main {
 
 
 .form-area button:active {
-    transform:
-        scale(0.97);
-}
-
-
-.manage-task-title {
-    margin-top: 36px;
+    transform: scale(0.97);
 }
 
 
 /* =========================
-   第三頁：目前加分事項
+   下拉式管理
 ========================= */
+
+.delete-control {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+/* 下拉選單 */
+
+.manage-select {
+    width: 100%;
+
+    min-height: 48px;
+
+    padding:
+        0
+        42px
+        0
+        14px;
+
+    border:
+        1px solid
+        #cccccc;
+
+    border-radius: 10px;
+
+    background-color: #ffffff;
+    color: #222222;
+
+    font-size: 17px;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+
+.manage-select:focus {
+    border-color: #555555;
+}
+
+
+/* 刪除按鈕 */
+
+.delete-manage-button {
+    align-self: flex-end;
+
+    min-width: 76px;
+
+    padding:
+        9px
+        19px;
+
+    border:
+        1px solid
+        #bbbbbb;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #555555;
+
+    font-size: 15px;
+
+    cursor: pointer;
+}
+
+
+.delete-manage-button:active:not(:disabled) {
+    transform: scale(0.97);
+
+    background: #eeeeee;
+}
+
+
+.delete-manage-button:disabled {
+    border-color: #dddddd;
+
+    color: #bbbbbb;
+
+    background: #f3f3f3;
+
+    cursor: default;
+}
+
+
+/* =====================================================
+   舊版管理頁相容樣式
+   換成新版 index.html 後通常不會看到
+===================================================== */
 
 .manage-list-area {
     margin-top: 48px;
 }
 
 
-#manageTaskList {
+#manageTaskList,
+#manageGoalList {
     width: 100%;
 }
 
 
-.manage-task-item {
+.manage-task-item,
+.manage-goal-item {
     display: flex;
 
-    justify-content:
-        space-between;
-
-    align-items:
-        center;
+    justify-content: space-between;
+    align-items: center;
 
     gap: 12px;
 
@@ -537,24 +653,38 @@ main {
 }
 
 
-.manage-task-item span {
+.manage-task-item span,
+.manage-goal-name {
     flex: 1;
 
-    word-break:
-        break-word;
+    word-break: break-word;
 }
 
 
-/* 刪除按鈕 */
+.manage-goal-actions {
+    display: flex;
 
-.delete-task-button {
+    align-items: center;
+
+    gap: 14px;
+
+    flex-shrink: 0;
+}
+
+
+.manage-goal-points {
+    color: #555555;
+
+    white-space: nowrap;
+}
+
+
+.delete-task-button,
+.delete-goal-button {
     border: none;
 
-    background:
-        transparent;
-
-    color:
-        #777777;
+    background: transparent;
+    color: #777777;
 
     font-size: 14px;
 
@@ -568,20 +698,24 @@ main {
 }
 
 
-.delete-task-button:active {
+.delete-task-button:active,
+.delete-goal-button:active {
     opacity: 0.5;
 }
 
 
-/* =========================
+/* =====================================================
    第四頁：紀錄
+===================================================== */
+
+/* =========================
+   上一週 / 下一週
 ========================= */
 
 .week-navigation {
     display: flex;
 
-    justify-content:
-        space-between;
+    justify-content: space-between;
 
     margin-bottom: 32px;
 }
@@ -590,11 +724,8 @@ main {
 .week-navigation button {
     border: none;
 
-    background:
-        transparent;
-
-    color:
-        #333333;
+    background: transparent;
+    color: #333333;
 
     padding:
         8px
@@ -613,17 +744,17 @@ main {
 
 .week-range {
     margin-top: -8px;
-
     margin-bottom: 34px;
 
-    color:
-        #666666;
+    color: #666666;
 
     font-size: 16px;
 }
 
 
-/* 每一天紀錄 */
+/* =========================
+   每一天紀錄
+========================= */
 
 .record-day {
     margin-bottom: 34px;
@@ -632,7 +763,6 @@ main {
 
 .record-day-title {
     font-size: 18px;
-
     font-weight: 700;
 
     margin-bottom: 12px;
@@ -642,8 +772,8 @@ main {
 .record-item {
     display: flex;
 
-    justify-content:
-        space-between;
+    justify-content: space-between;
+    align-items: center;
 
     gap: 16px;
 
@@ -655,22 +785,20 @@ main {
 }
 
 
-.record-item span:first-child {
+.record-item > span:first-child {
     flex: 1;
 
-    word-break:
-        break-word;
+    word-break: break-word;
 }
 
 
-.record-item span:last-child {
+.record-item > span:last-child {
     flex-shrink: 0;
 }
 
 
 .record-empty {
-    color:
-        #999999;
+    color: #999999;
 
     font-size: 16px;
 
@@ -681,8 +809,42 @@ main {
 
 
 /* =========================
-   底部導覽列
+   撤銷兌換
 ========================= */
+
+.record-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    flex-shrink: 0;
+}
+
+
+.undo-redeem-button {
+    border: none;
+
+    background: transparent;
+    color: #777777;
+
+    font-size: 14px;
+
+    padding: 4px;
+
+    cursor: pointer;
+}
+
+
+.undo-redeem-button:active {
+    opacity: 0.5;
+}
+
+
+/* =====================================================
+   底部導覽列
+===================================================== */
 
 .bottom-nav {
     position: fixed;
@@ -691,7 +853,14 @@ main {
     right: 0;
     bottom: 0;
 
-    height: 74px;
+    height:
+        calc(
+            74px +
+            env(safe-area-inset-bottom)
+        );
+
+    padding-bottom:
+        env(safe-area-inset-bottom);
 
     display: flex;
 
@@ -722,14 +891,10 @@ main {
 
     border: none;
 
-    background:
-        transparent;
-
-    color:
-        #888888;
+    background: transparent;
+    color: #888888;
 
     font-size: 15px;
-
     font-weight: 500;
 
     cursor: pointer;
@@ -737,16 +902,15 @@ main {
 
 
 .nav-button.active {
-    color:
-        #111111;
+    color: #111111;
 
     font-weight: 700;
 }
 
 
-/* =========================
-   手機尺寸調整
-========================= */
+/* =====================================================
+   手機尺寸
+===================================================== */
 
 @media (
     max-width: 480px
@@ -787,12 +951,22 @@ main {
         font-size: 13px;
     }
 
+
+    .manage-main-title {
+        font-size: 22px;
+    }
+
+
+    .manage-section {
+        margin-bottom: 52px;
+    }
+
 }
 
 
-/* =========================
+/* =====================================================
    大一點的手機 / 平板
-========================= */
+===================================================== */
 
 @media (
     min-width: 600px

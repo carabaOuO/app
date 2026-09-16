@@ -31,9 +31,9 @@
     <main>
 
 
-        <!-- ==================== -->
-        <!-- 第一頁：總覽 -->
-        <!-- ==================== -->
+        <!-- =====================================================
+             第一頁：總覽
+        ====================================================== -->
 
         <section
             id="page-home"
@@ -48,6 +48,7 @@
                 <div class="section-title">
                     目前點數
                 </div>
+
 
                 <div class="total-points">
 
@@ -77,10 +78,10 @@
                 <div id="goalList">
 
                     <!--
-                    JavaScript 會自動產生：
+                    JavaScript 自動產生：
 
-                    地瓜球   3點   兌換
-                    泡麵    10點   兌換
+                    地瓜球    3 點    兌換
+                    泡麵     10 點    兌換
                     -->
 
                 </div>
@@ -94,6 +95,7 @@
             <button
                 id="backupButton"
                 class="backup-button"
+                type="button"
             >
                 匯出紀錄
             </button>
@@ -105,9 +107,9 @@
 
 
 
-        <!-- ==================== -->
-        <!-- 第二頁：加分 -->
-        <!-- ==================== -->
+        <!-- =====================================================
+             第二頁：加分
+        ====================================================== -->
 
         <section
             id="page-add"
@@ -164,6 +166,7 @@
             <button
                 id="undoButton"
                 class="undo-button"
+                type="button"
             >
 
                 <span>
@@ -183,9 +186,9 @@
 
 
 
-        <!-- ==================== -->
-        <!-- 第三頁：管理 -->
-        <!-- ==================== -->
+        <!-- =====================================================
+             第三頁：管理
+        ====================================================== -->
 
         <section
             id="page-manage"
@@ -193,106 +196,207 @@
         >
 
 
-            <!-- 新增獎勵 -->
+            <!-- =================================================
+                 獎勵
+            ================================================== -->
 
-            <div class="section-title">
-                新增獎勵
-            </div>
-
-
-            <div class="form-area">
+            <div class="manage-section">
 
 
-                <label for="goalName">
-                    獎勵名稱
-                </label>
-
-
-                <input
-                    type="text"
-                    id="goalName"
-                    placeholder="輸入獎勵"
-                >
-
-
-
-                <label for="goalPoints">
-                    所需點數
-                </label>
-
-
-                <input
-                    type="number"
-                    id="goalPoints"
-                    placeholder="輸入點數"
-                    min="1"
-                >
-
-
-
-                <button id="addGoalButton">
-                    確認
-                </button>
-
-
-            </div>
-
-
-
-
-
-            <!-- 設定加分事項 -->
-
-            <div class="section-title manage-task-title">
-                設定加分事項
-            </div>
-
-
-            <div class="form-area">
-
-
-                <label for="taskName">
-                    事項名稱
-                </label>
-
-
-                <input
-                    type="text"
-                    id="taskName"
-                    placeholder="輸入事項"
-                >
-
-
-                <button id="addTaskButton">
-                    確認
-                </button>
-
-
-            </div>
-
-
-
-
-
-            <!-- 目前加分事項 -->
-
-            <div class="manage-list-area">
-
-
-                <div class="section-title">
-                    目前加分事項
+                <div class="manage-main-title">
+                    獎勵
                 </div>
 
 
-                <div id="manageTaskList">
 
-                    <!--
-                    JavaScript 自動產生：
+                <!-- 新增獎勵 -->
 
-                    讀書30分鐘        刪除
-                    洗衣服            刪除
-                    曬衣服            刪除
-                    -->
+                <div class="manage-subsection">
+
+                    <div class="manage-subtitle">
+                        新增獎勵
+                    </div>
+
+
+                    <div class="form-area">
+
+
+                        <label for="goalName">
+                            獎勵名稱
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="goalName"
+                            placeholder="輸入獎勵名稱"
+                            autocomplete="off"
+                        >
+
+
+
+                        <label for="goalPoints">
+                            所需點數
+                        </label>
+
+
+                        <input
+                            type="number"
+                            id="goalPoints"
+                            placeholder="輸入點數"
+                            min="1"
+                            inputmode="numeric"
+                        >
+
+
+
+                        <button
+                            id="addGoalButton"
+                            type="button"
+                        >
+                            新增
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- 管理現有獎勵 -->
+
+                <div class="manage-subsection">
+
+                    <div class="manage-subtitle">
+                        管理現有獎勵
+                    </div>
+
+
+                    <div class="delete-control">
+
+
+                        <select
+                            id="goalDeleteSelect"
+                            class="manage-select"
+                        >
+
+                            <option value="">
+                                請選擇獎勵
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            id="deleteGoalButton"
+                            class="delete-manage-button"
+                            type="button"
+                            disabled
+                        >
+                            刪除
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+            <!-- =================================================
+                 加分事項
+            ================================================== -->
+
+            <div class="manage-section">
+
+
+                <div class="manage-main-title">
+                    加分事項
+                </div>
+
+
+
+                <!-- 新增加分事項 -->
+
+                <div class="manage-subsection">
+
+                    <div class="manage-subtitle">
+                        新增加分事項
+                    </div>
+
+
+                    <div class="form-area">
+
+
+                        <label for="taskName">
+                            事項名稱
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="taskName"
+                            placeholder="輸入事項名稱"
+                            autocomplete="off"
+                        >
+
+
+
+                        <button
+                            id="addTaskButton"
+                            type="button"
+                        >
+                            新增
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- 管理現有加分事項 -->
+
+                <div class="manage-subsection">
+
+                    <div class="manage-subtitle">
+                        管理現有加分事項
+                    </div>
+
+
+                    <div class="delete-control">
+
+
+                        <select
+                            id="taskDeleteSelect"
+                            class="manage-select"
+                        >
+
+                            <option value="">
+                                請選擇加分事項
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            id="deleteTaskButton"
+                            class="delete-manage-button"
+                            type="button"
+                            disabled
+                        >
+                            刪除
+                        </button>
+
+
+                    </div>
 
                 </div>
 
@@ -306,9 +410,9 @@
 
 
 
-        <!-- ==================== -->
-        <!-- 第四頁：紀錄 -->
-        <!-- ==================== -->
+        <!-- =====================================================
+             第四頁：紀錄
+        ====================================================== -->
 
         <section
             id="page-record"
@@ -321,12 +425,18 @@
             <div class="week-navigation">
 
 
-                <button id="previousWeek">
+                <button
+                    id="previousWeek"
+                    type="button"
+                >
                     上一週
                 </button>
 
 
-                <button id="nextWeek">
+                <button
+                    id="nextWeek"
+                    type="button"
+                >
                     下一週
                 </button>
 
@@ -355,16 +465,21 @@
             <div id="weeklyRecord">
 
                 <!--
-                JavaScript 會自動產生：
+                JavaScript 自動產生：
 
                 星期一
-                讀書30分鐘       +1
+
+                讀書30分鐘          +1
+                洗衣服              +1
 
                 星期二
+
                 無紀錄
 
-                星期三
-                洗衣服           +1
+
+                如果是兌換：
+
+                兌換：地瓜球        -3    撤銷
                 -->
 
             </div>
@@ -379,9 +494,9 @@
 
 
 
-    <!-- ==================== -->
-    <!-- 底部選單 -->
-    <!-- ==================== -->
+    <!-- =====================================================
+         底部導覽列
+    ====================================================== -->
 
     <nav class="bottom-nav">
 
@@ -389,6 +504,7 @@
         <button
             class="nav-button active"
             data-page="home"
+            type="button"
         >
             總覽
         </button>
@@ -397,6 +513,7 @@
         <button
             class="nav-button"
             data-page="add"
+            type="button"
         >
             加分
         </button>
@@ -405,6 +522,7 @@
         <button
             class="nav-button"
             data-page="manage"
+            type="button"
         >
             管理
         </button>
@@ -413,6 +531,7 @@
         <button
             class="nav-button"
             data-page="record"
+            type="button"
         >
             紀錄
         </button>
@@ -422,7 +541,9 @@
 
 
 
-    <!-- JavaScript -->
+    <!-- =====================================================
+         JavaScript
+    ====================================================== -->
 
     <script src="app.js"></script>
 
