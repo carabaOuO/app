@@ -1,53 +1,107 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>我的點數</title>
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="manifest"
+        href="manifest.json"
+    >
+
 </head>
+
 
 <body>
 
+
     <main>
+
 
         <!-- ==================== -->
         <!-- 第一頁：總覽 -->
         <!-- ==================== -->
 
-        <section id="page-home" class="page active">
+        <section
+            id="page-home"
+            class="page active"
+        >
+
+
+            <!-- 目前點數 -->
 
             <div class="points-area">
-                <div class="section-title">目前點數</div>
+
+                <div class="section-title">
+                    目前點數
+                </div>
 
                 <div class="total-points">
-                    <span id="totalPoints">0</span>
-                    <span class="point-unit">點</span>
+
+                    <span id="totalPoints">
+                        0
+                    </span>
+
+                    <span class="point-unit">
+                        點
+                    </span>
+
                 </div>
+
             </div>
 
+
+
+            <!-- 獎勵兌換處 -->
 
             <div class="goal-area">
 
-                <div class="section-title">目標</div>
+                <div class="section-title">
+                    獎勵兌換處
+                </div>
+
 
                 <div id="goalList">
 
-                    <!-- 之後由程式自動加入目標 -->
+                    <!--
+                    JavaScript 會自動產生：
+
+                    地瓜球   3點   兌換
+                    泡麵    10點   兌換
+                    -->
 
                 </div>
 
             </div>
 
 
-            <button id="backupButton" class="backup-button">
-                資料備份
+
+            <!-- 匯出紀錄 -->
+
+            <button
+                id="backupButton"
+                class="backup-button"
+            >
+                匯出紀錄
             </button>
 
+
         </section>
+
+
 
 
 
@@ -55,38 +109,77 @@
         <!-- 第二頁：加分 -->
         <!-- ==================== -->
 
-        <section id="page-add" class="page">
+        <section
+            id="page-add"
+            class="page"
+        >
 
-            <div class="section-title">今日進度</div>
+
+            <!-- 今日進度 -->
+
+            <div class="section-title">
+                今日進度
+            </div>
+
 
             <div class="daily-progress">
 
                 <span class="progress-light"></span>
+
                 <span class="progress-light"></span>
+
                 <span class="progress-light"></span>
+
                 <span class="progress-light"></span>
+
                 <span class="progress-light"></span>
 
             </div>
 
+
+
+            <!-- 加分選項 -->
 
             <div class="section-title add-title">
                 加分選項
             </div>
 
+
             <div id="taskList">
 
-                <!-- 之後由程式自動產生 -->
+                <!--
+                JavaScript 自動產生：
+
+                讀書30分鐘        +1
+                洗衣服            +1
+                曬衣服            +1
+                -->
 
             </div>
 
 
-            <button id="undoButton" class="undo-button">
-                <span>取消上一筆</span>
-                <span>-1</span>
+
+            <!-- 取消上一筆 -->
+
+            <button
+                id="undoButton"
+                class="undo-button"
+            >
+
+                <span>
+                    取消上一筆
+                </span>
+
+                <span>
+                    -1
+                </span>
+
             </button>
 
+
         </section>
+
+
 
 
 
@@ -94,28 +187,39 @@
         <!-- 第三頁：管理 -->
         <!-- ==================== -->
 
-        <section id="page-manage" class="page">
+        <section
+            id="page-manage"
+            class="page"
+        >
+
+
+            <!-- 新增獎勵 -->
 
             <div class="section-title">
-                設定目標
+                新增獎勵
             </div>
+
 
             <div class="form-area">
 
-                <label>
-                    目標名稱
+
+                <label for="goalName">
+                    獎勵名稱
                 </label>
+
 
                 <input
                     type="text"
                     id="goalName"
-                    placeholder="輸入目標"
+                    placeholder="輸入獎勵"
                 >
 
 
-                <label>
+
+                <label for="goalPoints">
                     所需點數
                 </label>
+
 
                 <input
                     type="number"
@@ -125,23 +229,32 @@
                 >
 
 
+
                 <button id="addGoalButton">
                     確認
                 </button>
 
+
             </div>
 
 
+
+
+
+            <!-- 設定加分事項 -->
 
             <div class="section-title manage-task-title">
                 設定加分事項
             </div>
 
+
             <div class="form-area">
 
-                <label>
+
+                <label for="taskName">
                     事項名稱
                 </label>
+
 
                 <input
                     type="text"
@@ -154,9 +267,42 @@
                     確認
                 </button>
 
+
             </div>
 
+
+
+
+
+            <!-- 目前加分事項 -->
+
+            <div class="manage-list-area">
+
+
+                <div class="section-title">
+                    目前加分事項
+                </div>
+
+
+                <div id="manageTaskList">
+
+                    <!--
+                    JavaScript 自動產生：
+
+                    讀書30分鐘        刪除
+                    洗衣服            刪除
+                    曬衣服            刪除
+                    -->
+
+                </div>
+
+
+            </div>
+
+
         </section>
+
+
 
 
 
@@ -164,38 +310,72 @@
         <!-- 第四頁：紀錄 -->
         <!-- ==================== -->
 
-        <section id="page-record" class="page">
+        <section
+            id="page-record"
+            class="page"
+        >
+
+
+            <!-- 上一週 / 下一週 -->
 
             <div class="week-navigation">
+
 
                 <button id="previousWeek">
                     上一週
                 </button>
 
+
                 <button id="nextWeek">
                     下一週
                 </button>
 
+
             </div>
 
+
+
+            <!-- 本週紀錄 -->
 
             <div class="section-title">
                 本週紀錄
             </div>
 
-            <div id="weekRange" class="week-range">
+
+            <div
+                id="weekRange"
+                class="week-range"
+            >
             </div>
 
+
+
+            <!-- 每週內容 -->
 
             <div id="weeklyRecord">
 
-                <!-- 每週紀錄由程式產生 -->
+                <!--
+                JavaScript 會自動產生：
+
+                星期一
+                讀書30分鐘       +1
+
+                星期二
+                無紀錄
+
+                星期三
+                洗衣服           +1
+                -->
 
             </div>
 
+
         </section>
 
+
     </main>
+
+
 
 
 
@@ -205,26 +385,48 @@
 
     <nav class="bottom-nav">
 
-        <button class="nav-button active" data-page="home">
+
+        <button
+            class="nav-button active"
+            data-page="home"
+        >
             總覽
         </button>
 
-        <button class="nav-button" data-page="add">
+
+        <button
+            class="nav-button"
+            data-page="add"
+        >
             加分
         </button>
 
-        <button class="nav-button" data-page="manage">
+
+        <button
+            class="nav-button"
+            data-page="manage"
+        >
             管理
         </button>
 
-        <button class="nav-button" data-page="record">
+
+        <button
+            class="nav-button"
+            data-page="record"
+        >
             紀錄
         </button>
+
 
     </nav>
 
 
+
+    <!-- JavaScript -->
+
     <script src="app.js"></script>
 
+
 </body>
+
 </html>
