@@ -1,4 +1,4 @@
-const CACHE_NAME = "reward-app-v1";
+const CACHE_NAME = "reward-app-v2";
 
 const APP_FILES = [
     "./",
@@ -9,75 +9,130 @@ const APP_FILES = [
 ];
 
 
-/* 安裝時先快取基本檔案 */
-self.addEventListener("install", event => {
+/* =========================
+   安裝
+========================= */
 
-    event.waitUntil(
+self.addEventListener(
+    "install",
+    event => {
 
-        caches.open(CACHE_NAME)
-            .then(cache => {
-                return cache.addAll(APP_FILES);
-            })
+        event.waitUntil(
 
-    );
+            caches
+                .open(CACHE_NAME)
+                .then(cache => {
+                    return cache.addAll(APP_FILES);
+                })
 
-    self.skipWaiting();
+        );
 
-});
+        self.skipWaiting();
 
-
-/* 啟用新版 Service Worker 時，
-   刪掉舊版本快取 */
-self.addEventListener("activate", event => {
-
-    event.waitUntil(
-
-        caches.keys()
-            .then(cacheNames => {
-
-                return Promise.all(
-
-                    cacheNames.map(name => {
-
-                        if (name !== CACHE_NAME) {
-                            return caches.delete(name);
-                        }
-
-                    })
-
-                );
-
-            })
-
-    );
-
-    self.clients.claim();
-
-});
-
-
-/* 讀取檔案時：
-   先找快取，
-   找不到再抓網路 */
-self.addEventListener("fetch", event => {
-
-    if (event.request.method !== "GET") {
-        return;
     }
+);
 
-    event.respondWith(
 
-        caches.match(event.request)
-            .then(cachedResponse => {
+/* =========================
+   啟用
+   刪除所有舊版快取
+========================= */
 
-                if (cachedResponse) {
-                    return cachedResponse;
-                }
+self.addEventListener(
+    "activate",
+    event => {
 
-                return fetch(event.request);
+        event.waitUntil(
 
-            })
+            caches
+                .keys()
+                .then(cacheNames => {
 
-    );
+                    return Promise.all(
 
-});
+                        cacheNames.map(
+                            cacheName => {
+
+                                if (
+                                    cacheName !== CACHE_NAME
+                                ) {
+
+                                    return caches.delete(
+                                        cacheName
+                                    );
+
+                                }
+
+                            }
+                        )
+
+                    );
+
+                })
+
+        );
+
+        self.clients.claim();
+
+    }
+);
+
+
+/* =========================
+   讀取檔案
+
+   優先抓最新版網路檔案
+   網路失敗才使用快取
+========================= */
+
+self.addEventListener(
+    "fetch",
+    event => {
+
+        if (
+            event.request.method !== "GET"
+        ) {
+
+            return;
+
+        }
+
+
+        event.respondWith(
+
+            fetch(event.request)
+
+                .then(response => {
+
+                    const responseClone =
+                        response.clone();
+
+
+                    caches
+                        .open(CACHE_NAME)
+                        .then(cache => {
+
+                            cache.put(
+                                event.request,
+                                responseClone
+                            );
+
+                        });
+
+
+                    return response;
+
+                })
+
+                .catch(() => {
+
+                    return caches.match(
+                        event.request
+                    );
+
+                })
+
+        );
+
+    }
+);
