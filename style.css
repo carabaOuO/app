@@ -4,9 +4,9 @@
 ===================================================== */
 
 
-/* =========================
+/* =====================================================
    基本設定
-========================= */
+===================================================== */
 
 * {
     box-sizing: border-box;
@@ -43,10 +43,19 @@ select {
     font: inherit;
 }
 
+button {
+    -webkit-tap-highlight-color:
+        transparent;
+}
 
-/* =========================
+[hidden] {
+    display: none !important;
+}
+
+
+/* =====================================================
    主內容
-========================= */
+===================================================== */
 
 main {
     width: 100%;
@@ -55,12 +64,14 @@ main {
     margin: 0 auto;
 }
 
-
 .page {
     display: none;
 
     min-height:
-        calc(100vh - 82px);
+        calc(
+            100vh -
+            82px
+        );
 
     padding:
         32px
@@ -68,21 +79,20 @@ main {
         120px;
 }
 
-
 .page.active {
     display: block;
 }
 
 
-/* =========================
+/* =====================================================
    共用標題
-========================= */
+===================================================== */
 
 .section-title {
+    margin-bottom: 18px;
+
     font-size: 22px;
     font-weight: 700;
-
-    margin-bottom: 18px;
 }
 
 
@@ -90,10 +100,14 @@ main {
    第一頁：總覽
 ===================================================== */
 
-.points-area {
-    margin-bottom: 46px;
-}
 
+/* =========================
+   目前點數
+========================= */
+
+.points-area {
+    margin-bottom: 42px;
+}
 
 .total-points {
     display: flex;
@@ -105,14 +119,12 @@ main {
     margin-top: 12px;
 }
 
-
 #totalPoints {
     font-size: 64px;
     font-weight: 700;
 
     line-height: 1;
 }
-
 
 .point-unit {
     font-size: 22px;
@@ -121,18 +133,195 @@ main {
 
 
 /* =========================
+   今日功績
+========================= */
+
+.achievement-area {
+    margin-bottom: 42px;
+}
+
+.achievement-display {
+    margin-bottom: 14px;
+}
+
+.achievement-title {
+    margin-bottom: 14px;
+}
+
+#achievementList {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.achievement-item {
+    padding:
+        11px
+        2px;
+
+    border-bottom:
+        1px solid
+        #dddddd;
+
+    font-size: 17px;
+
+    line-height: 1.45;
+
+    word-break: break-word;
+}
+
+
+/* 新增今日功績 */
+
+.open-achievement-button {
+    border: none;
+
+    background: transparent;
+    color: #555555;
+
+    padding:
+        8px
+        2px;
+
+    font-size: 15px;
+
+    cursor: pointer;
+}
+
+.open-achievement-button:active {
+    opacity: 0.5;
+}
+
+
+/* 今日功績輸入區 */
+
+.achievement-form {
+    margin-top: 10px;
+
+    padding: 16px;
+
+    border:
+        1px solid
+        #d3d3d3;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+}
+
+.achievement-form label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    color: #444444;
+}
+
+.achievement-form input {
+    width: 100%;
+
+    min-height: 48px;
+
+    padding:
+        12px
+        14px;
+
+    border:
+        1px solid
+        #cccccc;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #222222;
+
+    font-size: 17px;
+
+    outline: none;
+}
+
+.achievement-form input:focus {
+    border-color: #555555;
+}
+
+.achievement-form input::placeholder {
+    color: #aaaaaa;
+}
+
+.achievement-form-actions {
+    display: flex;
+
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 12px;
+}
+
+
+/* 功績取消 */
+
+.achievement-cancel-button {
+    border: none;
+
+    background: transparent;
+    color: #777777;
+
+    padding:
+        9px
+        12px;
+
+    font-size: 15px;
+
+    cursor: pointer;
+}
+
+.achievement-cancel-button:active {
+    opacity: 0.5;
+}
+
+
+/* 功績 +1 */
+
+.achievement-add-button {
+    min-width: 64px;
+
+    padding:
+        9px
+        17px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #222222;
+    color: #ffffff;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+.achievement-add-button:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================
    獎勵兌換處
 ========================= */
 
 .goal-area {
-    margin-top: 20px;
+    margin-top: 10px;
 }
-
 
 #goalList {
     width: 100%;
 }
-
 
 .goal-item {
     display: flex;
@@ -153,7 +342,6 @@ main {
     font-size: 18px;
 }
 
-
 .goal-name {
     flex: 1;
 
@@ -161,7 +349,6 @@ main {
 
     word-break: break-word;
 }
-
 
 .goal-actions {
     display: flex;
@@ -173,15 +360,11 @@ main {
     flex-shrink: 0;
 }
 
-
 .goal-points {
     color: #555555;
 
     white-space: nowrap;
 }
-
-
-/* 兌換按鈕 */
 
 .redeem-button {
     border: none;
@@ -200,11 +383,9 @@ main {
     cursor: pointer;
 }
 
-
 .redeem-button:active {
     transform: scale(0.96);
 }
-
 
 .redeem-button:disabled {
     background: #dddddd;
@@ -241,7 +422,6 @@ main {
     cursor: pointer;
 }
 
-
 .backup-button:active {
     opacity: 0.5;
 }
@@ -250,6 +430,7 @@ main {
 /* =====================================================
    第二頁：加分
 ===================================================== */
+
 
 /* =========================
    今日進度
@@ -269,16 +450,15 @@ main {
         50px;
 }
 
-
 .progress-light {
     width: 42px;
     height: 42px;
 
-    border-radius: 50%;
-
     border:
         2px solid
         #999999;
+
+    border-radius: 50%;
 
     background: #ffffff;
 
@@ -287,7 +467,6 @@ main {
         border-color 0.2s ease,
         transform 0.15s ease;
 }
-
 
 .progress-light.active {
     background: #222222;
@@ -298,13 +477,37 @@ main {
 
 
 /* =========================
-   加分選項
+   短期任務
+========================= */
+
+.short-task-section {
+    margin-bottom: 44px;
+}
+
+.short-task-title {
+    margin-bottom: 16px;
+}
+
+#shortTaskList {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.short-task-button {
+    border-color: #bdbdbd;
+}
+
+
+/* =========================
+   固定加分選項
 ========================= */
 
 .add-title {
     margin-top: 12px;
 }
-
 
 #taskList {
     display: flex;
@@ -313,7 +516,6 @@ main {
 
     gap: 14px;
 }
-
 
 .task-button {
     width: 100%;
@@ -340,7 +542,6 @@ main {
 
     cursor: pointer;
 }
-
 
 .task-button:active {
     transform: scale(0.98);
@@ -381,7 +582,6 @@ main {
     cursor: pointer;
 }
 
-
 .undo-button:active {
     transform: scale(0.98);
 
@@ -393,42 +593,140 @@ main {
    第三頁：管理
 ===================================================== */
 
-/* =========================
-   大區塊
-========================= */
 
-.manage-section {
-    margin-bottom: 58px;
+/* =====================================================
+   管理頁摺疊區
+
+   關閉時：
+
+             獎勵
+   ----------------------
+
+           加分事項
+   ----------------------
+
+           短期任務
+   ----------------------
+===================================================== */
+
+.manage-accordion-section {
+    width: 100%;
+
+    margin-bottom: 10px;
 }
 
 
-.manage-main-title {
-    font-size: 23px;
-    font-weight: 700;
+/* =========================
+   摺疊標題
+========================= */
 
-    padding-bottom: 12px;
-    margin-bottom: 26px;
+.manage-accordion-toggle {
+    width: 100%;
+
+    min-height: 58px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding:
+        14px
+        10px;
+
+    border: none;
 
     border-bottom:
         1px solid
-        #d8d8d8;
+        #d7d7d7;
+
+    border-radius: 0;
+
+    background: transparent;
+    color: #333333;
+
+    font-size: 20px;
+    font-weight: 500;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        color 0.15s ease,
+        font-weight 0.15s ease,
+        background 0.15s ease;
+}
+
+
+/*
+整條都可以按，
+按下時只給非常淡的回饋。
+*/
+
+.manage-accordion-toggle:active {
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.025
+        );
+}
+
+
+/*
+目前展開中的項目：
+只稍微加粗。
+不加箭頭、不加背景框。
+*/
+
+.manage-accordion-toggle.active {
+    color: #111111;
+
+    font-weight: 700;
 }
 
 
 /* =========================
-   小區塊
+   展開內容
+========================= */
+
+.manage-accordion-content {
+    padding:
+        28px
+        2px
+        18px;
+}
+
+
+/*
+展開內容結束後，
+和下一個標題保留一點距離。
+*/
+
+.manage-accordion-content:not([hidden]) {
+    margin-bottom: 8px;
+}
+
+
+/* =========================
+   管理小區塊
 ========================= */
 
 .manage-subsection {
     margin-bottom: 38px;
 }
 
+.manage-subsection:last-child {
+    margin-bottom: 8px;
+}
 
 .manage-subtitle {
+    margin-bottom: 16px;
+
     font-size: 17px;
     font-weight: 600;
-
-    margin-bottom: 16px;
 
     color: #333333;
 }
@@ -444,20 +742,16 @@ main {
     flex-direction: column;
 
     gap: 10px;
-
-    margin-bottom: 0;
 }
 
-
 .form-area label {
+    margin-top: 4px;
+
     font-size: 15px;
     font-weight: 500;
 
-    margin-top: 4px;
-
     color: #444444;
 }
-
 
 .form-area input {
     width: 100%;
@@ -482,14 +776,24 @@ main {
     outline: none;
 }
 
-
 .form-area input:focus {
     border-color: #555555;
 }
 
-
 .form-area input::placeholder {
     color: #aaaaaa;
+}
+
+
+/* 日期欄 */
+
+.form-area input[type="date"] {
+    width: 100%;
+
+    min-height: 48px;
+
+    background: #ffffff;
+    color: #222222;
 }
 
 
@@ -498,9 +802,9 @@ main {
 .form-area button {
     align-self: flex-end;
 
-    margin-top: 8px;
-
     min-width: 76px;
+
+    margin-top: 8px;
 
     padding:
         10px
@@ -518,14 +822,13 @@ main {
     cursor: pointer;
 }
 
-
 .form-area button:active {
     transform: scale(0.97);
 }
 
 
 /* =========================
-   下拉式管理
+   管理下拉選單
 ========================= */
 
 .delete-control {
@@ -535,9 +838,6 @@ main {
 
     gap: 12px;
 }
-
-
-/* 下拉選單 */
 
 .manage-select {
     width: 100%;
@@ -566,13 +866,21 @@ main {
     cursor: pointer;
 }
 
-
 .manage-select:focus {
     border-color: #555555;
 }
 
+.manage-select:disabled {
+    background: #f3f3f3;
+    color: #aaaaaa;
 
-/* 刪除按鈕 */
+    cursor: default;
+}
+
+
+/* =========================
+   管理刪除按鈕
+========================= */
 
 .delete-manage-button {
     align-self: flex-end;
@@ -597,40 +905,51 @@ main {
     cursor: pointer;
 }
 
-
 .delete-manage-button:active:not(:disabled) {
     transform: scale(0.97);
 
     background: #eeeeee;
 }
 
-
 .delete-manage-button:disabled {
     border-color: #dddddd;
 
-    color: #bbbbbb;
-
     background: #f3f3f3;
+    color: #bbbbbb;
 
     cursor: default;
 }
 
 
 /* =====================================================
-   舊版管理頁相容樣式
-   換成新版 index.html 後通常不會看到
+   舊版管理樣式相容
 ===================================================== */
+
+.manage-section {
+    margin-bottom: 58px;
+}
+
+.manage-main-title {
+    margin-bottom: 26px;
+
+    padding-bottom: 12px;
+
+    border-bottom:
+        1px solid
+        #d8d8d8;
+
+    font-size: 23px;
+    font-weight: 700;
+}
 
 .manage-list-area {
     margin-top: 48px;
 }
 
-
 #manageTaskList,
 #manageGoalList {
     width: 100%;
 }
-
 
 .manage-task-item,
 .manage-goal-item {
@@ -652,14 +971,12 @@ main {
     font-size: 17px;
 }
 
-
 .manage-task-item span,
 .manage-goal-name {
     flex: 1;
 
     word-break: break-word;
 }
-
 
 .manage-goal-actions {
     display: flex;
@@ -671,13 +988,11 @@ main {
     flex-shrink: 0;
 }
 
-
 .manage-goal-points {
     color: #555555;
 
     white-space: nowrap;
 }
-
 
 .delete-task-button,
 .delete-goal-button {
@@ -686,17 +1001,14 @@ main {
     background: transparent;
     color: #777777;
 
-    font-size: 14px;
-
     padding:
         8px
         4px;
 
+    font-size: 14px;
+
     cursor: pointer;
-
-    flex-shrink: 0;
 }
-
 
 .delete-task-button:active,
 .delete-goal-button:active {
@@ -707,6 +1019,7 @@ main {
 /* =====================================================
    第四頁：紀錄
 ===================================================== */
+
 
 /* =========================
    上一週 / 下一週
@@ -719,7 +1032,6 @@ main {
 
     margin-bottom: 32px;
 }
-
 
 .week-navigation button {
     border: none;
@@ -736,11 +1048,9 @@ main {
     cursor: pointer;
 }
 
-
 .week-navigation button:active {
     opacity: 0.5;
 }
-
 
 .week-range {
     margin-top: -8px;
@@ -753,21 +1063,19 @@ main {
 
 
 /* =========================
-   每一天紀錄
+   每天紀錄
 ========================= */
 
 .record-day {
     margin-bottom: 34px;
 }
 
-
 .record-day-title {
+    margin-bottom: 12px;
+
     font-size: 18px;
     font-weight: 700;
-
-    margin-bottom: 12px;
 }
-
 
 .record-item {
     display: flex;
@@ -784,32 +1092,29 @@ main {
     font-size: 17px;
 }
 
-
 .record-item > span:first-child {
     flex: 1;
 
     word-break: break-word;
 }
 
-
 .record-item > span:last-child {
     flex-shrink: 0;
 }
 
-
 .record-empty {
-    color: #999999;
-
-    font-size: 16px;
-
     padding:
         4px
         0;
+
+    color: #999999;
+
+    font-size: 16px;
 }
 
 
 /* =========================
-   撤銷兌換
+   紀錄撤銷
 ========================= */
 
 .record-actions {
@@ -822,22 +1127,20 @@ main {
     flex-shrink: 0;
 }
 
-
-.undo-redeem-button {
+.undo-record-button {
     border: none;
 
     background: transparent;
     color: #777777;
 
-    font-size: 14px;
-
     padding: 4px;
+
+    font-size: 14px;
 
     cursor: pointer;
 }
 
-
-.undo-redeem-button:active {
+.undo-record-button:active {
     opacity: 0.5;
 }
 
@@ -885,7 +1188,6 @@ main {
     z-index: 100;
 }
 
-
 .nav-button {
     flex: 1;
 
@@ -899,7 +1201,6 @@ main {
 
     cursor: pointer;
 }
-
 
 .nav-button.active {
     color: #111111;
@@ -952,13 +1253,32 @@ main {
     }
 
 
-    .manage-main-title {
-        font-size: 22px;
+    .short-task-section {
+        margin-bottom: 40px;
     }
 
 
-    .manage-section {
-        margin-bottom: 52px;
+    .achievement-area {
+        margin-bottom: 38px;
+    }
+
+
+    .achievement-form {
+        padding: 14px;
+    }
+
+
+    /* 管理頁 */
+
+    .manage-accordion-toggle {
+        min-height: 56px;
+
+        font-size: 19px;
+    }
+
+
+    .manage-accordion-content {
+        padding-top: 25px;
     }
 
 }

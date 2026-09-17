@@ -41,7 +41,9 @@
         >
 
 
-            <!-- 目前點數 -->
+            <!-- =========================
+                 目前點數
+            ========================== -->
 
             <div class="points-area">
 
@@ -66,7 +68,105 @@
 
 
 
-            <!-- 獎勵兌換處 -->
+            <!-- =========================
+                 今日功績
+            ========================== -->
+
+            <div class="achievement-area">
+
+
+                <!--
+                今天有功績時才會顯示
+                -->
+
+                <div
+                    id="achievementDisplay"
+                    class="achievement-display"
+                    hidden
+                >
+
+                    <div class="section-title achievement-title">
+                        今日功績
+                    </div>
+
+
+                    <div id="achievementList">
+                    </div>
+
+                </div>
+
+
+
+                <!--
+                尚未新增：
+                ＋ 新增今日功績
+
+                已經有功績：
+                ＋ 再新增一件
+                -->
+
+                <button
+                    id="openAchievementFormButton"
+                    class="open-achievement-button"
+                    type="button"
+                >
+                    ＋ 新增今日功績
+                </button>
+
+
+
+                <!-- 今日功績輸入區 -->
+
+                <div
+                    id="achievementForm"
+                    class="achievement-form"
+                    hidden
+                >
+
+                    <label for="achievementInput">
+                        今天做了什麼值得肯定的事？
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="achievementInput"
+                        placeholder="輸入今天做到的事"
+                        autocomplete="off"
+                    >
+
+
+                    <div class="achievement-form-actions">
+
+                        <button
+                            id="cancelAchievementButton"
+                            class="achievement-cancel-button"
+                            type="button"
+                        >
+                            取消
+                        </button>
+
+
+                        <button
+                            id="addAchievementButton"
+                            class="achievement-add-button"
+                            type="button"
+                        >
+                            +1
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =========================
+                 獎勵兌換處
+            ========================== -->
 
             <div class="goal-area">
 
@@ -76,21 +176,15 @@
 
 
                 <div id="goalList">
-
-                    <!--
-                    JavaScript 自動產生：
-
-                    地瓜球    3 點    兌換
-                    泡麵     10 點    兌換
-                    -->
-
                 </div>
 
             </div>
 
 
 
-            <!-- 匯出紀錄 -->
+            <!-- =========================
+                 匯出紀錄
+            ========================== -->
 
             <button
                 id="backupButton"
@@ -117,7 +211,9 @@
         >
 
 
-            <!-- 今日進度 -->
+            <!-- =========================
+                 今日進度
+            ========================== -->
 
             <div class="section-title">
                 今日進度
@@ -140,7 +236,31 @@
 
 
 
-            <!-- 加分選項 -->
+            <!-- =========================
+                 今日短期任務
+            ========================== -->
+
+            <div
+                id="shortTaskSection"
+                class="short-task-section"
+                hidden
+            >
+
+                <div class="section-title short-task-title">
+                    短期任務
+                </div>
+
+
+                <div id="shortTaskList">
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 固定加分事項
+            ========================== -->
 
             <div class="section-title add-title">
                 加分選項
@@ -148,20 +268,13 @@
 
 
             <div id="taskList">
-
-                <!--
-                JavaScript 自動產生：
-
-                讀書30分鐘        +1
-                洗衣服            +1
-                曬衣服            +1
-                -->
-
             </div>
 
 
 
-            <!-- 取消上一筆 -->
+            <!-- =========================
+                 取消上一筆
+            ========================== -->
 
             <button
                 id="undoButton"
@@ -197,108 +310,124 @@
 
 
             <!-- =================================================
-                 獎勵
+                 摺疊一：獎勵
             ================================================== -->
 
-            <div class="manage-section">
+            <div class="manage-accordion-section">
 
 
-                <div class="manage-main-title">
+                <button
+                    id="manageGoalToggle"
+                    class="manage-accordion-toggle"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="manageGoalContent"
+                >
                     獎勵
-                </div>
+                </button>
 
 
 
-                <!-- 新增獎勵 -->
-
-                <div class="manage-subsection">
-
-                    <div class="manage-subtitle">
-                        新增獎勵
-                    </div>
+                <div
+                    id="manageGoalContent"
+                    class="manage-accordion-content"
+                    hidden
+                >
 
 
-                    <div class="form-area">
+                    <!-- 新增獎勵 -->
+
+                    <div class="manage-subsection">
+
+                        <div class="manage-subtitle">
+                            新增獎勵
+                        </div>
 
 
-                        <label for="goalName">
-                            獎勵名稱
-                        </label>
+                        <div class="form-area">
 
 
-                        <input
-                            type="text"
-                            id="goalName"
-                            placeholder="輸入獎勵名稱"
-                            autocomplete="off"
-                        >
+                            <label for="goalName">
+                                獎勵名稱
+                            </label>
 
 
-
-                        <label for="goalPoints">
-                            所需點數
-                        </label>
-
-
-                        <input
-                            type="number"
-                            id="goalPoints"
-                            placeholder="輸入點數"
-                            min="1"
-                            inputmode="numeric"
-                        >
+                            <input
+                                type="text"
+                                id="goalName"
+                                placeholder="輸入獎勵名稱"
+                                autocomplete="off"
+                            >
 
 
 
-                        <button
-                            id="addGoalButton"
-                            type="button"
-                        >
-                            新增
-                        </button>
+                            <label for="goalPoints">
+                                所需點數
+                            </label>
 
 
-                    </div>
-
-                </div>
-
-
-
-                <!-- 管理現有獎勵 -->
-
-                <div class="manage-subsection">
-
-                    <div class="manage-subtitle">
-                        管理現有獎勵
-                    </div>
+                            <input
+                                type="number"
+                                id="goalPoints"
+                                placeholder="輸入點數"
+                                min="1"
+                                inputmode="numeric"
+                            >
 
 
-                    <div class="delete-control">
+
+                            <button
+                                id="addGoalButton"
+                                type="button"
+                            >
+                                新增
+                            </button>
 
 
-                        <select
-                            id="goalDeleteSelect"
-                            class="manage-select"
-                        >
-
-                            <option value="">
-                                請選擇獎勵
-                            </option>
-
-                        </select>
-
-
-                        <button
-                            id="deleteGoalButton"
-                            class="delete-manage-button"
-                            type="button"
-                            disabled
-                        >
-                            刪除
-                        </button>
-
+                        </div>
 
                     </div>
+
+
+
+                    <!-- 管理現有獎勵 -->
+
+                    <div class="manage-subsection">
+
+                        <div class="manage-subtitle">
+                            管理現有獎勵
+                        </div>
+
+
+                        <div class="delete-control">
+
+
+                            <select
+                                id="goalDeleteSelect"
+                                class="manage-select"
+                            >
+
+                                <option value="">
+                                    請選擇獎勵
+                                </option>
+
+                            </select>
+
+
+                            <button
+                                id="deleteGoalButton"
+                                class="delete-manage-button"
+                                type="button"
+                                disabled
+                            >
+                                刪除
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
 
                 </div>
 
@@ -310,93 +439,235 @@
 
 
             <!-- =================================================
-                 加分事項
+                 摺疊二：加分事項
             ================================================== -->
 
-            <div class="manage-section">
+            <div class="manage-accordion-section">
 
 
-                <div class="manage-main-title">
+                <button
+                    id="manageTaskToggle"
+                    class="manage-accordion-toggle"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="manageTaskContent"
+                >
                     加分事項
+                </button>
+
+
+
+                <div
+                    id="manageTaskContent"
+                    class="manage-accordion-content"
+                    hidden
+                >
+
+
+                    <!-- 新增加分事項 -->
+
+                    <div class="manage-subsection">
+
+                        <div class="manage-subtitle">
+                            新增加分事項
+                        </div>
+
+
+                        <div class="form-area">
+
+
+                            <label for="taskName">
+                                事項名稱
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="taskName"
+                                placeholder="輸入事項名稱"
+                                autocomplete="off"
+                            >
+
+
+
+                            <button
+                                id="addTaskButton"
+                                type="button"
+                            >
+                                新增
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- 管理現有加分事項 -->
+
+                    <div class="manage-subsection">
+
+                        <div class="manage-subtitle">
+                            管理現有加分事項
+                        </div>
+
+
+                        <div class="delete-control">
+
+
+                            <select
+                                id="taskDeleteSelect"
+                                class="manage-select"
+                            >
+
+                                <option value="">
+                                    請選擇加分事項
+                                </option>
+
+                            </select>
+
+
+                            <button
+                                id="deleteTaskButton"
+                                class="delete-manage-button"
+                                type="button"
+                                disabled
+                            >
+                                刪除
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
+
                 </div>
 
 
+            </div>
 
-                <!-- 新增加分事項 -->
 
-                <div class="manage-subsection">
 
-                    <div class="manage-subtitle">
-                        新增加分事項
+
+
+            <!-- =================================================
+                 摺疊三：短期任務
+            ================================================== -->
+
+            <div class="manage-accordion-section">
+
+
+                <button
+                    id="manageShortTaskToggle"
+                    class="manage-accordion-toggle"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="manageShortTaskContent"
+                >
+                    短期任務
+                </button>
+
+
+
+                <div
+                    id="manageShortTaskContent"
+                    class="manage-accordion-content"
+                    hidden
+                >
+
+
+                    <!-- 新增短期任務 -->
+
+                    <div class="manage-subsection">
+
+                        <div class="manage-subtitle">
+                            新增短期任務
+                        </div>
+
+
+                        <div class="form-area">
+
+
+                            <label for="shortTaskName">
+                                任務名稱
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="shortTaskName"
+                                placeholder="例如：丟垃圾"
+                                autocomplete="off"
+                            >
+
+
+
+                            <label for="shortTaskDate">
+                                日期
+                            </label>
+
+
+                            <input
+                                type="date"
+                                id="shortTaskDate"
+                            >
+
+
+
+                            <button
+                                id="addShortTaskButton"
+                                type="button"
+                            >
+                                新增
+                            </button>
+
+
+                        </div>
+
                     </div>
 
 
-                    <div class="form-area">
+
+                    <!-- 管理已安排任務 -->
+
+                    <div class="manage-subsection">
+
+                        <div class="manage-subtitle">
+                            管理已安排任務
+                        </div>
 
 
-                        <label for="taskName">
-                            事項名稱
-                        </label>
+                        <div class="delete-control">
 
 
-                        <input
-                            type="text"
-                            id="taskName"
-                            placeholder="輸入事項名稱"
-                            autocomplete="off"
-                        >
+                            <select
+                                id="shortTaskDeleteSelect"
+                                class="manage-select"
+                            >
+
+                                <option value="">
+                                    請選擇短期任務
+                                </option>
+
+                            </select>
 
 
-
-                        <button
-                            id="addTaskButton"
-                            type="button"
-                        >
-                            新增
-                        </button>
-
-
-                    </div>
-
-                </div>
+                            <button
+                                id="deleteShortTaskButton"
+                                class="delete-manage-button"
+                                type="button"
+                                disabled
+                            >
+                                刪除
+                            </button>
 
 
-
-                <!-- 管理現有加分事項 -->
-
-                <div class="manage-subsection">
-
-                    <div class="manage-subtitle">
-                        管理現有加分事項
-                    </div>
-
-
-                    <div class="delete-control">
-
-
-                        <select
-                            id="taskDeleteSelect"
-                            class="manage-select"
-                        >
-
-                            <option value="">
-                                請選擇加分事項
-                            </option>
-
-                        </select>
-
-
-                        <button
-                            id="deleteTaskButton"
-                            class="delete-manage-button"
-                            type="button"
-                            disabled
-                        >
-                            刪除
-                        </button>
-
+                        </div>
 
                     </div>
+
 
                 </div>
 
@@ -420,7 +691,9 @@
         >
 
 
-            <!-- 上一週 / 下一週 -->
+            <!-- =========================
+                 上一週 / 下一週
+            ========================== -->
 
             <div class="week-navigation">
 
@@ -445,7 +718,9 @@
 
 
 
-            <!-- 本週紀錄 -->
+            <!-- =========================
+                 本週紀錄
+            ========================== -->
 
             <div class="section-title">
                 本週紀錄
@@ -459,29 +734,7 @@
             </div>
 
 
-
-            <!-- 每週內容 -->
-
             <div id="weeklyRecord">
-
-                <!--
-                JavaScript 自動產生：
-
-                星期一
-
-                讀書30分鐘          +1
-                洗衣服              +1
-
-                星期二
-
-                無紀錄
-
-
-                如果是兌換：
-
-                兌換：地瓜球        -3    撤銷
-                -->
-
             </div>
 
 
