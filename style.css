@@ -97,7 +97,7 @@ main {
 
 
 /* =====================================================
-   第一頁：總覽
+   第一頁：能量艙
 ===================================================== */
 
 
@@ -395,40 +395,8 @@ main {
 }
 
 
-/* =========================
-   匯出紀錄
-========================= */
-
-.backup-button {
-    position: fixed;
-
-    right: 22px;
-
-    bottom:
-        calc(
-            98px +
-            env(safe-area-inset-bottom)
-        );
-
-    border: none;
-
-    background: transparent;
-    color: #666666;
-
-    font-size: 14px;
-
-    padding: 8px;
-
-    cursor: pointer;
-}
-
-.backup-button:active {
-    opacity: 0.5;
-}
-
-
 /* =====================================================
-   第二頁：加分
+   第二頁：賺經驗
 ===================================================== */
 
 
@@ -526,7 +494,6 @@ main {
     align-items: center;
 
     padding:
-        18px
         18px;
 
     border:
@@ -590,23 +557,153 @@ main {
 
 
 /* =====================================================
-   第三頁：管理
+   第三頁：戰績
+===================================================== */
+
+
+/* =========================
+   上一週 / 下一週
+========================= */
+
+.week-navigation {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 32px;
+}
+
+.week-navigation button {
+    border: none;
+
+    background: transparent;
+    color: #333333;
+
+    padding:
+        8px
+        0;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+.week-navigation button:active {
+    opacity: 0.5;
+}
+
+.week-range {
+    margin-top: -8px;
+    margin-bottom: 34px;
+
+    color: #666666;
+
+    font-size: 16px;
+}
+
+
+/* =========================
+   每天戰績
+========================= */
+
+.record-day {
+    margin-bottom: 34px;
+}
+
+.record-day-title {
+    margin-bottom: 12px;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.record-item {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 16px;
+
+    padding:
+        8px
+        0;
+
+    font-size: 17px;
+}
+
+.record-item > span:first-child {
+    flex: 1;
+
+    word-break: break-word;
+}
+
+.record-item > span:last-child {
+    flex-shrink: 0;
+}
+
+.record-empty {
+    padding:
+        4px
+        0;
+
+    color: #999999;
+
+    font-size: 16px;
+}
+
+
+/* =========================
+   戰績撤銷
+========================= */
+
+.record-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    flex-shrink: 0;
+}
+
+.undo-record-button {
+    border: none;
+
+    background: transparent;
+    color: #777777;
+
+    padding: 4px;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.undo-record-button:active {
+    opacity: 0.5;
+}
+
+
+/* =====================================================
+   第四頁：設定
 ===================================================== */
 
 
 /* =====================================================
-   管理頁摺疊區
+   設定頁摺疊
 
-   關閉時：
+           獎勵
+   ----------------
 
-             獎勵
-   ----------------------
+         加分事項
+   ----------------
 
-           加分事項
-   ----------------------
+         短期任務
+   ----------------
 
-           短期任務
-   ----------------------
+           資料
+   ----------------
 ===================================================== */
 
 .manage-accordion-section {
@@ -658,12 +755,6 @@ main {
         background 0.15s ease;
 }
 
-
-/*
-整條都可以按，
-按下時只給非常淡的回饋。
-*/
-
 .manage-accordion-toggle:active {
     background:
         rgba(
@@ -675,11 +766,7 @@ main {
 }
 
 
-/*
-目前展開中的項目：
-只稍微加粗。
-不加箭頭、不加背景框。
-*/
+/* 展開中的標題 */
 
 .manage-accordion-toggle.active {
     color: #111111;
@@ -699,19 +786,13 @@ main {
         18px;
 }
 
-
-/*
-展開內容結束後，
-和下一個標題保留一點距離。
-*/
-
 .manage-accordion-content:not([hidden]) {
     margin-bottom: 8px;
 }
 
 
 /* =========================
-   管理小區塊
+   設定內的小區塊
 ========================= */
 
 .manage-subsection {
@@ -732,9 +813,9 @@ main {
 }
 
 
-/* =========================
-   新增表單
-========================= */
+/* =====================================================
+   設定：新增表單
+===================================================== */
 
 .form-area {
     display: flex;
@@ -785,7 +866,7 @@ main {
 }
 
 
-/* 日期欄 */
+/* 日期 */
 
 .form-area input[type="date"] {
     width: 100%;
@@ -797,7 +878,7 @@ main {
 }
 
 
-/* 新增按鈕 */
+/* 新增 */
 
 .form-area button {
     align-self: flex-end;
@@ -827,9 +908,9 @@ main {
 }
 
 
-/* =========================
-   管理下拉選單
-========================= */
+/* =====================================================
+   設定：下拉式管理
+===================================================== */
 
 .delete-control {
     display: flex;
@@ -879,7 +960,7 @@ main {
 
 
 /* =========================
-   管理刪除按鈕
+   刪除
 ========================= */
 
 .delete-manage-button {
@@ -918,6 +999,74 @@ main {
     color: #bbbbbb;
 
     cursor: default;
+}
+
+
+/* =====================================================
+   設定：資料
+===================================================== */
+
+
+/*
+匯出備份
+匯入備份
+下載數據
+*/
+
+.data-action-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.data-action-button {
+    width: 100%;
+
+    min-height: 50px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding:
+        12px
+        16px;
+
+    border:
+        1px solid
+        #cccccc;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #333333;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.1s ease;
+}
+
+.data-action-button:active {
+    background: #eeeeee;
+
+    transform: scale(0.98);
+}
+
+
+/*
+隱藏真正的檔案上傳 input
+*/
+
+#importBackupInput {
+    display: none;
 }
 
 
@@ -1017,135 +1166,6 @@ main {
 
 
 /* =====================================================
-   第四頁：紀錄
-===================================================== */
-
-
-/* =========================
-   上一週 / 下一週
-========================= */
-
-.week-navigation {
-    display: flex;
-
-    justify-content: space-between;
-
-    margin-bottom: 32px;
-}
-
-.week-navigation button {
-    border: none;
-
-    background: transparent;
-    color: #333333;
-
-    padding:
-        8px
-        0;
-
-    font-size: 16px;
-
-    cursor: pointer;
-}
-
-.week-navigation button:active {
-    opacity: 0.5;
-}
-
-.week-range {
-    margin-top: -8px;
-    margin-bottom: 34px;
-
-    color: #666666;
-
-    font-size: 16px;
-}
-
-
-/* =========================
-   每天紀錄
-========================= */
-
-.record-day {
-    margin-bottom: 34px;
-}
-
-.record-day-title {
-    margin-bottom: 12px;
-
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.record-item {
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 16px;
-
-    padding:
-        8px
-        0;
-
-    font-size: 17px;
-}
-
-.record-item > span:first-child {
-    flex: 1;
-
-    word-break: break-word;
-}
-
-.record-item > span:last-child {
-    flex-shrink: 0;
-}
-
-.record-empty {
-    padding:
-        4px
-        0;
-
-    color: #999999;
-
-    font-size: 16px;
-}
-
-
-/* =========================
-   紀錄撤銷
-========================= */
-
-.record-actions {
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    flex-shrink: 0;
-}
-
-.undo-record-button {
-    border: none;
-
-    background: transparent;
-    color: #777777;
-
-    padding: 4px;
-
-    font-size: 14px;
-
-    cursor: pointer;
-}
-
-.undo-record-button:active {
-    opacity: 0.5;
-}
-
-
-/* =====================================================
    底部導覽列
 ===================================================== */
 
@@ -1191,13 +1211,21 @@ main {
 .nav-button {
     flex: 1;
 
+    min-width: 0;
+
     border: none;
 
     background: transparent;
     color: #888888;
 
+    padding:
+        0
+        4px;
+
     font-size: 15px;
     font-weight: 500;
+
+    white-space: nowrap;
 
     cursor: pointer;
 }
@@ -1210,7 +1238,7 @@ main {
 
 
 /* =====================================================
-   手機尺寸
+   小尺寸手機
 ===================================================== */
 
 @media (
@@ -1268,7 +1296,7 @@ main {
     }
 
 
-    /* 管理頁 */
+    /* 設定 */
 
     .manage-accordion-toggle {
         min-height: 56px;
@@ -1279,6 +1307,38 @@ main {
 
     .manage-accordion-content {
         padding-top: 25px;
+    }
+
+
+    /* 底部四格 */
+
+    .nav-button {
+        font-size: 14px;
+    }
+
+}
+
+
+/* =====================================================
+   特別窄的手機
+===================================================== */
+
+@media (
+    max-width: 360px
+) {
+
+    .nav-button {
+        padding:
+            0
+            2px;
+
+        font-size: 13px;
+    }
+
+
+    .progress-light {
+        width: 34px;
+        height: 34px;
     }
 
 }

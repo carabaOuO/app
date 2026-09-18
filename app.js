@@ -4,6 +4,8 @@
 ===================================================== */
 
 const STORAGE_KEY = "myRewardAppData";
+const BACKUP_APP_ID = "myRewardApp";
+const BACKUP_VERSION = 1;
 
 let currentWeekOffset = 0;
 let currentManageSection = null;
@@ -31,20 +33,58 @@ let appData = loadData();
 
 
 /* =====================================================
-   資料
+   基本資料
 ===================================================== */
+
+function createId() {
+    return Date.now().toString(36) + Math.random().toString(36).substring(2);
+}
+
+
+function normalizeData(data) {
+
+    return {
+
+        points:
+            typeof data?.points === "number" &&
+            Number.isFinite(data.points)
+                ? data.points
+                : 0,
+
+        goals:
+            Array.isArray(data?.goals)
+                ? data.goals
+                : [],
+
+        tasks:
+            Array.isArray(data?.tasks)
+                ? data.tasks
+                : [],
+
+        shortTasks:
+            Array.isArray(data?.shortTasks)
+                ? data.shortTasks
+                : [],
+
+        records:
+            Array.isArray(data?.records)
+                ? data.records
+                : []
+    };
+}
+
 
 function loadData() {
 
-    const savedData =
+    const saved =
         localStorage.getItem(
             STORAGE_KEY
         );
 
 
-    if (!savedData) {
+    if (!saved) {
 
-        const newData =
+        const fresh =
             JSON.parse(
                 JSON.stringify(
                     defaultData
@@ -55,68 +95,22 @@ function loadData() {
         localStorage.setItem(
             STORAGE_KEY,
             JSON.stringify(
-                newData
+                fresh
             )
         );
 
 
-        return newData;
+        return fresh;
     }
 
 
     try {
 
-        const parsedData =
+        return normalizeData(
             JSON.parse(
-                savedData
-            );
-
-
-        if (
-            typeof parsedData.points !==
-            "number"
-        ) {
-            parsedData.points = 0;
-        }
-
-
-        if (
-            !Array.isArray(
-                parsedData.goals
+                saved
             )
-        ) {
-            parsedData.goals = [];
-        }
-
-
-        if (
-            !Array.isArray(
-                parsedData.tasks
-            )
-        ) {
-            parsedData.tasks = [];
-        }
-
-
-        if (
-            !Array.isArray(
-                parsedData.shortTasks
-            )
-        ) {
-            parsedData.shortTasks = [];
-        }
-
-
-        if (
-            !Array.isArray(
-                parsedData.records
-            )
-        ) {
-            parsedData.records = [];
-        }
-
-
-        return parsedData;
+        );
 
     } catch (error) {
 
@@ -142,19 +136,6 @@ function saveData() {
         JSON.stringify(
             appData
         )
-    );
-}
-
-
-function createId() {
-
-    return (
-        Date.now()
-            .toString(36) +
-
-        Math.random()
-            .toString(36)
-            .substring(2)
     );
 }
 
@@ -189,20 +170,14 @@ function getDateKey(
         );
 
 
-    return (
-        `${year}-${month}-${day}`
-    );
+    return `${year}-${month}-${day}`;
 }
 
 
-function getMonday(
-    date
-) {
+function getMonday(date) {
 
     const result =
-        new Date(
-            date
-        );
+        new Date(date);
 
 
     result.setHours(
@@ -217,15 +192,13 @@ function getMonday(
         result.getDay();
 
 
-    const difference =
-        day === 0
-            ? -6
-            : 1 - day;
-
-
     result.setDate(
         result.getDate() +
-        difference
+        (
+            day === 0
+                ? -6
+                : 1 - day
+        )
     );
 
 
@@ -239,9 +212,7 @@ function addDays(
 ) {
 
     const result =
-        new Date(
-            date
-        );
+        new Date(date);
 
 
     result.setDate(
@@ -254,9 +225,7 @@ function addDays(
 }
 
 
-function formatShortDate(
-    date
-) {
+function formatShortDate(date) {
 
     return (
         `${date.getMonth() + 1}/${date.getDate()}`
@@ -264,9 +233,7 @@ function formatShortDate(
 }
 
 
-function formatDateKeyShort(
-    dateKey
-) {
+function formatDateKeyShort(dateKey) {
 
     const parts =
         String(
@@ -275,8 +242,7 @@ function formatDateKeyShort(
 
 
     if (
-        parts.length !==
-        3
+        parts.length !== 3
     ) {
 
         return dateKey;
@@ -295,21 +261,20 @@ function cleanupExpiredShortTasks() {
         getDateKey();
 
 
-    const originalLength =
+    const before =
         appData.shortTasks.length;
 
 
     appData.shortTasks =
         appData.shortTasks.filter(
             task =>
-                task.date >=
-                today
+                task.date >= today
         );
 
 
     if (
         appData.shortTasks.length !==
-        originalLength
+        before
     ) {
 
         saveData();
@@ -319,6 +284,13 @@ function cleanupExpiredShortTasks() {
 
 /* =====================================================
    底部四頁切換
+
+   顯示名稱由 index.html 決定：
+
+   能量艙
+   賺經驗
+   戰績
+   設定
 ===================================================== */
 
 const pages =
@@ -366,8 +338,7 @@ navButtons.forEach(
 
                 const targetPage =
                     document.getElementById(
-                        "page-" +
-                        pageName
+                        `page-${pageName}`
                     );
 
 
@@ -398,16 +369,13 @@ navButtons.forEach(
 
 
 /* =====================================================
-   管理頁：極簡摺疊選單
-
-   預設全部收起。
-   點同一區：收起。
-   點另一區：原本收起，新區展開。
+   設定頁：極簡摺疊選單
 ===================================================== */
 
 const manageAccordionSections = {
 
     goal: {
+
         toggleId:
             "manageGoalToggle",
 
@@ -417,6 +385,7 @@ const manageAccordionSections = {
 
 
     task: {
+
         toggleId:
             "manageTaskToggle",
 
@@ -426,11 +395,22 @@ const manageAccordionSections = {
 
 
     shortTask: {
+
         toggleId:
             "manageShortTaskToggle",
 
         contentId:
             "manageShortTaskContent"
+    },
+
+
+    data: {
+
+        toggleId:
+            "manageDataToggle",
+
+        contentId:
+            "manageDataContent"
     }
 };
 
@@ -566,7 +546,7 @@ function setupManageAccordion() {
 
 
 /* =====================================================
-   第一頁：目前點數
+   能量艙：目前點數
 ===================================================== */
 
 function renderPoints() {
@@ -577,20 +557,41 @@ function renderPoints() {
         );
 
 
-    if (!element) {
+    if (element) {
 
-        return;
+        element.textContent =
+            appData.points;
     }
-
-
-    element.textContent =
-        appData.points;
 }
 
 
 /* =====================================================
-   第一頁：今日功績
+   能量艙：今日功績
 ===================================================== */
+
+function getTodayAchievements() {
+
+    const today =
+        getDateKey();
+
+
+    return appData.records.filter(
+        record =>
+
+            record.date ===
+                today &&
+
+            record.type ===
+                "achievement" &&
+
+            record.delta ===
+                1 &&
+
+            record.undone !==
+                true
+    );
+}
+
 
 function renderAchievements() {
 
@@ -622,26 +623,8 @@ function renderAchievements() {
     }
 
 
-    const today =
-        getDateKey();
-
-
     const achievements =
-        appData.records.filter(
-            record =>
-
-                record.date ===
-                    today &&
-
-                record.type ===
-                    "achievement" &&
-
-                record.delta ===
-                    1 &&
-
-                record.undone !==
-                    true
-        );
+        getTodayAchievements();
 
 
     list.innerHTML =
@@ -731,9 +714,7 @@ function openAchievementForm() {
         false;
 
 
-    if (
-        openButton
-    ) {
+    if (openButton) {
 
         openButton.hidden =
             true;
@@ -801,9 +782,7 @@ function addAchievement() {
 
 
     const name =
-        input
-            .value
-            .trim();
+        input.value.trim();
 
 
     if (!name) {
@@ -883,11 +862,10 @@ if (
     openAchievementFormButton
 ) {
 
-    openAchievementFormButton
-        .addEventListener(
-            "click",
-            openAchievementForm
-        );
+    openAchievementFormButton.addEventListener(
+        "click",
+        openAchievementForm
+    );
 }
 
 
@@ -895,11 +873,10 @@ if (
     cancelAchievementButton
 ) {
 
-    cancelAchievementButton
-        .addEventListener(
-            "click",
-            closeAchievementForm
-        );
+    cancelAchievementButton.addEventListener(
+        "click",
+        closeAchievementForm
+    );
 }
 
 
@@ -907,11 +884,10 @@ if (
     addAchievementButton
 ) {
 
-    addAchievementButton
-        .addEventListener(
-            "click",
-            addAchievement
-        );
+    addAchievementButton.addEventListener(
+        "click",
+        addAchievement
+    );
 }
 
 
@@ -919,27 +895,26 @@ if (
     achievementInput
 ) {
 
-    achievementInput
-        .addEventListener(
-            "keydown",
-            function (event) {
+    achievementInput.addEventListener(
+        "keydown",
+        function (event) {
 
-                if (
-                    event.key ===
-                    "Enter"
-                ) {
+            if (
+                event.key ===
+                "Enter"
+            ) {
 
-                    event.preventDefault();
+                event.preventDefault();
 
-                    addAchievement();
-                }
+                addAchievement();
             }
-        );
+        }
+    );
 }
 
 
 /* =====================================================
-   第一頁：獎勵兌換處
+   能量艙：獎勵兌換處
 ===================================================== */
 
 function renderGoals() {
@@ -961,9 +936,7 @@ function renderGoals() {
 
 
     const sortedGoals =
-        [
-            ...appData.goals
-        ].sort(
+        [...appData.goals].sort(
             (a, b) =>
                 a.points -
                 b.points
@@ -1049,35 +1022,34 @@ function renderGoals() {
                 `${goal.points} 點`;
 
 
-            const redeemButton =
+            const button =
                 document.createElement(
                     "button"
                 );
 
 
-            redeemButton.className =
+            button.className =
                 "redeem-button";
 
 
-            redeemButton.textContent =
+            button.textContent =
                 "兌換";
 
 
-            redeemButton.disabled =
+            button.disabled =
                 appData.points <
                 goal.points;
 
 
-            redeemButton
-                .addEventListener(
-                    "click",
-                    function () {
+            button.addEventListener(
+                "click",
+                function () {
 
-                        redeemGoal(
-                            goal.id
-                        );
-                    }
-                );
+                    redeemGoal(
+                        goal.id
+                    );
+                }
+            );
 
 
             right.appendChild(
@@ -1086,7 +1058,7 @@ function renderGoals() {
 
 
             right.appendChild(
-                redeemButton
+                button
             );
 
 
@@ -1108,8 +1080,234 @@ function renderGoals() {
 }
 
 
+function redeemGoal(
+    goalId
+) {
+
+    const goal =
+        appData.goals.find(
+            item =>
+                item.id ===
+                goalId
+        );
+
+
+    if (!goal) {
+
+        return;
+    }
+
+
+    if (
+        appData.points <
+        goal.points
+    ) {
+
+        alert(
+            "目前點數不足。"
+        );
+
+
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            `確定要使用 ${goal.points} 點兌換「${goal.name}」嗎？`
+        );
+
+
+    if (!confirmed) {
+
+        return;
+    }
+
+
+    appData.points -=
+        goal.points;
+
+
+    appData.records.push({
+
+        id:
+            createId(),
+
+        timestamp:
+            new Date()
+                .toISOString(),
+
+        date:
+            getDateKey(),
+
+        type:
+            "redeem",
+
+        name:
+            `兌換：${goal.name}`,
+
+        delta:
+            -goal.points,
+
+        goalId:
+            goal.id,
+
+        goalName:
+            goal.name,
+
+        goalPoints:
+            goal.points
+    });
+
+
+    appData.goals =
+        appData.goals.filter(
+            item =>
+                item.id !==
+                goalId
+        );
+
+
+    saveData();
+
+    renderAll();
+}
+
+
+function undoRedeem(
+    recordId
+) {
+
+    const record =
+        appData.records.find(
+            item =>
+                item.id ===
+                recordId
+        );
+
+
+    if (
+        !record ||
+        record.type !==
+            "redeem"
+    ) {
+
+        return;
+    }
+
+
+    const rewardName =
+
+        record.goalName ||
+
+        String(
+            record.name ||
+            ""
+        ).replace(
+            /^兌換：/,
+            ""
+        );
+
+
+    const rewardPoints =
+
+        Number(
+            record.goalPoints
+        ) ||
+
+        Math.abs(
+            Number(
+                record.delta
+            ) || 0
+        );
+
+
+    if (
+        !rewardName ||
+        rewardPoints <= 0
+    ) {
+
+        alert(
+            "這筆舊紀錄資料不完整，無法撤銷。"
+        );
+
+
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            `確定要撤銷「${rewardName}」的兌換嗎？\n\n${rewardPoints} 點會歸還。`
+        );
+
+
+    if (!confirmed) {
+
+        return;
+    }
+
+
+    appData.points +=
+        rewardPoints;
+
+
+    const rewardAlreadyExists =
+
+        record.goalId
+
+            ? appData.goals.some(
+                goal =>
+                    goal.id ===
+                    record.goalId
+            )
+
+            : appData.goals.some(
+                goal =>
+
+                    goal.name ===
+                        rewardName &&
+
+                    goal.points ===
+                        rewardPoints
+            );
+
+
+    if (
+        !rewardAlreadyExists
+    ) {
+
+        appData.goals.push({
+
+            id:
+                record.goalId ||
+                createId(),
+
+            name:
+                rewardName,
+
+            points:
+                rewardPoints
+        });
+    }
+
+
+    appData.records =
+        appData.records.filter(
+            item =>
+                item.id !==
+                recordId
+        );
+
+
+    saveData();
+
+    renderAll();
+}
+
+
 /* =====================================================
-   第二頁：固定加分選項
+   賺經驗：固定加分事項
 ===================================================== */
 
 function renderTasks() {
@@ -1220,8 +1418,46 @@ function renderTasks() {
 }
 
 
+function addPoint(task) {
+
+    appData.points +=
+        1;
+
+
+    appData.records.push({
+
+        id:
+            createId(),
+
+        timestamp:
+            new Date()
+                .toISOString(),
+
+        date:
+            getDateKey(),
+
+        type:
+            "task",
+
+        name:
+            task.name,
+
+        delta:
+            1,
+
+        undone:
+            false
+    });
+
+
+    saveData();
+
+    renderAll();
+}
+
+
 /* =====================================================
-   第二頁：短期任務
+   賺經驗：短期任務
 ===================================================== */
 
 function renderShortTasks() {
@@ -1342,50 +1578,6 @@ function renderShortTasks() {
 }
 
 
-/* =====================================================
-   +1 與今日進度
-===================================================== */
-
-function addPoint(
-    task
-) {
-
-    appData.points +=
-        1;
-
-
-    appData.records.push({
-
-        id:
-            createId(),
-
-        timestamp:
-            new Date()
-                .toISOString(),
-
-        date:
-            getDateKey(),
-
-        type:
-            "task",
-
-        name:
-            task.name,
-
-        delta:
-            1,
-
-        undone:
-            false
-    });
-
-
-    saveData();
-
-    renderAll();
-}
-
-
 function completeShortTask(
     taskId
 ) {
@@ -1474,6 +1666,10 @@ function completeShortTask(
     renderAll();
 }
 
+
+/* =====================================================
+   賺經驗：今日進度
+===================================================== */
 
 function renderDailyProgress() {
 
@@ -1626,23 +1822,6 @@ function undoLastPoint() {
 }
 
 
-const undoButton =
-    document.getElementById(
-        "undoButton"
-    );
-
-
-if (
-    undoButton
-) {
-
-    undoButton.addEventListener(
-        "click",
-        undoLastPoint
-    );
-}
-
-
 function undoTaskRecord(
     recordId
 ) {
@@ -1675,9 +1854,7 @@ function undoTaskRecord(
             1;
 
 
-    if (
-        !canUndo
-    ) {
+    if (!canUndo) {
 
         return;
     }
@@ -1703,9 +1880,7 @@ function undoTaskRecord(
         );
 
 
-    if (
-        !confirmed
-    ) {
+    if (!confirmed) {
 
         return;
     }
@@ -1805,27 +1980,44 @@ function reversePointRecord(
 }
 
 
+const undoButton =
+    document.getElementById(
+        "undoButton"
+    );
+
+
+if (
+    undoButton
+) {
+
+    undoButton.addEventListener(
+        "click",
+        undoLastPoint
+    );
+}
+
+
 /* =====================================================
-   管理：獎勵
+   設定：獎勵
 ===================================================== */
 
 function addGoal() {
 
-    const goalNameInput =
+    const nameInput =
         document.getElementById(
             "goalName"
         );
 
 
-    const goalPointsInput =
+    const pointsInput =
         document.getElementById(
             "goalPoints"
         );
 
 
     if (
-        !goalNameInput ||
-        !goalPointsInput
+        !nameInput ||
+        !pointsInput
     ) {
 
         return;
@@ -1833,14 +2025,12 @@ function addGoal() {
 
 
     const name =
-        goalNameInput
-            .value
-            .trim();
+        nameInput.value.trim();
 
 
     const points =
         Number(
-            goalPointsInput.value
+            pointsInput.value
         );
 
 
@@ -1890,11 +2080,11 @@ function addGoal() {
     saveData();
 
 
-    goalNameInput.value =
+    nameInput.value =
         "";
 
 
-    goalPointsInput.value =
+    pointsInput.value =
         "";
 
 
@@ -1903,23 +2093,6 @@ function addGoal() {
 
     alert(
         "獎勵已新增。"
-    );
-}
-
-
-const addGoalButton =
-    document.getElementById(
-        "addGoalButton"
-    );
-
-
-if (
-    addGoalButton
-) {
-
-    addGoalButton.addEventListener(
-        "click",
-        addGoal
     );
 }
 
@@ -1977,14 +2150,14 @@ function renderManageGoals() {
     );
 
 
-    [
-        ...appData.goals
-    ]
+    [...appData.goals]
+
         .sort(
             (a, b) =>
                 a.points -
                 b.points
         )
+
         .forEach(
             goal => {
 
@@ -2027,9 +2200,7 @@ function renderManageGoals() {
         0;
 
 
-    if (
-        deleteButton
-    ) {
+    if (deleteButton) {
 
         deleteButton.disabled =
             !select.value;
@@ -2061,9 +2232,7 @@ function deleteGoal(
         );
 
 
-    if (
-        !confirmed
-    ) {
+    if (!confirmed) {
 
         return;
     }
@@ -2111,6 +2280,12 @@ function deleteSelectedGoal() {
 }
 
 
+const addGoalButton =
+    document.getElementById(
+        "addGoalButton"
+    );
+
+
 const goalDeleteSelect =
     document.getElementById(
         "goalDeleteSelect"
@@ -2124,6 +2299,17 @@ const deleteGoalButton =
 
 
 if (
+    addGoalButton
+) {
+
+    addGoalButton.addEventListener(
+        "click",
+        addGoal
+    );
+}
+
+
+if (
     goalDeleteSelect
 ) {
 
@@ -2131,9 +2317,7 @@ if (
         "change",
         function () {
 
-            if (
-                deleteGoalButton
-            ) {
+            if (deleteGoalButton) {
 
                 deleteGoalButton.disabled =
                     !goalDeleteSelect.value;
@@ -2155,265 +2339,25 @@ if (
 
 
 /* =====================================================
-   兌換獎勵
-===================================================== */
-
-function redeemGoal(
-    goalId
-) {
-
-    const goal =
-        appData.goals.find(
-            item =>
-                item.id ===
-                goalId
-        );
-
-
-    if (!goal) {
-
-        return;
-    }
-
-
-    if (
-        appData.points <
-        goal.points
-    ) {
-
-        alert(
-            "目前點數不足。"
-        );
-
-
-        return;
-    }
-
-
-    const confirmed =
-        confirm(
-            `確定要使用 ${goal.points} 點兌換「${goal.name}」嗎？`
-        );
-
-
-    if (
-        !confirmed
-    ) {
-
-        return;
-    }
-
-
-    appData.points -=
-        goal.points;
-
-
-    appData.records.push({
-
-        id:
-            createId(),
-
-        timestamp:
-            new Date()
-                .toISOString(),
-
-        date:
-            getDateKey(),
-
-        type:
-            "redeem",
-
-        name:
-            "兌換：" +
-            goal.name,
-
-        delta:
-            -goal.points,
-
-        goalId:
-            goal.id,
-
-        goalName:
-            goal.name,
-
-        goalPoints:
-            goal.points
-    });
-
-
-    appData.goals =
-        appData.goals.filter(
-            item =>
-                item.id !==
-                goalId
-        );
-
-
-    saveData();
-
-    renderAll();
-}
-
-
-function undoRedeem(
-    recordId
-) {
-
-    const record =
-        appData.records.find(
-            item =>
-                item.id ===
-                recordId
-        );
-
-
-    if (
-        !record ||
-        record.type !==
-            "redeem"
-    ) {
-
-        return;
-    }
-
-
-    const rewardName =
-
-        record.goalName ||
-
-        String(
-            record.name ||
-            ""
-        ).replace(
-            /^兌換：/,
-            ""
-        );
-
-
-    const rewardPoints =
-
-        Number(
-            record.goalPoints
-        ) ||
-
-        Math.abs(
-            Number(
-                record.delta
-            ) || 0
-        );
-
-
-    if (
-        !rewardName ||
-        rewardPoints <=
-        0
-    ) {
-
-        alert(
-            "這筆舊紀錄資料不完整，無法撤銷。"
-        );
-
-
-        return;
-    }
-
-
-    const confirmed =
-        confirm(
-            `確定要撤銷「${rewardName}」的兌換嗎？\n\n${rewardPoints} 點會歸還。`
-        );
-
-
-    if (
-        !confirmed
-    ) {
-
-        return;
-    }
-
-
-    appData.points +=
-        rewardPoints;
-
-
-    const rewardAlreadyExists =
-
-        record.goalId
-
-            ? appData.goals.some(
-                goal =>
-                    goal.id ===
-                    record.goalId
-            )
-
-            : appData.goals.some(
-                goal =>
-
-                    goal.name ===
-                        rewardName &&
-
-                    goal.points ===
-                        rewardPoints
-            );
-
-
-    if (
-        !rewardAlreadyExists
-    ) {
-
-        appData.goals.push({
-
-            id:
-                record.goalId ||
-                createId(),
-
-            name:
-                rewardName,
-
-            points:
-                rewardPoints
-        });
-    }
-
-
-    appData.records =
-        appData.records.filter(
-            item =>
-                item.id !==
-                recordId
-        );
-
-
-    saveData();
-
-    renderAll();
-}
-
-
-/* =====================================================
-   管理：固定加分事項
+   設定：固定加分事項
 ===================================================== */
 
 function addTask() {
 
-    const taskNameInput =
+    const input =
         document.getElementById(
             "taskName"
         );
 
 
-    if (
-        !taskNameInput
-    ) {
+    if (!input) {
 
         return;
     }
 
 
     const name =
-        taskNameInput
-            .value
-            .trim();
+        input.value.trim();
 
 
     if (!name) {
@@ -2427,16 +2371,12 @@ function addTask() {
     }
 
 
-    const alreadyExists =
+    if (
         appData.tasks.some(
             task =>
                 task.name ===
                 name
-        );
-
-
-    if (
-        alreadyExists
+        )
     ) {
 
         alert(
@@ -2461,7 +2401,7 @@ function addTask() {
     saveData();
 
 
-    taskNameInput.value =
+    input.value =
         "";
 
 
@@ -2470,23 +2410,6 @@ function addTask() {
 
     alert(
         "加分事項已新增。"
-    );
-}
-
-
-const addTaskButton =
-    document.getElementById(
-        "addTaskButton"
-    );
-
-
-if (
-    addTaskButton
-) {
-
-    addTaskButton.addEventListener(
-        "click",
-        addTask
     );
 }
 
@@ -2586,9 +2509,7 @@ function renderManageTasks() {
         0;
 
 
-    if (
-        deleteButton
-    ) {
+    if (deleteButton) {
 
         deleteButton.disabled =
             !select.value;
@@ -2620,9 +2541,7 @@ function deleteTask(
         );
 
 
-    if (
-        !confirmed
-    ) {
+    if (!confirmed) {
 
         return;
     }
@@ -2670,6 +2589,12 @@ function deleteSelectedTask() {
 }
 
 
+const addTaskButton =
+    document.getElementById(
+        "addTaskButton"
+    );
+
+
 const taskDeleteSelect =
     document.getElementById(
         "taskDeleteSelect"
@@ -2683,6 +2608,17 @@ const deleteTaskButton =
 
 
 if (
+    addTaskButton
+) {
+
+    addTaskButton.addEventListener(
+        "click",
+        addTask
+    );
+}
+
+
+if (
     taskDeleteSelect
 ) {
 
@@ -2690,9 +2626,7 @@ if (
         "change",
         function () {
 
-            if (
-                deleteTaskButton
-            ) {
+            if (deleteTaskButton) {
 
                 deleteTaskButton.disabled =
                     !taskDeleteSelect.value;
@@ -2714,7 +2648,7 @@ if (
 
 
 /* =====================================================
-   管理：短期任務
+   設定：短期任務
 ===================================================== */
 
 function addShortTask() {
@@ -2741,9 +2675,7 @@ function addShortTask() {
 
 
     const name =
-        nameInput
-            .value
-            .trim();
+        nameInput.value.trim();
 
 
     const date =
@@ -2790,7 +2722,7 @@ function addShortTask() {
     }
 
 
-    const alreadyExists =
+    if (
         appData.shortTasks.some(
             task =>
 
@@ -2799,11 +2731,7 @@ function addShortTask() {
 
                 task.date ===
                     date
-        );
-
-
-    if (
-        alreadyExists
+        )
     ) {
 
         alert(
@@ -2848,23 +2776,6 @@ function addShortTask() {
 }
 
 
-const addShortTaskButton =
-    document.getElementById(
-        "addShortTaskButton"
-    );
-
-
-if (
-    addShortTaskButton
-) {
-
-    addShortTaskButton.addEventListener(
-        "click",
-        addShortTask
-    );
-}
-
-
 function renderManageShortTasks() {
 
     const select =
@@ -2894,14 +2805,14 @@ function renderManageShortTasks() {
 
 
     const futureTasks =
-        [
-            ...appData.shortTasks
-        ]
+        [...appData.shortTasks]
+
             .filter(
                 task =>
                     task.date >=
                     today
             )
+
             .sort(
                 (a, b) => {
 
@@ -2999,9 +2910,7 @@ function renderManageShortTasks() {
         0;
 
 
-    if (
-        deleteButton
-    ) {
+    if (deleteButton) {
 
         deleteButton.disabled =
             !select.value;
@@ -3033,9 +2942,7 @@ function deleteShortTask(
         );
 
 
-    if (
-        !confirmed
-    ) {
+    if (!confirmed) {
 
         return;
     }
@@ -3083,6 +2990,12 @@ function deleteSelectedShortTask() {
 }
 
 
+const addShortTaskButton =
+    document.getElementById(
+        "addShortTaskButton"
+    );
+
+
 const shortTaskDeleteSelect =
     document.getElementById(
         "shortTaskDeleteSelect"
@@ -3093,6 +3006,17 @@ const deleteShortTaskButton =
     document.getElementById(
         "deleteShortTaskButton"
     );
+
+
+if (
+    addShortTaskButton
+) {
+
+    addShortTaskButton.addEventListener(
+        "click",
+        addShortTask
+    );
+}
 
 
 if (
@@ -3127,7 +3051,7 @@ if (
 
 
 /* =====================================================
-   第四頁：週紀錄
+   戰績：上一週 / 下一週
 ===================================================== */
 
 const previousWeekButton =
@@ -3231,6 +3155,7 @@ function renderWeeklyRecord() {
 
 
     const weekdayNames = [
+
         "星期一",
         "星期二",
         "星期三",
@@ -3238,6 +3163,7 @@ function renderWeeklyRecord() {
         "星期五",
         "星期六",
         "星期日"
+
     ];
 
 
@@ -3394,9 +3320,7 @@ function renderWeeklyRecord() {
                         );
 
 
-                    if (
-                        canUndo
-                    ) {
+                    if (canUndo) {
 
                         const rightArea =
                             document.createElement(
@@ -3422,28 +3346,27 @@ function renderWeeklyRecord() {
                             "撤銷";
 
 
-                        undoRecordButton
-                            .addEventListener(
-                                "click",
-                                function () {
+                        undoRecordButton.addEventListener(
+                            "click",
+                            function () {
 
-                                    if (
-                                        record.type ===
-                                        "redeem"
-                                    ) {
+                                if (
+                                    record.type ===
+                                    "redeem"
+                                ) {
 
-                                        undoRedeem(
-                                            record.id
-                                        );
+                                    undoRedeem(
+                                        record.id
+                                    );
 
-                                    } else {
+                                } else {
 
-                                        undoTaskRecord(
-                                            record.id
-                                        );
-                                    }
+                                    undoTaskRecord(
+                                        record.id
+                                    );
                                 }
-                            );
+                            }
+                        );
 
 
                         rightArea.appendChild(
@@ -3484,141 +3407,21 @@ function renderWeeklyRecord() {
 
 
 /* =====================================================
-   匯出 CSV
+   設定 → 資料：共用下載
 ===================================================== */
 
-function exportRecords() {
-
-    const filteredRecords =
-        appData.records.filter(
-            record =>
-
-                record.type !==
-                    "undo" &&
-
-                record.undone !==
-                    true
-        );
-
-
-    if (
-        filteredRecords.length ===
-        0
-    ) {
-
-        alert(
-            "目前還沒有任何可匯出的紀錄。"
-        );
-
-
-        return;
-    }
-
-
-    const weekdayNames = [
-        "星期日",
-        "星期一",
-        "星期二",
-        "星期三",
-        "星期四",
-        "星期五",
-        "星期六"
-    ];
-
-
-    const rows = [
-        [
-            "日期",
-            "星期",
-            "紀錄",
-            "點數"
-        ]
-    ];
-
-
-    filteredRecords.forEach(
-        record => {
-
-            const date =
-                new Date(
-                    record.date +
-                    "T00:00:00"
-                );
-
-
-            const weekday =
-                weekdayNames[
-                    date.getDay()
-                ];
-
-
-            const displayDate =
-                record.date
-                    .replaceAll(
-                        "-",
-                        "/"
-                    );
-
-
-            const displayPoints =
-
-                record.delta >
-                0
-
-                    ? `+${record.delta}`
-
-                    : record.delta;
-
-
-            rows.push([
-                displayDate,
-                weekday,
-                record.name,
-                displayPoints
-            ]);
-        }
-    );
-
-
-    const csvContent =
-        rows
-            .map(
-                row =>
-
-                    row
-                        .map(
-                            value => {
-
-                                const text =
-                                    String(
-                                        value
-                                    ).replaceAll(
-                                        '"',
-                                        '""'
-                                    );
-
-
-                                return (
-                                    `"${text}"`
-                                );
-                            }
-                        )
-                        .join(",")
-            )
-            .join("\n");
-
+function downloadFile(
+    content,
+    type,
+    fileName
+) {
 
     const blob =
         new Blob(
-
-            [
-                "\uFEFF" +
-                csvContent
-            ],
-
+            [content],
             {
                 type:
-                    "text/csv;charset=utf-8;"
+                    type
             }
         );
 
@@ -3640,7 +3443,7 @@ function exportRecords() {
 
 
     link.download =
-        `點數紀錄_${getDateKey()}.csv`;
+        fileName;
 
 
     document.body.appendChild(
@@ -3660,19 +3463,529 @@ function exportRecords() {
 }
 
 
-const backupButton =
+/* =====================================================
+   設定 → 資料：匯出備份
+
+   JSON：
+   換手機 / 還原 App 用
+===================================================== */
+
+function exportBackup() {
+
+    const backup = {
+
+        app:
+            BACKUP_APP_ID,
+
+        version:
+            BACKUP_VERSION,
+
+        exportedAt:
+            new Date()
+                .toISOString(),
+
+        data:
+            appData
+    };
+
+
+    const jsonContent =
+        JSON.stringify(
+            backup,
+            null,
+            2
+        );
+
+
+    downloadFile(
+
+        jsonContent,
+
+        "application/json;charset=utf-8;",
+
+        `我的點數_備份_${getDateKey()}.json`
+
+    );
+}
+
+
+/* =====================================================
+   設定 → 資料：檢查備份
+===================================================== */
+
+function isValidBackupData(
+    data
+) {
+
+    if (
+        !data ||
+        typeof data !==
+            "object" ||
+        Array.isArray(
+            data
+        )
+    ) {
+
+        return false;
+    }
+
+
+    if (
+        typeof data.points !==
+            "number" ||
+        !Number.isFinite(
+            data.points
+        )
+    ) {
+
+        return false;
+    }
+
+
+    return (
+
+        Array.isArray(
+            data.goals
+        ) &&
+
+        Array.isArray(
+            data.tasks
+        ) &&
+
+        Array.isArray(
+            data.shortTasks
+        ) &&
+
+        Array.isArray(
+            data.records
+        )
+
+    );
+}
+
+
+/* =====================================================
+   設定 → 資料：匯入備份
+
+   匯入後會完整取代
+   目前裝置中的資料。
+===================================================== */
+
+async function importBackupFile(
+    file
+) {
+
+    if (!file) {
+
+        return;
+    }
+
+
+    try {
+
+        const text =
+            await file.text();
+
+
+        const backup =
+            JSON.parse(
+                text
+            );
+
+
+        if (
+            !backup ||
+            backup.app !==
+                BACKUP_APP_ID
+        ) {
+
+            alert(
+                "無法匯入。\n\n這不是有效的「我的點數」備份檔。"
+            );
+
+
+            return;
+        }
+
+
+        if (
+            backup.version !==
+            BACKUP_VERSION
+        ) {
+
+            alert(
+                "無法匯入。\n\n這份備份的版本目前不支援。"
+            );
+
+
+            return;
+        }
+
+
+        if (
+            !isValidBackupData(
+                backup.data
+            )
+        ) {
+
+            alert(
+                "無法匯入。\n\n備份內容不完整或格式有誤。"
+            );
+
+
+            return;
+        }
+
+
+        let backupDate =
+            "未知";
+
+
+        if (
+            backup.exportedAt
+        ) {
+
+            const parsedDate =
+                new Date(
+                    backup.exportedAt
+                );
+
+
+            if (
+                !Number.isNaN(
+                    parsedDate.getTime()
+                )
+            ) {
+
+                backupDate =
+                    parsedDate.toLocaleString(
+                        "zh-TW"
+                    );
+            }
+        }
+
+
+        const confirmed =
+            confirm(
+
+                `確定要匯入這份備份嗎？\n\n` +
+
+                `備份日期：${backupDate}\n` +
+
+                `目前點數：${backup.data.points} 點\n` +
+
+                `紀錄：${backup.data.records.length} 筆\n\n` +
+
+                `匯入後會取代目前裝置中的點數、設定與紀錄。`
+
+            );
+
+
+        if (!confirmed) {
+
+            return;
+        }
+
+
+        appData =
+            normalizeData(
+
+                JSON.parse(
+                    JSON.stringify(
+                        backup.data
+                    )
+                )
+
+            );
+
+
+        saveData();
+
+
+        currentWeekOffset =
+            0;
+
+
+        currentManageSection =
+            "data";
+
+
+        renderAll();
+
+
+        alert(
+            "備份已匯入。"
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "匯入備份失敗：",
+            error
+        );
+
+
+        alert(
+            "無法匯入。\n\n請確認選擇的是有效的 JSON 備份檔。"
+        );
+    }
+}
+
+
+/* =====================================================
+   設定 → 資料：下載數據
+
+   CSV：
+   給自己用 Excel / Numbers 看。
+===================================================== */
+
+function downloadData() {
+
+    const filteredRecords =
+        appData.records.filter(
+            record =>
+
+                record.type !==
+                    "undo" &&
+
+                record.undone !==
+                    true
+        );
+
+
+    if (
+        filteredRecords.length ===
+        0
+    ) {
+
+        alert(
+            "目前還沒有任何可下載的數據。"
+        );
+
+
+        return;
+    }
+
+
+    const weekdayNames = [
+
+        "星期日",
+        "星期一",
+        "星期二",
+        "星期三",
+        "星期四",
+        "星期五",
+        "星期六"
+
+    ];
+
+
+    const rows = [
+
+        [
+            "日期",
+            "星期",
+            "紀錄",
+            "點數"
+        ]
+
+    ];
+
+
+    filteredRecords.forEach(
+        record => {
+
+            const date =
+                new Date(
+                    `${record.date}T00:00:00`
+                );
+
+
+            const weekday =
+                weekdayNames[
+                    date.getDay()
+                ];
+
+
+            const displayDate =
+                record.date.replaceAll(
+                    "-",
+                    "/"
+                );
+
+
+            const displayPoints =
+
+                record.delta >
+                0
+
+                    ? `+${record.delta}`
+
+                    : record.delta;
+
+
+            rows.push([
+
+                displayDate,
+
+                weekday,
+
+                record.name,
+
+                displayPoints
+
+            ]);
+        }
+    );
+
+
+    const csvContent =
+        rows
+
+            .map(
+                row =>
+
+                    row
+
+                        .map(
+                            value =>
+
+                                `"${String(value).replaceAll(
+                                    '"',
+                                    '""'
+                                )}"`
+
+                        )
+
+                        .join(",")
+            )
+
+            .join("\n");
+
+
+    downloadFile(
+
+        "\uFEFF" +
+        csvContent,
+
+        "text/csv;charset=utf-8;",
+
+        `我的點數_數據_${getDateKey()}.csv`
+
+    );
+}
+
+
+/* =====================================================
+   設定 → 資料：按鈕
+===================================================== */
+
+const exportBackupButton =
+    document.getElementById(
+        "exportBackupButton"
+    );
+
+
+const importBackupButton =
+    document.getElementById(
+        "importBackupButton"
+    );
+
+
+const importBackupInput =
+    document.getElementById(
+        "importBackupInput"
+    );
+
+
+const downloadDataButton =
+    document.getElementById(
+        "downloadDataButton"
+    );
+
+
+if (
+    exportBackupButton
+) {
+
+    exportBackupButton.addEventListener(
+        "click",
+        exportBackup
+    );
+}
+
+
+if (
+    importBackupButton &&
+    importBackupInput
+) {
+
+    importBackupButton.addEventListener(
+        "click",
+        function () {
+
+            importBackupInput.value =
+                "";
+
+
+            importBackupInput.click();
+        }
+    );
+
+
+    importBackupInput.addEventListener(
+        "change",
+        function () {
+
+            const file =
+
+                importBackupInput.files &&
+
+                importBackupInput.files[0];
+
+
+            importBackupFile(
+                file
+            );
+        }
+    );
+}
+
+
+if (
+    downloadDataButton
+) {
+
+    downloadDataButton.addEventListener(
+        "click",
+        downloadData
+    );
+}
+
+
+/*
+   舊版 index.html 還沒換掉以前，
+   總覽右下角舊的「匯出紀錄」
+   暫時仍然可以使用。
+
+   等下一份 index.html 換好，
+   這個按鈕就不存在了。
+*/
+
+const legacyBackupButton =
     document.getElementById(
         "backupButton"
     );
 
 
 if (
-    backupButton
+    legacyBackupButton
 ) {
 
-    backupButton.addEventListener(
+    legacyBackupButton.addEventListener(
         "click",
-        exportRecords
+        downloadData
     );
 }
 
@@ -3690,11 +4003,12 @@ if (
         "load",
         function () {
 
-            navigator
-                .serviceWorker
+            navigator.serviceWorker
+
                 .register(
                     "./service-worker.js"
                 )
+
                 .catch(
                     error => {
 
@@ -3710,7 +4024,7 @@ if (
 
 
 /* =====================================================
-   一次重新整理所有畫面
+   重新整理所有畫面
 ===================================================== */
 
 function renderAll() {

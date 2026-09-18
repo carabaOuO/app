@@ -32,7 +32,7 @@
 
 
         <!-- =====================================================
-             第一頁：總覽
+             第一頁：能量艙
         ====================================================== -->
 
         <section
@@ -76,7 +76,7 @@
 
 
                 <!--
-                今天有功績時才會顯示
+                今天有功績時才顯示
                 -->
 
                 <div
@@ -98,7 +98,7 @@
 
 
                 <!--
-                尚未新增：
+                還沒有功績：
                 ＋ 新增今日功績
 
                 已經有功績：
@@ -138,6 +138,7 @@
 
                     <div class="achievement-form-actions">
 
+
                         <button
                             id="cancelAchievementButton"
                             class="achievement-cancel-button"
@@ -154,6 +155,7 @@
                         >
                             +1
                         </button>
+
 
                     </div>
 
@@ -181,20 +183,6 @@
             </div>
 
 
-
-            <!-- =========================
-                 匯出紀錄
-            ========================== -->
-
-            <button
-                id="backupButton"
-                class="backup-button"
-                type="button"
-            >
-                匯出紀錄
-            </button>
-
-
         </section>
 
 
@@ -202,7 +190,7 @@
 
 
         <!-- =====================================================
-             第二頁：加分
+             第二頁：賺經驗
         ====================================================== -->
 
         <section
@@ -237,7 +225,7 @@
 
 
             <!-- =========================
-                 今日短期任務
+                 短期任務
             ========================== -->
 
             <div
@@ -259,7 +247,7 @@
 
 
             <!-- =========================
-                 固定加分事項
+                 加分選項
             ========================== -->
 
             <div class="section-title add-title">
@@ -300,7 +288,70 @@
 
 
         <!-- =====================================================
-             第三頁：管理
+             第三頁：戰績
+        ====================================================== -->
+
+        <section
+            id="page-record"
+            class="page"
+        >
+
+
+            <!-- =========================
+                 上一週 / 下一週
+            ========================== -->
+
+            <div class="week-navigation">
+
+
+                <button
+                    id="previousWeek"
+                    type="button"
+                >
+                    上一週
+                </button>
+
+
+                <button
+                    id="nextWeek"
+                    type="button"
+                >
+                    下一週
+                </button>
+
+
+            </div>
+
+
+
+            <!-- =========================
+                 本週戰績
+            ========================== -->
+
+            <div class="section-title">
+                本週戰績
+            </div>
+
+
+            <div
+                id="weekRange"
+                class="week-range"
+            >
+            </div>
+
+
+            <div id="weeklyRecord">
+            </div>
+
+
+        </section>
+
+
+
+
+
+        <!-- =====================================================
+             第四頁：設定
         ====================================================== -->
 
         <section
@@ -675,66 +726,121 @@
             </div>
 
 
-        </section>
 
 
 
+            <!-- =================================================
+                 摺疊四：資料
+            ================================================== -->
 
-
-        <!-- =====================================================
-             第四頁：紀錄
-        ====================================================== -->
-
-        <section
-            id="page-record"
-            class="page"
-        >
-
-
-            <!-- =========================
-                 上一週 / 下一週
-            ========================== -->
-
-            <div class="week-navigation">
+            <div class="manage-accordion-section">
 
 
                 <button
-                    id="previousWeek"
+                    id="manageDataToggle"
+                    class="manage-accordion-toggle"
                     type="button"
+                    aria-expanded="false"
+                    aria-controls="manageDataContent"
                 >
-                    上一週
+                    資料
                 </button>
 
 
-                <button
-                    id="nextWeek"
-                    type="button"
+
+                <div
+                    id="manageDataContent"
+                    class="manage-accordion-content"
+                    hidden
                 >
-                    下一週
-                </button>
 
 
-            </div>
+                    <!-- =========================
+                         備份與還原
+                    ========================== -->
+
+                    <div class="manage-subsection">
+
+                        <div class="manage-subtitle">
+                            備份與還原
+                        </div>
+
+
+                        <div class="data-action-list">
+
+
+                            <button
+                                id="exportBackupButton"
+                                class="data-action-button"
+                                type="button"
+                            >
+                                匯出備份
+                            </button>
 
 
 
-            <!-- =========================
-                 本週紀錄
-            ========================== -->
-
-            <div class="section-title">
-                本週紀錄
-            </div>
-
-
-            <div
-                id="weekRange"
-                class="week-range"
-            >
-            </div>
+                            <button
+                                id="importBackupButton"
+                                class="data-action-button"
+                                type="button"
+                            >
+                                匯入備份
+                            </button>
 
 
-            <div id="weeklyRecord">
+
+                            <!--
+                            真正的檔案選擇器。
+
+                            畫面上不顯示，
+                            點「匯入備份」時由 app.js 開啟。
+                            -->
+
+                            <input
+                                id="importBackupInput"
+                                type="file"
+                                accept=".json,application/json"
+                                hidden
+                            >
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         數據
+                    ========================== -->
+
+                    <div class="manage-subsection">
+
+                        <div class="manage-subtitle">
+                            數據
+                        </div>
+
+
+                        <div class="data-action-list">
+
+
+                            <button
+                                id="downloadDataButton"
+                                class="data-action-button"
+                                type="button"
+                            >
+                                下載數據
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
             </div>
 
 
@@ -749,6 +855,12 @@
 
     <!-- =====================================================
          底部導覽列
+
+         順序：
+         能量艙
+         賺經驗
+         戰績
+         設定
     ====================================================== -->
 
     <nav class="bottom-nav">
@@ -759,7 +871,7 @@
             data-page="home"
             type="button"
         >
-            總覽
+            能量艙
         </button>
 
 
@@ -768,16 +880,7 @@
             data-page="add"
             type="button"
         >
-            加分
-        </button>
-
-
-        <button
-            class="nav-button"
-            data-page="manage"
-            type="button"
-        >
-            管理
+            賺經驗
         </button>
 
 
@@ -786,7 +889,16 @@
             data-page="record"
             type="button"
         >
-            紀錄
+            戰績
+        </button>
+
+
+        <button
+            class="nav-button"
+            data-page="manage"
+            type="button"
+        >
+            設定
         </button>
 
 
