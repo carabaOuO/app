@@ -75,10 +75,6 @@
             <div class="achievement-area">
 
 
-                <!--
-                今天有功績時才顯示
-                -->
-
                 <div
                     id="achievementDisplay"
                     class="achievement-display"
@@ -97,14 +93,6 @@
 
 
 
-                <!--
-                還沒有功績：
-                ＋ 新增今日功績
-
-                已經有功績：
-                ＋ 再新增一件
-                -->
-
                 <button
                     id="openAchievementFormButton"
                     class="open-achievement-button"
@@ -114,8 +102,6 @@
                 </button>
 
 
-
-                <!-- 今日功績輸入區 -->
 
                 <div
                     id="achievementForm"
@@ -211,13 +197,9 @@
             <div class="daily-progress">
 
                 <span class="progress-light"></span>
-
                 <span class="progress-light"></span>
-
                 <span class="progress-light"></span>
-
                 <span class="progress-light"></span>
-
                 <span class="progress-light"></span>
 
             </div>
@@ -260,9 +242,10 @@
 
 
 
-            <!-- =========================
-                 取消上一筆
-            ========================== -->
+            <!--
+            取消上一筆維持原本位置：
+            就在加分選項最後面
+            -->
 
             <button
                 id="undoButton"
@@ -281,6 +264,46 @@
             </button>
 
 
+
+            <!-- =========================
+                 里程碑
+
+                 沒有設定追蹤項目時
+                 整區隱藏
+            ========================== -->
+
+            <div
+                id="milestoneSection"
+                class="milestone-section"
+                hidden
+            >
+
+                <div class="section-title milestone-title">
+                    里程碑
+                </div>
+
+
+                <div class="milestone-row">
+
+                    <span
+                        id="milestoneName"
+                        class="milestone-name"
+                    >
+                    </span>
+
+
+                    <span
+                        id="milestoneCount"
+                        class="milestone-count"
+                    >
+                        累積 0 次
+                    </span>
+
+                </div>
+
+            </div>
+
+
         </section>
 
 
@@ -296,10 +319,6 @@
             class="page"
         >
 
-
-            <!-- =========================
-                 上一週 / 下一週
-            ========================== -->
 
             <div class="week-navigation">
 
@@ -323,10 +342,6 @@
             </div>
 
 
-
-            <!-- =========================
-                 本週戰績
-            ========================== -->
 
             <div class="section-title">
                 本週戰績
@@ -361,7 +376,7 @@
 
 
             <!-- =================================================
-                 摺疊一：獎勵
+                 1. 獎勵
             ================================================== -->
 
             <div class="manage-accordion-section">
@@ -385,8 +400,6 @@
                     hidden
                 >
 
-
-                    <!-- 新增獎勵 -->
 
                     <div class="manage-subsection">
 
@@ -441,8 +454,6 @@
 
 
 
-                    <!-- 管理現有獎勵 -->
-
                     <div class="manage-subsection">
 
                         <div class="manage-subtitle">
@@ -490,7 +501,7 @@
 
 
             <!-- =================================================
-                 摺疊二：加分事項
+                 2. 加分事項
             ================================================== -->
 
             <div class="manage-accordion-section">
@@ -514,8 +525,6 @@
                     hidden
                 >
 
-
-                    <!-- 新增加分事項 -->
 
                     <div class="manage-subsection">
 
@@ -554,8 +563,6 @@
                     </div>
 
 
-
-                    <!-- 管理現有加分事項 -->
 
                     <div class="manage-subsection">
 
@@ -604,7 +611,7 @@
 
 
             <!-- =================================================
-                 摺疊三：短期任務
+                 3. 短期任務
             ================================================== -->
 
             <div class="manage-accordion-section">
@@ -628,8 +635,6 @@
                     hidden
                 >
 
-
-                    <!-- 新增短期任務 -->
 
                     <div class="manage-subsection">
 
@@ -681,8 +686,6 @@
 
 
 
-                    <!-- 管理已安排任務 -->
-
                     <div class="manage-subsection">
 
                         <div class="manage-subtitle">
@@ -730,7 +733,260 @@
 
 
             <!-- =================================================
-                 摺疊四：資料
+                 4. 里程碑
+            ================================================== -->
+
+            <div class="manage-accordion-section">
+
+
+                <button
+                    id="manageMilestoneToggle"
+                    class="manage-accordion-toggle"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="manageMilestoneContent"
+                >
+                    里程碑
+                </button>
+
+
+
+                <div
+                    id="manageMilestoneContent"
+                    class="manage-accordion-content"
+                    hidden
+                >
+
+
+                    <div class="manage-subsection">
+
+
+                        <div class="manage-subtitle">
+                            追蹤里程碑
+                        </div>
+
+
+                        <div class="form-area">
+
+
+                            <label for="milestoneTaskSelect">
+                                追蹤項目
+                            </label>
+
+
+                            <select
+                                id="milestoneTaskSelect"
+                                class="manage-select"
+                            >
+
+                                <option value="">
+                                    不顯示里程碑
+                                </option>
+
+                            </select>
+
+
+                            <div class="manage-note">
+                                選擇一個加分事項後，會依照過去與未來的戰績累積完成次數。
+                            </div>
+
+
+
+                            <button
+                                id="saveMilestoneButton"
+                                type="button"
+                            >
+                                儲存
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+            <!-- =================================================
+                 5. 補登功能
+            ================================================== -->
+
+            <div class="manage-accordion-section">
+
+
+                <button
+                    id="manageBackfillToggle"
+                    class="manage-accordion-toggle"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="manageBackfillContent"
+                >
+                    補登功能
+                </button>
+
+
+
+                <div
+                    id="manageBackfillContent"
+                    class="manage-accordion-content"
+                    hidden
+                >
+
+
+                    <!-- =========================
+                         補加分
+                    ========================== -->
+
+                    <div class="manage-subsection">
+
+
+                        <div class="manage-subtitle">
+                            補加分
+                        </div>
+
+
+                        <div class="form-area">
+
+
+                            <label for="backfillTaskSelect">
+                                加分事項
+                            </label>
+
+
+                            <select
+                                id="backfillTaskSelect"
+                                class="manage-select"
+                            >
+
+                                <option value="">
+                                    選擇加分事項
+                                </option>
+
+                            </select>
+
+
+
+                            <label for="backfillPointsInput">
+                                加幾點
+                            </label>
+
+
+                            <input
+                                id="backfillPointsInput"
+                                type="number"
+                                min="1"
+                                step="1"
+                                value="1"
+                                inputmode="numeric"
+                            >
+
+
+
+                            <label for="backfillTaskDate">
+                                日期
+                            </label>
+
+
+                            <input
+                                id="backfillTaskDate"
+                                type="date"
+                            >
+
+
+
+                            <button
+                                id="backfillTaskButton"
+                                type="button"
+                            >
+                                確定
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         補兌換獎勵
+                    ========================== -->
+
+                    <div class="manage-subsection">
+
+
+                        <div class="manage-subtitle">
+                            補兌換獎勵
+                        </div>
+
+
+                        <div class="form-area">
+
+
+                            <label for="backfillGoalSelect">
+                                獎勵
+                            </label>
+
+
+                            <select
+                                id="backfillGoalSelect"
+                                class="manage-select"
+                            >
+
+                                <option value="">
+                                    選擇獎勵
+                                </option>
+
+                            </select>
+
+
+
+                            <label for="backfillGoalDate">
+                                日期
+                            </label>
+
+
+                            <input
+                                id="backfillGoalDate"
+                                type="date"
+                            >
+
+
+
+                            <button
+                                id="backfillGoalButton"
+                                type="button"
+                            >
+                                確定
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+            <!-- =================================================
+                 6. 資料
             ================================================== -->
 
             <div class="manage-accordion-section">
@@ -788,13 +1044,6 @@
                             </button>
 
 
-
-                            <!--
-                            真正的檔案選擇器。
-
-                            畫面上不顯示，
-                            點「匯入備份」時由 app.js 開啟。
-                            -->
 
                             <input
                                 id="importBackupInput"
@@ -855,12 +1104,6 @@
 
     <!-- =====================================================
          底部導覽列
-
-         順序：
-         能量艙
-         賺經驗
-         戰績
-         設定
     ====================================================== -->
 
     <nav class="bottom-nav">
@@ -903,6 +1146,76 @@
 
 
     </nav>
+
+
+
+
+
+    <!-- =====================================================
+         App 自訂確認視窗
+
+         用於：
+         補登確認
+         找不到項目 → 前往新增
+    ====================================================== -->
+
+    <div
+        id="appModal"
+        class="app-modal"
+        hidden
+    >
+
+        <div
+            class="app-modal-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modalTitle"
+        >
+
+
+            <div
+                id="modalTitle"
+                class="app-modal-title"
+            >
+            </div>
+
+
+            <div
+                id="modalMessage"
+                class="app-modal-message"
+            >
+            </div>
+
+
+            <div class="app-modal-actions">
+
+
+                <button
+                    id="modalCancelButton"
+                    class="app-modal-cancel"
+                    type="button"
+                >
+                    取消
+                </button>
+
+
+                <button
+                    id="modalConfirmButton"
+                    class="app-modal-confirm"
+                    type="button"
+                >
+                    確定
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
 
 
 
