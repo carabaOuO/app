@@ -247,22 +247,10 @@
                 </div>
 
 
-                <div class="milestone-row">
-
-                    <span
-                        id="milestoneName"
-                        class="milestone-name"
-                    >
-                    </span>
-
-
-                    <span
-                        id="milestoneCount"
-                        class="milestone-count"
-                    >
-                        累積 0 次
-                    </span>
-
+                <div
+                    id="milestoneList"
+                    class="milestone-list"
+                >
                 </div>
 
             </div>
@@ -339,7 +327,9 @@
         >
 
 
-            <!-- 1. 獎勵 -->
+            <!-- =================================================
+                 1. 獎勵
+            ================================================== -->
 
             <div class="manage-accordion-section">
 
@@ -462,7 +452,9 @@
 
 
 
-            <!-- 2. 加分事項 -->
+            <!-- =================================================
+                 2. 加分事項
+            ================================================== -->
 
             <div class="manage-accordion-section">
 
@@ -570,7 +562,9 @@
 
 
 
-            <!-- 3. 短期任務 -->
+            <!-- =================================================
+                 3. 短期任務
+            ================================================== -->
 
             <div class="manage-accordion-section">
 
@@ -690,7 +684,9 @@
 
 
 
-            <!-- 4. 里程碑 -->
+            <!-- =================================================
+                 4. 里程碑
+            ================================================== -->
 
             <div class="manage-accordion-section">
 
@@ -718,44 +714,19 @@
 
 
                         <div class="manage-subtitle">
-                            追蹤里程碑
+                            顯示項目
                         </div>
 
 
-                        <div class="form-area">
+                        <div class="manage-note milestone-manage-note">
+                            勾選想顯示的加分事項。勾選或取消後會立即儲存，不需要另外按儲存。
+                        </div>
 
 
-                            <label for="milestoneTaskSelect">
-                                追蹤項目
-                            </label>
-
-
-                            <select
-                                id="milestoneTaskSelect"
-                                class="manage-select"
-                            >
-
-                                <option value="">
-                                    不顯示里程碑
-                                </option>
-
-                            </select>
-
-
-                            <div class="manage-note">
-                                選擇一個加分事項後，會依照過去與未來的戰績累積完成次數。
-                            </div>
-
-
-
-                            <button
-                                id="saveMilestoneButton"
-                                type="button"
-                            >
-                                儲存
-                            </button>
-
-
+                        <div
+                            id="milestoneChecklist"
+                            class="milestone-checklist"
+                        >
                         </div>
 
 
@@ -771,7 +742,9 @@
 
 
 
-            <!-- 5. 補登功能 -->
+            <!-- =================================================
+                 5. 補登功能
+            ================================================== -->
 
             <div class="manage-accordion-section">
 
@@ -931,7 +904,9 @@
 
 
 
-            <!-- 6. 資料 -->
+            <!-- =================================================
+                 6. 資料
+            ================================================== -->
 
             <div class="manage-accordion-section">
 

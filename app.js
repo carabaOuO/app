@@ -26,7 +26,7 @@ const defaultData = {
         { id: createId(), name: "曬衣服" }
     ],
     shortTasks: [],
-    milestoneTaskId: null,
+    milestoneTaskIds: [],
     appCreatedDate: getDateKey(),
     lastWeeklySummaryWeek: null,
     lastBackupDate: null,
@@ -46,65 +46,167 @@ function createId() {
 }
 
 function normalizeData(data) {
+    const goals = Array.isArray(data?.goals) ? data.goals : [];
+    const tasks = Array.isArray(data?.tasks) ? data.tasks : [];
+    const shortTasks = Array.isArray(data?.shortTasks) ? data.shortTasks : [];
     const records = Array.isArray(data?.records) ? data.records : [];
 
-    const earliestRecordDate = records
-        .map(record => record?.date)
-        .filter(date => isValidDateKey(date))
-        .sort()[0] || null;
+    const taskIds = new Set(
+        tasks.map(task => String(task.id))
+    );
 
-    const appCreatedDate = isValidDateKey(data?.appCreatedDate)
-        ? data.appCreatedDate
-        : earliestRecordDate || getDateKey();
+    let milestoneTaskIds = [];
+
+    if (Array.isArray(data?.milestoneTaskIds)) {
+        milestoneTaskIds =
+            data.milestoneTaskIds
+                .filter(
+                    id =>
+                        typeof id === "string" &&
+                        id
+                )
+                .filter(
+                    id =>
+                        taskIds.has(
+                            String(id)
+                        )
+                );
+
+    } else if (
+        typeof data?.milestoneTaskId === "string" &&
+        data.milestoneTaskId &&
+        taskIds.has(
+            String(
+                data.milestoneTaskId
+            )
+        )
+    ) {
+        /*
+        舊版是單選 milestoneTaskId。
+        更新後自動轉成新版多選陣列。
+        */
+        milestoneTaskIds = [
+            data.milestoneTaskId
+        ];
+    }
+
+    const earliestRecordDate =
+        records
+            .map(
+                record =>
+                    record?.date
+            )
+            .filter(
+                date =>
+                    isValidDateKey(
+                        date
+                    )
+            )
+            .sort()[0] ||
+        null;
+
+    const appCreatedDate =
+        isValidDateKey(
+            data?.appCreatedDate
+        )
+            ? data.appCreatedDate
+            : earliestRecordDate ||
+              getDateKey();
 
     return {
         points:
-            typeof data?.points === "number" && Number.isFinite(data.points)
+            typeof data?.points === "number" &&
+            Number.isFinite(
+                data.points
+            )
                 ? data.points
                 : 0,
-        goals: Array.isArray(data?.goals) ? data.goals : [],
-        tasks: Array.isArray(data?.tasks) ? data.tasks : [],
-        shortTasks: Array.isArray(data?.shortTasks) ? data.shortTasks : [],
-        milestoneTaskId:
-            typeof data?.milestoneTaskId === "string" && data.milestoneTaskId
-                ? data.milestoneTaskId
-                : null,
+
+        goals,
+        tasks,
+        shortTasks,
+        milestoneTaskIds,
         appCreatedDate,
+
         lastWeeklySummaryWeek:
-            isValidDateKey(data?.lastWeeklySummaryWeek)
+            isValidDateKey(
+                data?.lastWeeklySummaryWeek
+            )
                 ? data.lastWeeklySummaryWeek
                 : null,
+
         lastBackupDate:
-            isValidDateKey(data?.lastBackupDate)
+            isValidDateKey(
+                data?.lastBackupDate
+            )
                 ? data.lastBackupDate
                 : null,
+
         nextBackupReminderDate:
-            isValidDateKey(data?.nextBackupReminderDate)
+            isValidDateKey(
+                data?.nextBackupReminderDate
+            )
                 ? data.nextBackupReminderDate
-                : getFirstDayOfNextMonthKey(new Date()),
+                : getFirstDayOfNextMonthKey(
+                    new Date()
+                ),
+
         records
     };
 }
 
 function loadData() {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved =
+        localStorage.getItem(
+            STORAGE_KEY
+        );
 
     if (!saved) {
-        const fresh = JSON.parse(JSON.stringify(defaultData));
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(fresh));
+        const fresh =
+            JSON.parse(
+                JSON.stringify(
+                    defaultData
+                )
+            );
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(
+                fresh
+            )
+        );
+
         return fresh;
     }
 
     try {
-        return normalizeData(JSON.parse(saved));
+        return normalizeData(
+            JSON.parse(
+                saved
+            )
+        );
+
     } catch (error) {
-        console.error("讀取資料失敗：", error);
-        return JSON.parse(JSON.stringify(defaultData));
+        console.error(
+            "讀取資料失敗：",
+            error
+        );
+
+        return JSON.parse(
+            JSON.stringify(
+                defaultData
+            )
+        );
     }
 }
 
 function saveData() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(
+            appData
+        )
+    );
 }
 
 
@@ -112,101 +214,220 @@ function saveData() {
    日期工具
 ===================================================== */
 
-function getDateKey(date = new Date()) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
+function getDateKey(
+    date = new Date()
+) {
+    const year =
+        date.getFullYear();
+
+    const month =
+        String(
+            date.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+    const day =
+        String(
+            date.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+    return (
+        `${year}-${month}-${day}`
+    );
 }
 
 function getYesterdayKey() {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    return getDateKey(yesterday);
+    const yesterday =
+        new Date();
+
+    yesterday.setDate(
+        yesterday.getDate() - 1
+    );
+
+    return getDateKey(
+        yesterday
+    );
 }
 
 function getMonday(date) {
-    const result = new Date(date);
-    result.setHours(0, 0, 0, 0);
+    const result =
+        new Date(
+            date
+        );
 
-    const day = result.getDay();
-    result.setDate(result.getDate() + (day === 0 ? -6 : 1 - day));
+    result.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+    const day =
+        result.getDay();
+
+    result.setDate(
+        result.getDate() +
+        (
+            day === 0
+                ? -6
+                : 1 - day
+        )
+    );
 
     return result;
 }
 
-function addDays(date, amount) {
-    const result = new Date(date);
-    result.setDate(result.getDate() + amount);
+function addDays(
+    date,
+    amount
+) {
+    const result =
+        new Date(
+            date
+        );
+
+    result.setDate(
+        result.getDate() +
+        amount
+    );
+
     return result;
 }
 
 function formatShortDate(date) {
-    return `${date.getMonth() + 1}/${date.getDate()}`;
+    return (
+        `${date.getMonth() + 1}/${date.getDate()}`
+    );
 }
 
-function formatDateKeyShort(dateKey) {
-    const parts = String(dateKey).split("-");
+function formatDateKeyShort(
+    dateKey
+) {
+    const parts =
+        String(
+            dateKey
+        ).split("-");
 
-    if (parts.length !== 3) {
+    if (
+        parts.length !== 3
+    ) {
         return dateKey;
     }
 
-    return `${Number(parts[1])}/${Number(parts[2])}`;
+    return (
+        `${Number(parts[1])}/${Number(parts[2])}`
+    );
 }
 
-function formatDateForDisplay(dateKey) {
-    return String(dateKey).replaceAll("-", "/");
+function formatDateForDisplay(
+    dateKey
+) {
+    return String(
+        dateKey
+    ).replaceAll(
+        "-",
+        "/"
+    );
 }
 
-function isValidDateKey(value) {
-    if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+function isValidDateKey(
+    value
+) {
+    if (
+        typeof value !== "string" ||
+        !/^\d{4}-\d{2}-\d{2}$/.test(
+            value
+        )
+    ) {
         return false;
     }
 
-    const date = new Date(`${value}T00:00:00`);
+    const date =
+        new Date(
+            `${value}T00:00:00`
+        );
 
     return (
-        !Number.isNaN(date.getTime()) &&
-        getDateKey(date) === value
+        !Number.isNaN(
+            date.getTime()
+        ) &&
+        getDateKey(
+            date
+        ) ===
+            value
     );
 }
 
-function getFirstDayOfNextMonthKey(date = new Date()) {
-    const nextMonth = new Date(
-        date.getFullYear(),
-        date.getMonth() + 1,
-        1
-    );
+function getFirstDayOfNextMonthKey(
+    date = new Date()
+) {
+    const nextMonth =
+        new Date(
+            date.getFullYear(),
+            date.getMonth() + 1,
+            1
+        );
 
-    return getDateKey(nextMonth);
+    return getDateKey(
+        nextMonth
+    );
 }
 
 function getBackupStartDate() {
     const dates = [];
 
-    if (isValidDateKey(appData.appCreatedDate)) {
-        dates.push(appData.appCreatedDate);
+    if (
+        isValidDateKey(
+            appData.appCreatedDate
+        )
+    ) {
+        dates.push(
+            appData.appCreatedDate
+        );
     }
 
-    appData.records.forEach(record => {
-        if (isValidDateKey(record?.date)) {
-            dates.push(record.date);
+    appData.records.forEach(
+        record => {
+            if (
+                isValidDateKey(
+                    record?.date
+                )
+            ) {
+                dates.push(
+                    record.date
+                );
+            }
         }
-    });
+    );
 
-    return dates.sort()[0] || getDateKey();
+    return (
+        dates.sort()[0] ||
+        getDateKey()
+    );
 }
 
 function cleanupExpiredShortTasks() {
-    const today = getDateKey();
-    const before = appData.shortTasks.length;
+    const today =
+        getDateKey();
 
-    appData.shortTasks = appData.shortTasks.filter(
-        task => task.date >= today
-    );
+    const before =
+        appData.shortTasks.length;
 
-    if (appData.shortTasks.length !== before) {
+    appData.shortTasks =
+        appData.shortTasks.filter(
+            task =>
+                task.date >= today
+        );
+
+    if (
+        appData.shortTasks.length !==
+        before
+    ) {
         saveData();
     }
 }
@@ -216,37 +437,75 @@ function cleanupExpiredShortTasks() {
    頁面切換
 ===================================================== */
 
-const pages = document.querySelectorAll(".page");
-const navButtons = document.querySelectorAll(".nav-button");
-
-function switchPage(pageName) {
-    pages.forEach(page => page.classList.remove("active"));
-    navButtons.forEach(button => button.classList.remove("active"));
-
-    const targetPage = document.getElementById(`page-${pageName}`);
-
-    const targetNav = document.querySelector(
-        `.nav-button[data-page="${pageName}"]`
+const pages =
+    document.querySelectorAll(
+        ".page"
     );
 
+const navButtons =
+    document.querySelectorAll(
+        ".nav-button"
+    );
+
+function switchPage(
+    pageName
+) {
+    pages.forEach(
+        page =>
+            page.classList.remove(
+                "active"
+            )
+    );
+
+    navButtons.forEach(
+        button =>
+            button.classList.remove(
+                "active"
+            )
+    );
+
+    const targetPage =
+        document.getElementById(
+            `page-${pageName}`
+        );
+
+    const targetNav =
+        document.querySelector(
+            `.nav-button[data-page="${pageName}"]`
+        );
+
     if (targetPage) {
-        targetPage.classList.add("active");
+        targetPage.classList.add(
+            "active"
+        );
     }
 
     if (targetNav) {
-        targetNav.classList.add("active");
+        targetNav.classList.add(
+            "active"
+        );
     }
 
-    if (pageName === "record") {
+    if (
+        pageName ===
+        "record"
+    ) {
         renderWeeklyRecord();
     }
 }
 
-navButtons.forEach(button => {
-    button.addEventListener("click", function () {
-        switchPage(button.dataset.page);
-    });
-});
+navButtons.forEach(
+    button => {
+        button.addEventListener(
+            "click",
+            function () {
+                switchPage(
+                    button.dataset.page
+                );
+            }
+        );
+    }
+);
 
 
 /* =====================================================
@@ -255,60 +514,93 @@ navButtons.forEach(button => {
 
 const manageAccordionSections = {
     goal: {
-        toggleId: "manageGoalToggle",
-        contentId: "manageGoalContent"
+        toggleId:
+            "manageGoalToggle",
+
+        contentId:
+            "manageGoalContent"
     },
 
     task: {
-        toggleId: "manageTaskToggle",
-        contentId: "manageTaskContent"
+        toggleId:
+            "manageTaskToggle",
+
+        contentId:
+            "manageTaskContent"
     },
 
     shortTask: {
-        toggleId: "manageShortTaskToggle",
-        contentId: "manageShortTaskContent"
+        toggleId:
+            "manageShortTaskToggle",
+
+        contentId:
+            "manageShortTaskContent"
     },
 
     milestone: {
-        toggleId: "manageMilestoneToggle",
-        contentId: "manageMilestoneContent"
+        toggleId:
+            "manageMilestoneToggle",
+
+        contentId:
+            "manageMilestoneContent"
     },
 
     backfill: {
-        toggleId: "manageBackfillToggle",
-        contentId: "manageBackfillContent"
+        toggleId:
+            "manageBackfillToggle",
+
+        contentId:
+            "manageBackfillContent"
     },
 
     data: {
-        toggleId: "manageDataToggle",
-        contentId: "manageDataContent"
+        toggleId:
+            "manageDataToggle",
+
+        contentId:
+            "manageDataContent"
     }
 };
 
 function renderManageAccordion() {
-    Object.entries(manageAccordionSections).forEach(
-        ([sectionName, section]) => {
+    Object.entries(
+        manageAccordionSections
+    ).forEach(
+        (
+            [
+                sectionName,
+                section
+            ]
+        ) => {
+            const toggle =
+                document.getElementById(
+                    section.toggleId
+                );
 
-            const toggle = document.getElementById(
-                section.toggleId
-            );
+            const content =
+                document.getElementById(
+                    section.contentId
+                );
 
-            const content = document.getElementById(
-                section.contentId
-            );
-
-            if (!toggle || !content) {
+            if (
+                !toggle ||
+                !content
+            ) {
                 return;
             }
 
             const isOpen =
-                currentManageSection === sectionName;
+                currentManageSection ===
+                sectionName;
 
-            content.hidden = !isOpen;
+            content.hidden =
+                !isOpen;
 
             toggle.setAttribute(
                 "aria-expanded",
-                String(isOpen)
+                String(
+                    isOpen
+                )
             );
 
             toggle.classList.toggle(
@@ -319,13 +611,20 @@ function renderManageAccordion() {
     );
 }
 
-function toggleManageSection(sectionName) {
-    if (!manageAccordionSections[sectionName]) {
+function toggleManageSection(
+    sectionName
+) {
+    if (
+        !manageAccordionSections[
+            sectionName
+        ]
+    ) {
         return;
     }
 
     currentManageSection =
-        currentManageSection === sectionName
+        currentManageSection ===
+        sectionName
             ? null
             : sectionName;
 
@@ -333,12 +632,19 @@ function toggleManageSection(sectionName) {
 }
 
 function setupManageAccordion() {
-    Object.entries(manageAccordionSections).forEach(
-        ([sectionName, section]) => {
-
-            const toggle = document.getElementById(
-                section.toggleId
-            );
+    Object.entries(
+        manageAccordionSections
+    ).forEach(
+        (
+            [
+                sectionName,
+                section
+            ]
+        ) => {
+            const toggle =
+                document.getElementById(
+                    section.toggleId
+                );
 
             if (!toggle) {
                 return;
@@ -358,31 +664,42 @@ function setupManageAccordion() {
     renderManageAccordion();
 }
 
-function goToManageSection(sectionName, focusId) {
-    switchPage("manage");
+function goToManageSection(
+    sectionName,
+    focusId
+) {
+    switchPage(
+        "manage"
+    );
 
-    currentManageSection = sectionName;
+    currentManageSection =
+        sectionName;
 
     renderManageAccordion();
 
-    window.setTimeout(() => {
+    window.setTimeout(
+        () => {
+            const element =
+                document.getElementById(
+                    focusId
+                );
 
-        const element = document.getElementById(
-            focusId
-        );
+            if (!element) {
+                return;
+            }
 
-        if (!element) {
-            return;
-        }
+            element.scrollIntoView({
+                behavior:
+                    "smooth",
 
-        element.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
+                block:
+                    "center"
+            });
 
-        element.focus();
-
-    }, 120);
+            element.focus();
+        },
+        120
+    );
 }
 
 
@@ -391,19 +708,29 @@ function goToManageSection(sectionName, focusId) {
 ===================================================== */
 
 const appModal =
-    document.getElementById("appModal");
+    document.getElementById(
+        "appModal"
+    );
 
 const modalTitle =
-    document.getElementById("modalTitle");
+    document.getElementById(
+        "modalTitle"
+    );
 
 const modalMessage =
-    document.getElementById("modalMessage");
+    document.getElementById(
+        "modalMessage"
+    );
 
 const modalCancelButton =
-    document.getElementById("modalCancelButton");
+    document.getElementById(
+        "modalCancelButton"
+    );
 
 const modalConfirmButton =
-    document.getElementById("modalConfirmButton");
+    document.getElementById(
+        "modalConfirmButton"
+    );
 
 function openModal({
     title,
@@ -422,13 +749,23 @@ function openModal({
         return;
     }
 
-    modalTitle.textContent = title;
-    modalMessage.textContent = message;
-    modalCancelButton.textContent = cancelText;
-    modalConfirmButton.textContent = confirmText;
-    modalConfirmAction = onConfirm;
+    modalTitle.textContent =
+        title;
 
-    appModal.hidden = false;
+    modalMessage.textContent =
+        message;
+
+    modalCancelButton.textContent =
+        cancelText;
+
+    modalConfirmButton.textContent =
+        confirmText;
+
+    modalConfirmAction =
+        onConfirm;
+
+    appModal.hidden =
+        false;
 
     document.body.classList.add(
         "modal-open"
@@ -442,13 +779,15 @@ function closeModal() {
         return;
     }
 
-    appModal.hidden = true;
+    appModal.hidden =
+        true;
 
     document.body.classList.remove(
         "modal-open"
     );
 
-    modalConfirmAction = null;
+    modalConfirmAction =
+        null;
 }
 
 if (modalCancelButton) {
@@ -462,13 +801,15 @@ if (modalConfirmButton) {
     modalConfirmButton.addEventListener(
         "click",
         function () {
-
             const action =
                 modalConfirmAction;
 
             closeModal();
 
-            if (typeof action === "function") {
+            if (
+                typeof action ===
+                "function"
+            ) {
                 action();
             }
         }
@@ -479,8 +820,10 @@ if (appModal) {
     appModal.addEventListener(
         "click",
         function (event) {
-
-            if (event.target === appModal) {
+            if (
+                event.target ===
+                appModal
+            ) {
                 closeModal();
             }
         }
@@ -490,9 +833,9 @@ if (appModal) {
 window.addEventListener(
     "keydown",
     function (event) {
-
         if (
-            event.key === "Escape" &&
+            event.key ===
+                "Escape" &&
             appModal &&
             !appModal.hidden
         ) {
@@ -508,10 +851,13 @@ window.addEventListener(
 
 function renderPoints() {
     const element =
-        document.getElementById("totalPoints");
+        document.getElementById(
+            "totalPoints"
+        );
 
     if (element) {
-        element.textContent = appData.points;
+        element.textContent =
+            appData.points;
     }
 }
 
@@ -521,14 +867,22 @@ function renderPoints() {
 ===================================================== */
 
 function getTodayAchievements() {
-    const today = getDateKey();
+    const today =
+        getDateKey();
 
     return appData.records.filter(
         record =>
-            record.date === today &&
-            record.type === "achievement" &&
-            record.delta === 1 &&
-            record.undone !== true
+            record.date ===
+                today &&
+
+            record.type ===
+                "achievement" &&
+
+            record.delta ===
+                1 &&
+
+            record.undone !==
+                true
     );
 }
 
@@ -559,10 +913,15 @@ function renderAchievements() {
     const achievements =
         getTodayAchievements();
 
-    list.innerHTML = "";
+    list.innerHTML =
+        "";
 
-    if (achievements.length === 0) {
-        display.hidden = true;
+    if (
+        achievements.length ===
+        0
+    ) {
+        display.hidden =
+            true;
 
         openButton.textContent =
             "＋ 新增今日功績";
@@ -570,24 +929,30 @@ function renderAchievements() {
         return;
     }
 
-    display.hidden = false;
+    display.hidden =
+        false;
 
     openButton.textContent =
         "＋ 再新增一件";
 
-    achievements.forEach(record => {
+    achievements.forEach(
+        record => {
+            const item =
+                document.createElement(
+                    "div"
+                );
 
-        const item =
-            document.createElement("div");
+            item.className =
+                "achievement-item";
 
-        item.className =
-            "achievement-item";
+            item.textContent =
+                record.name;
 
-        item.textContent =
-            record.name;
-
-        list.appendChild(item);
-    });
+            list.appendChild(
+                item
+            );
+        }
+    );
 }
 
 function openAchievementForm() {
@@ -606,14 +971,19 @@ function openAchievementForm() {
             "openAchievementFormButton"
         );
 
-    if (!form || !input) {
+    if (
+        !form ||
+        !input
+    ) {
         return;
     }
 
-    form.hidden = false;
+    form.hidden =
+        false;
 
     if (openButton) {
-        openButton.hidden = true;
+        openButton.hidden =
+            true;
     }
 
     input.focus();
@@ -636,15 +1006,18 @@ function closeAchievementForm() {
         );
 
     if (form) {
-        form.hidden = true;
+        form.hidden =
+            true;
     }
 
     if (input) {
-        input.value = "";
+        input.value =
+            "";
     }
 
     if (openButton) {
-        openButton.hidden = false;
+        openButton.hidden =
+            false;
     }
 }
 
@@ -669,16 +1042,31 @@ function addAchievement() {
         return;
     }
 
-    appData.points += 1;
+    appData.points +=
+        1;
 
     appData.records.push({
-        id: createId(),
-        timestamp: new Date().toISOString(),
-        date: getDateKey(),
-        type: "achievement",
-        name,
-        delta: 1,
-        undone: false
+        id:
+            createId(),
+
+        timestamp:
+            new Date()
+                .toISOString(),
+
+        date:
+            getDateKey(),
+
+        type:
+            "achievement",
+
+        name:
+            name,
+
+        delta:
+            1,
+
+        undone:
+            false
     });
 
     saveData();
@@ -708,34 +1096,45 @@ const achievementInput =
         "achievementInput"
     );
 
-if (openAchievementFormButton) {
+if (
+    openAchievementFormButton
+) {
     openAchievementFormButton.addEventListener(
         "click",
         openAchievementForm
     );
 }
 
-if (cancelAchievementButton) {
+if (
+    cancelAchievementButton
+) {
     cancelAchievementButton.addEventListener(
         "click",
         closeAchievementForm
     );
 }
 
-if (addAchievementButton) {
+if (
+    addAchievementButton
+) {
     addAchievementButton.addEventListener(
         "click",
         addAchievement
     );
 }
 
-if (achievementInput) {
+if (
+    achievementInput
+) {
     achievementInput.addEventListener(
         "keydown",
         function (event) {
-
-            if (event.key === "Enter") {
+            if (
+                event.key ===
+                "Enter"
+            ) {
                 event.preventDefault();
+
                 addAchievement();
             }
         }
@@ -749,23 +1148,32 @@ if (achievementInput) {
 
 function renderGoals() {
     const goalList =
-        document.getElementById("goalList");
+        document.getElementById(
+            "goalList"
+        );
 
     if (!goalList) {
         return;
     }
 
-    goalList.innerHTML = "";
+    goalList.innerHTML =
+        "";
 
     const sortedGoals =
         [...appData.goals].sort(
             (a, b) =>
-                a.points - b.points
+                a.points -
+                b.points
         );
 
-    if (sortedGoals.length === 0) {
+    if (
+        sortedGoals.length ===
+        0
+    ) {
         const empty =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         empty.className =
             "record-empty";
@@ -773,84 +1181,118 @@ function renderGoals() {
         empty.textContent =
             "目前沒有可兌換的獎勵";
 
-        goalList.appendChild(empty);
+        goalList.appendChild(
+            empty
+        );
 
         return;
     }
 
-    sortedGoals.forEach(goal => {
+    sortedGoals.forEach(
+        goal => {
+            const item =
+                document.createElement(
+                    "div"
+                );
 
-        const item =
-            document.createElement("div");
+            item.className =
+                "goal-item";
 
-        item.className =
-            "goal-item";
+            const name =
+                document.createElement(
+                    "span"
+                );
 
-        const name =
-            document.createElement("span");
+            name.className =
+                "goal-name";
 
-        name.className =
-            "goal-name";
+            name.textContent =
+                goal.name;
 
-        name.textContent =
-            goal.name;
+            const right =
+                document.createElement(
+                    "div"
+                );
 
-        const right =
-            document.createElement("div");
+            right.className =
+                "goal-actions";
 
-        right.className =
-            "goal-actions";
+            const points =
+                document.createElement(
+                    "span"
+                );
 
-        const points =
-            document.createElement("span");
+            points.className =
+                "goal-points";
 
-        points.className =
-            "goal-points";
+            points.textContent =
+                `${goal.points} 點`;
 
-        points.textContent =
-            `${goal.points} 點`;
+            const button =
+                document.createElement(
+                    "button"
+                );
 
-        const button =
-            document.createElement("button");
+            button.className =
+                "redeem-button";
 
-        button.className =
-            "redeem-button";
+            button.textContent =
+                "兌換";
 
-        button.textContent =
-            "兌換";
+            button.disabled =
+                appData.points <
+                goal.points;
 
-        button.disabled =
-            appData.points < goal.points;
+            button.addEventListener(
+                "click",
+                function () {
+                    redeemGoal(
+                        goal.id
+                    );
+                }
+            );
 
-        button.addEventListener(
-            "click",
-            function () {
-                redeemGoal(goal.id);
-            }
-        );
+            right.appendChild(
+                points
+            );
 
-        right.appendChild(points);
-        right.appendChild(button);
+            right.appendChild(
+                button
+            );
 
-        item.appendChild(name);
-        item.appendChild(right);
+            item.appendChild(
+                name
+            );
 
-        goalList.appendChild(item);
-    });
+            item.appendChild(
+                right
+            );
+
+            goalList.appendChild(
+                item
+            );
+        }
+    );
 }
 
-function redeemGoal(goalId) {
+function redeemGoal(
+    goalId
+) {
     const goal =
         appData.goals.find(
             item =>
-                item.id === goalId
+                item.id ===
+                goalId
         );
 
     if (!goal) {
         return;
     }
 
-    if (appData.points < goal.points) {
+    if (
+        appData.points <
+        goal.points
+    ) {
         alert(
             "目前點數不足。"
         );
@@ -867,24 +1309,44 @@ function redeemGoal(goalId) {
         return;
     }
 
-    appData.points -= goal.points;
+    appData.points -=
+        goal.points;
 
     appData.records.push({
-        id: createId(),
-        timestamp: new Date().toISOString(),
-        date: getDateKey(),
-        type: "redeem",
-        name: `兌換：${goal.name}`,
-        delta: -goal.points,
-        goalId: goal.id,
-        goalName: goal.name,
-        goalPoints: goal.points
+        id:
+            createId(),
+
+        timestamp:
+            new Date()
+                .toISOString(),
+
+        date:
+            getDateKey(),
+
+        type:
+            "redeem",
+
+        name:
+            `兌換：${goal.name}`,
+
+        delta:
+            -goal.points,
+
+        goalId:
+            goal.id,
+
+        goalName:
+            goal.name,
+
+        goalPoints:
+            goal.points
     });
 
     appData.goals =
         appData.goals.filter(
             item =>
-                item.id !== goalId
+                item.id !==
+                goalId
         );
 
     saveData();
@@ -892,16 +1354,20 @@ function redeemGoal(goalId) {
     renderAll();
 }
 
-function undoRedeem(recordId) {
+function undoRedeem(
+    recordId
+) {
     const record =
         appData.records.find(
             item =>
-                item.id === recordId
+                item.id ===
+                recordId
         );
 
     if (
         !record ||
-        record.type !== "redeem"
+        record.type !==
+            "redeem"
     ) {
         return;
     }
@@ -909,7 +1375,8 @@ function undoRedeem(recordId) {
     const rewardName =
         record.goalName ||
         String(
-            record.name || ""
+            record.name ||
+            ""
         ).replace(
             /^兌換：/,
             ""
@@ -920,12 +1387,15 @@ function undoRedeem(recordId) {
             record.goalPoints
         ) ||
         Math.abs(
-            Number(record.delta) || 0
+            Number(
+                record.delta
+            ) || 0
         );
 
     if (
         !rewardName ||
-        rewardPoints <= 0
+        rewardPoints <=
+        0
     ) {
         alert(
             "這筆舊紀錄資料不完整，無法撤銷。"
@@ -943,7 +1413,8 @@ function undoRedeem(recordId) {
         return;
     }
 
-    appData.points += rewardPoints;
+    appData.points +=
+        rewardPoints;
 
     const rewardAlreadyExists =
         record.goalId
@@ -960,7 +1431,9 @@ function undoRedeem(recordId) {
                         rewardPoints
             );
 
-    if (!rewardAlreadyExists) {
+    if (
+        !rewardAlreadyExists
+    ) {
         appData.goals.push({
             id:
                 record.goalId ||
@@ -977,7 +1450,8 @@ function undoRedeem(recordId) {
     appData.records =
         appData.records.filter(
             item =>
-                item.id !== recordId
+                item.id !==
+                recordId
         );
 
     saveData();
@@ -992,17 +1466,25 @@ function undoRedeem(recordId) {
 
 function renderTasks() {
     const taskList =
-        document.getElementById("taskList");
+        document.getElementById(
+            "taskList"
+        );
 
     if (!taskList) {
         return;
     }
 
-    taskList.innerHTML = "";
+    taskList.innerHTML =
+        "";
 
-    if (appData.tasks.length === 0) {
+    if (
+        appData.tasks.length ===
+        0
+    ) {
         const empty =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         empty.className =
             "record-empty";
@@ -1010,57 +1492,92 @@ function renderTasks() {
         empty.textContent =
             "目前沒有加分選項";
 
-        taskList.appendChild(empty);
+        taskList.appendChild(
+            empty
+        );
 
         return;
     }
 
-    appData.tasks.forEach(task => {
+    appData.tasks.forEach(
+        task => {
+            const button =
+                document.createElement(
+                    "button"
+                );
 
-        const button =
-            document.createElement("button");
+            button.className =
+                "task-button";
 
-        button.className =
-            "task-button";
+            const name =
+                document.createElement(
+                    "span"
+                );
 
-        const name =
-            document.createElement("span");
+            name.textContent =
+                task.name;
 
-        name.textContent =
-            task.name;
+            const points =
+                document.createElement(
+                    "span"
+                );
 
-        const points =
-            document.createElement("span");
+            points.textContent =
+                "+1";
 
-        points.textContent =
-            "+1";
+            button.appendChild(
+                name
+            );
 
-        button.appendChild(name);
-        button.appendChild(points);
+            button.appendChild(
+                points
+            );
 
-        button.addEventListener(
-            "click",
-            function () {
-                addPoint(task);
-            }
-        );
+            button.addEventListener(
+                "click",
+                function () {
+                    addPoint(
+                        task
+                    );
+                }
+            );
 
-        taskList.appendChild(button);
-    });
+            taskList.appendChild(
+                button
+            );
+        }
+    );
 }
 
 function addPoint(task) {
-    appData.points += 1;
+    appData.points +=
+        1;
 
     appData.records.push({
-        id: createId(),
-        timestamp: new Date().toISOString(),
-        date: getDateKey(),
-        type: "task",
-        name: task.name,
-        taskId: task.id,
-        delta: 1,
-        undone: false
+        id:
+            createId(),
+
+        timestamp:
+            new Date()
+                .toISOString(),
+
+        date:
+            getDateKey(),
+
+        type:
+            "task",
+
+        name:
+            task.name,
+
+        taskId:
+            task.id,
+
+        delta:
+            1,
+
+        undone:
+            false
     });
 
     saveData();
@@ -1070,236 +1587,352 @@ function addPoint(task) {
 
 
 /* =====================================================
-   賺經驗：里程碑
+   賺經驗：里程碑（多選）
 ===================================================== */
 
-function getMilestoneTask() {
-    if (!appData.milestoneTaskId) {
-        return null;
-    }
+function getMilestoneTasks() {
+    const selectedIds =
+        new Set(
+            Array.isArray(
+                appData.milestoneTaskIds
+            )
+                ? appData.milestoneTaskIds
+                : []
+        );
 
-    return (
-        appData.tasks.find(
-            task =>
-                task.id ===
-                appData.milestoneTaskId
-        ) ||
-        null
+    /*
+    顯示順序跟加分事項目前順序一致。
+    */
+    return appData.tasks.filter(
+        task =>
+            selectedIds.has(
+                task.id
+            )
     );
 }
 
-function getMilestoneCount(task) {
+function getMilestoneCount(
+    task
+) {
     if (!task) {
         return 0;
     }
 
     return appData.records.reduce(
-        (total, record) => {
-
+        (
+            total,
+            record
+        ) => {
             if (
-                record.type !== "task" ||
-                record.undone === true
+                record.type !==
+                    "task" ||
+                record.undone ===
+                    true
             ) {
                 return total;
             }
 
             const amount =
-                Number(record.delta);
+                Number(
+                    record.delta
+                );
 
             if (
-                !Number.isFinite(amount) ||
-                amount <= 0
+                !Number.isFinite(
+                    amount
+                ) ||
+                amount <=
+                    0
             ) {
                 return total;
             }
 
+            /*
+            新紀錄優先用 taskId。
+            舊紀錄沒有 taskId 時才用名稱比對。
+            */
             const sameTask =
-                record.taskId === task.id ||
-                (
-                    !record.taskId &&
-                    record.name === task.name
-                );
+                record.taskId
+                    ? String(
+                        record.taskId
+                    ) ===
+                      String(
+                          task.id
+                      )
+                    : record.name ===
+                      task.name;
 
             return sameTask
                 ? total + amount
                 : total;
-
         },
         0
     );
 }
 
-function renderMilestone() {
+function renderMilestones() {
     const section =
         document.getElementById(
             "milestoneSection"
         );
 
-    const nameElement =
+    const list =
         document.getElementById(
-            "milestoneName"
-        );
-
-    const countElement =
-        document.getElementById(
-            "milestoneCount"
+            "milestoneList"
         );
 
     if (
         !section ||
-        !nameElement ||
-        !countElement
+        !list
     ) {
         return;
     }
 
-    const task =
-        getMilestoneTask();
+    const tasks =
+        getMilestoneTasks();
 
-    if (!task) {
-        section.hidden = true;
+    list.innerHTML =
+        "";
+
+    if (
+        tasks.length ===
+        0
+    ) {
+        section.hidden =
+            true;
+
         return;
     }
 
-    const count =
-        getMilestoneCount(task);
+    tasks.forEach(
+        task => {
+            const row =
+                document.createElement(
+                    "div"
+                );
 
-    nameElement.textContent =
-        task.name;
+            row.className =
+                "milestone-row";
 
-    countElement.textContent =
-        `累積 ${count} 次`;
+            const name =
+                document.createElement(
+                    "span"
+                );
 
-    section.hidden = false;
+            name.className =
+                "milestone-name";
+
+            name.textContent =
+                task.name;
+
+            const count =
+                document.createElement(
+                    "span"
+                );
+
+            count.className =
+                "milestone-count";
+
+            count.textContent =
+                `累積 ${getMilestoneCount(task)} 次`;
+
+            row.appendChild(
+                name
+            );
+
+            row.appendChild(
+                count
+            );
+
+            list.appendChild(
+                row
+            );
+        }
+    );
+
+    section.hidden =
+        false;
 }
 
 
 /* =====================================================
-   設定：里程碑
+   設定：里程碑（勾選即時儲存）
 ===================================================== */
 
-function renderMilestoneSettings() {
-    const select =
-        document.getElementById(
-            "milestoneTaskSelect"
-        );
-
-    if (!select) {
-        return;
-    }
-
-    const oldValue =
-        select.value ||
-        appData.milestoneTaskId ||
-        "";
-
-    select.innerHTML = "";
-
-    const offOption =
-        document.createElement("option");
-
-    offOption.value = "";
-
-    offOption.textContent =
-        "不顯示里程碑";
-
-    select.appendChild(
-        offOption
-    );
-
-    appData.tasks.forEach(task => {
-
-        const option =
-            document.createElement("option");
-
-        option.value =
-            task.id;
-
-        option.textContent =
-            task.name;
-
-        select.appendChild(
-            option
-        );
-    });
-
-    const validTaskId =
-        appData.tasks.some(
-            task =>
-                task.id === oldValue
-        )
-            ? oldValue
-            : appData.tasks.some(
-                task =>
-                    task.id ===
-                    appData.milestoneTaskId
+function setMilestoneTaskSelected(
+    taskId,
+    selected
+) {
+    const current =
+        new Set(
+            Array.isArray(
+                appData.milestoneTaskIds
             )
-                ? appData.milestoneTaskId
-                : "";
-
-    select.value =
-        validTaskId;
-}
-
-function saveMilestoneSetting() {
-    const select =
-        document.getElementById(
-            "milestoneTaskSelect"
+                ? appData.milestoneTaskIds
+                : []
         );
 
-    if (!select) {
-        return;
-    }
-
-    const taskId =
-        select.value;
-
-    if (taskId) {
-        const taskExists =
-            appData.tasks.some(
-                task =>
-                    task.id === taskId
-            );
-
-        if (!taskExists) {
-            alert(
-                "找不到這個加分事項，請重新選擇。"
-            );
-
-            renderMilestoneSettings();
-
-            return;
-        }
-    }
-
-    appData.milestoneTaskId =
-        taskId || null;
-
-    saveData();
-
-    renderAll();
-
-    if (taskId) {
-        alert(
-            "里程碑已儲存。"
+    if (selected) {
+        current.add(
+            taskId
         );
 
     } else {
-        alert(
-            "里程碑已關閉。"
+        current.delete(
+            taskId
         );
     }
+
+    /*
+    依照加分事項目前順序保存。
+    */
+    appData.milestoneTaskIds =
+        appData.tasks
+            .filter(
+                task =>
+                    current.has(
+                        task.id
+                    )
+            )
+            .map(
+                task =>
+                    task.id
+            );
+
+    saveData();
+
+    renderMilestones();
 }
 
-const saveMilestoneButton =
-    document.getElementById(
-        "saveMilestoneButton"
-    );
+function renderMilestoneSettings() {
+    const checklist =
+        document.getElementById(
+            "milestoneChecklist"
+        );
 
-if (saveMilestoneButton) {
-    saveMilestoneButton.addEventListener(
-        "click",
-        saveMilestoneSetting
+    if (!checklist) {
+        return;
+    }
+
+    checklist.innerHTML =
+        "";
+
+    if (
+        appData.tasks.length ===
+        0
+    ) {
+        const empty =
+            document.createElement(
+                "div"
+            );
+
+        empty.className =
+            "milestone-checklist-empty";
+
+        empty.textContent =
+            "目前沒有加分事項";
+
+        checklist.appendChild(
+            empty
+        );
+
+        return;
+    }
+
+    const selectedIds =
+        new Set(
+            Array.isArray(
+                appData.milestoneTaskIds
+            )
+                ? appData.milestoneTaskIds
+                : []
+        );
+
+    appData.tasks.forEach(
+        task => {
+            /*
+            整列使用 label，
+            所以點文字或空白處都能勾選。
+            */
+            const label =
+                document.createElement(
+                    "label"
+                );
+
+            label.className =
+                "milestone-check-row";
+
+            const checkbox =
+                document.createElement(
+                    "input"
+                );
+
+            checkbox.type =
+                "checkbox";
+
+            checkbox.checked =
+                selectedIds.has(
+                    task.id
+                );
+
+            checkbox.value =
+                task.id;
+
+            checkbox.setAttribute(
+                "aria-label",
+                `顯示 ${task.name} 里程碑`
+            );
+
+            const box =
+                document.createElement(
+                    "span"
+                );
+
+            box.className =
+                "milestone-check-box";
+
+            box.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+            const name =
+                document.createElement(
+                    "span"
+                );
+
+            name.className =
+                "milestone-check-name";
+
+            name.textContent =
+                task.name;
+
+            checkbox.addEventListener(
+                "change",
+                function () {
+                    setMilestoneTaskSelected(
+                        task.id,
+                        checkbox.checked
+                    );
+                }
+            );
+
+            label.appendChild(
+                checkbox
+            );
+
+            label.appendChild(
+                box
+            );
+
+            label.appendChild(
+                name
+            );
+
+            checklist.appendChild(
+                label
+            );
+        }
     );
 }
 
@@ -1319,7 +1952,10 @@ function renderShortTasks() {
             "shortTaskList"
         );
 
-    if (!section || !list) {
+    if (
+        !section ||
+        !list
+    ) {
         return;
     }
 
@@ -1329,59 +1965,84 @@ function renderShortTasks() {
     const todayTasks =
         appData.shortTasks.filter(
             task =>
-                task.date === today
+                task.date ===
+                today
         );
 
-    list.innerHTML = "";
+    list.innerHTML =
+        "";
 
-    if (todayTasks.length === 0) {
-        section.hidden = true;
+    if (
+        todayTasks.length ===
+        0
+    ) {
+        section.hidden =
+            true;
+
         return;
     }
 
-    section.hidden = false;
+    section.hidden =
+        false;
 
-    todayTasks.forEach(task => {
-
-        const button =
-            document.createElement("button");
-
-        button.className =
-            "task-button short-task-button";
-
-        const name =
-            document.createElement("span");
-
-        name.textContent =
-            task.name;
-
-        const points =
-            document.createElement("span");
-
-        points.textContent =
-            "+1";
-
-        button.appendChild(name);
-        button.appendChild(points);
-
-        button.addEventListener(
-            "click",
-            function () {
-                completeShortTask(
-                    task.id
+    todayTasks.forEach(
+        task => {
+            const button =
+                document.createElement(
+                    "button"
                 );
-            }
-        );
 
-        list.appendChild(button);
-    });
+            button.className =
+                "task-button short-task-button";
+
+            const name =
+                document.createElement(
+                    "span"
+                );
+
+            name.textContent =
+                task.name;
+
+            const points =
+                document.createElement(
+                    "span"
+                );
+
+            points.textContent =
+                "+1";
+
+            button.appendChild(
+                name
+            );
+
+            button.appendChild(
+                points
+            );
+
+            button.addEventListener(
+                "click",
+                function () {
+                    completeShortTask(
+                        task.id
+                    );
+                }
+            );
+
+            list.appendChild(
+                button
+            );
+        }
+    );
 }
 
-function completeShortTask(taskId) {
+function completeShortTask(
+    taskId
+) {
     const task =
         appData.shortTasks.find(
             item =>
-                item.id === taskId
+                item.id ===
+                taskId
         );
 
     if (!task) {
@@ -1391,7 +2052,10 @@ function completeShortTask(taskId) {
     const today =
         getDateKey();
 
-    if (task.date !== today) {
+    if (
+        task.date !==
+        today
+    ) {
         alert(
             "這個短期任務今天無法完成。"
         );
@@ -1399,25 +2063,47 @@ function completeShortTask(taskId) {
         return;
     }
 
-    appData.points += 1;
+    appData.points +=
+        1;
 
     appData.records.push({
-        id: createId(),
-        timestamp: new Date().toISOString(),
-        date: today,
-        type: "shortTask",
-        name: task.name,
-        delta: 1,
-        shortTaskId: task.id,
-        shortTaskName: task.name,
-        shortTaskDate: task.date,
-        undone: false
+        id:
+            createId(),
+
+        timestamp:
+            new Date()
+                .toISOString(),
+
+        date:
+            today,
+
+        type:
+            "shortTask",
+
+        name:
+            task.name,
+
+        delta:
+            1,
+
+        shortTaskId:
+            task.id,
+
+        shortTaskName:
+            task.name,
+
+        shortTaskDate:
+            task.date,
+
+        undone:
+            false
     });
 
     appData.shortTasks =
         appData.shortTasks.filter(
             item =>
-                item.id !== taskId
+                item.id !==
+                taskId
         );
 
     saveData();
@@ -1437,14 +2123,22 @@ function renderDailyProgress() {
     const todayRecords =
         appData.records.filter(
             record =>
-                record.date === today &&
+                record.date ===
+                    today &&
+
                 [
                     "task",
                     "shortTask",
                     "achievement"
-                ].includes(record.type) &&
-                record.delta === 1 &&
-                record.undone !== true
+                ].includes(
+                    record.type
+                ) &&
+
+                record.delta ===
+                    1 &&
+
+                record.undone !==
+                    true
         );
 
     const completed =
@@ -1459,11 +2153,14 @@ function renderDailyProgress() {
         );
 
     lights.forEach(
-        (light, index) => {
-
+        (
+            light,
+            index
+        ) => {
             light.classList.toggle(
                 "active",
-                index < completed
+                index <
+                    completed
             );
         }
     );
@@ -1481,13 +2178,19 @@ function undoLastPoint() {
     const visibleTodayRecords =
         appData.records.filter(
             record =>
-                record.date === today &&
-                record.type !== "undo" &&
-                record.undone !== true
+                record.date ===
+                    today &&
+
+                record.type !==
+                    "undo" &&
+
+                record.undone !==
+                    true
         );
 
     if (
-        visibleTodayRecords.length === 0
+        visibleTodayRecords.length ===
+        0
     ) {
         alert(
             "今天沒有可以取消的上一筆紀錄。"
@@ -1498,7 +2201,8 @@ function undoLastPoint() {
 
     const lastRecord =
         visibleTodayRecords[
-            visibleTodayRecords.length - 1
+            visibleTodayRecords.length -
+            1
         ];
 
     const isPositiveRecord =
@@ -1509,9 +2213,12 @@ function undoLastPoint() {
         ].includes(
             lastRecord.type
         ) &&
-        lastRecord.delta === 1;
+        lastRecord.delta ===
+            1;
 
-    if (!isPositiveRecord) {
+    if (
+        !isPositiveRecord
+    ) {
         alert(
             "最近一筆不是加分紀錄，無法取消。"
         );
@@ -1519,7 +2226,10 @@ function undoLastPoint() {
         return;
     }
 
-    if (appData.points < 1) {
+    if (
+        appData.points <
+        1
+    ) {
         alert(
             "目前可用點數不足 1 點。\n\n這筆點數可能已經被兌換使用，請先撤銷相關兌換。"
         );
@@ -1532,11 +2242,14 @@ function undoLastPoint() {
     );
 }
 
-function undoTaskRecord(recordId) {
+function undoTaskRecord(
+    recordId
+) {
     const record =
         appData.records.find(
             item =>
-                item.id === recordId
+                item.id ===
+                recordId
         );
 
     if (!record) {
@@ -1544,22 +2257,32 @@ function undoTaskRecord(recordId) {
     }
 
     const amount =
-        Number(record.delta);
+        Number(
+            record.delta
+        );
 
     const canUndo =
         [
             "task",
             "shortTask",
             "achievement"
-        ].includes(record.type) &&
-        Number.isFinite(amount) &&
-        amount > 0;
+        ].includes(
+            record.type
+        ) &&
+        Number.isFinite(
+            amount
+        ) &&
+        amount >
+            0;
 
     if (!canUndo) {
         return;
     }
 
-    if (appData.points < amount) {
+    if (
+        appData.points <
+        amount
+    ) {
         alert(
             `目前可用點數不足 ${amount} 點。\n\n這筆點數可能已經被兌換使用，請先撤銷相關兌換後再撤銷這筆加分。`
         );
@@ -1581,21 +2304,31 @@ function undoTaskRecord(recordId) {
     );
 }
 
-function reversePointRecord(record) {
+function reversePointRecord(
+    record
+) {
     const amount =
-        Number(record.delta);
+        Number(
+            record.delta
+        );
 
     if (
-        !Number.isFinite(amount) ||
-        amount <= 0
+        !Number.isFinite(
+            amount
+        ) ||
+        amount <=
+        0
     ) {
         return;
     }
 
-    appData.points -= amount;
+    appData.points -=
+        amount;
 
-    if (record.type === "shortTask") {
-
+    if (
+        record.type ===
+        "shortTask"
+    ) {
         const today =
             getDateKey();
 
@@ -1603,8 +2336,10 @@ function reversePointRecord(record) {
             record.shortTaskDate ||
             record.date;
 
-        if (taskDate === today) {
-
+        if (
+            taskDate ===
+            today
+        ) {
             const taskId =
                 record.shortTaskId ||
                 createId();
@@ -1616,7 +2351,8 @@ function reversePointRecord(record) {
             const alreadyExists =
                 appData.shortTasks.some(
                     task =>
-                        task.id === taskId ||
+                        task.id ===
+                            taskId ||
                         (
                             task.name ===
                                 taskName &&
@@ -1625,11 +2361,18 @@ function reversePointRecord(record) {
                         )
                 );
 
-            if (!alreadyExists) {
+            if (
+                !alreadyExists
+            ) {
                 appData.shortTasks.push({
-                    id: taskId,
-                    name: taskName,
-                    date: taskDate
+                    id:
+                        taskId,
+
+                    name:
+                        taskName,
+
+                    date:
+                        taskDate
                 });
             }
         }
@@ -1638,7 +2381,8 @@ function reversePointRecord(record) {
     appData.records =
         appData.records.filter(
             item =>
-                item.id !== record.id
+                item.id !==
+                record.id
         );
 
     saveData();
@@ -1685,7 +2429,9 @@ function addGoal() {
         nameInput.value.trim();
 
     const points =
-        Number(pointsInput.value);
+        Number(
+            pointsInput.value
+        );
 
     if (!name) {
         alert(
@@ -1696,8 +2442,11 @@ function addGoal() {
     }
 
     if (
-        !Number.isFinite(points) ||
-        points <= 0
+        !Number.isFinite(
+            points
+        ) ||
+        points <=
+        0
     ) {
         alert(
             "請輸入正確的所需點數。"
@@ -1707,15 +2456,25 @@ function addGoal() {
     }
 
     appData.goals.push({
-        id: createId(),
-        name,
-        points: Math.floor(points)
+        id:
+            createId(),
+
+        name:
+            name,
+
+        points:
+            Math.floor(
+                points
+            )
     });
 
     saveData();
 
-    nameInput.value = "";
-    pointsInput.value = "";
+    nameInput.value =
+        "";
+
+    pointsInput.value =
+        "";
 
     renderAll();
 
@@ -1742,15 +2501,20 @@ function renderManageGoals() {
     const oldValue =
         select.value;
 
-    select.innerHTML = "";
+    select.innerHTML =
+        "";
 
     const placeholder =
-        document.createElement("option");
+        document.createElement(
+            "option"
+        );
 
-    placeholder.value = "";
+    placeholder.value =
+        "";
 
     placeholder.textContent =
-        appData.goals.length === 0
+        appData.goals.length ===
+        0
             ? "目前沒有獎勵"
             : "請選擇獎勵";
 
@@ -1761,30 +2525,33 @@ function renderManageGoals() {
     [...appData.goals]
         .sort(
             (a, b) =>
-                a.points - b.points
+                a.points -
+                b.points
         )
-        .forEach(goal => {
+        .forEach(
+            goal => {
+                const option =
+                    document.createElement(
+                        "option"
+                    );
 
-            const option =
-                document.createElement(
-                    "option"
+                option.value =
+                    goal.id;
+
+                option.textContent =
+                    `${goal.name} — ${goal.points} 點`;
+
+                select.appendChild(
+                    option
                 );
-
-            option.value =
-                goal.id;
-
-            option.textContent =
-                `${goal.name} — ${goal.points} 點`;
-
-            select.appendChild(
-                option
-            );
-        });
+            }
+        );
 
     if (
         appData.goals.some(
             goal =>
-                goal.id === oldValue
+                goal.id ===
+                oldValue
         )
     ) {
         select.value =
@@ -1792,7 +2559,8 @@ function renderManageGoals() {
     }
 
     select.disabled =
-        appData.goals.length === 0;
+        appData.goals.length ===
+        0;
 
     if (deleteButton) {
         deleteButton.disabled =
@@ -1800,11 +2568,14 @@ function renderManageGoals() {
     }
 }
 
-function deleteGoal(goalId) {
+function deleteGoal(
+    goalId
+) {
     const goal =
         appData.goals.find(
             item =>
-                item.id === goalId
+                item.id ===
+                goalId
         );
 
     if (!goal) {
@@ -1823,7 +2594,8 @@ function deleteGoal(goalId) {
     appData.goals =
         appData.goals.filter(
             item =>
-                item.id !== goalId
+                item.id !==
+                goalId
         );
 
     saveData();
@@ -1837,7 +2609,10 @@ function deleteSelectedGoal() {
             "goalDeleteSelect"
         );
 
-    if (!select || !select.value) {
+    if (
+        !select ||
+        !select.value
+    ) {
         alert(
             "請先選擇要刪除的獎勵。"
         );
@@ -1876,8 +2651,9 @@ if (goalDeleteSelect) {
     goalDeleteSelect.addEventListener(
         "change",
         function () {
-
-            if (deleteGoalButton) {
+            if (
+                deleteGoalButton
+            ) {
                 deleteGoalButton.disabled =
                     !goalDeleteSelect.value;
             }
@@ -1921,7 +2697,8 @@ function addTask() {
     if (
         appData.tasks.some(
             task =>
-                task.name === name
+                task.name ===
+                name
         )
     ) {
         alert(
@@ -1932,13 +2709,17 @@ function addTask() {
     }
 
     appData.tasks.push({
-        id: createId(),
-        name
+        id:
+            createId(),
+
+        name:
+            name
     });
 
     saveData();
 
-    input.value = "";
+    input.value =
+        "";
 
     renderAll();
 
@@ -1965,17 +2746,20 @@ function renderManageTasks() {
     const oldValue =
         select.value;
 
-    select.innerHTML = "";
+    select.innerHTML =
+        "";
 
     const placeholder =
         document.createElement(
             "option"
         );
 
-    placeholder.value = "";
+    placeholder.value =
+        "";
 
     placeholder.textContent =
-        appData.tasks.length === 0
+        appData.tasks.length ===
+        0
             ? "目前沒有加分事項"
             : "請選擇加分事項";
 
@@ -1983,28 +2767,30 @@ function renderManageTasks() {
         placeholder
     );
 
-    appData.tasks.forEach(task => {
+    appData.tasks.forEach(
+        task => {
+            const option =
+                document.createElement(
+                    "option"
+                );
 
-        const option =
-            document.createElement(
-                "option"
+            option.value =
+                task.id;
+
+            option.textContent =
+                task.name;
+
+            select.appendChild(
+                option
             );
-
-        option.value =
-            task.id;
-
-        option.textContent =
-            task.name;
-
-        select.appendChild(
-            option
-        );
-    });
+        }
+    );
 
     if (
         appData.tasks.some(
             task =>
-                task.id === oldValue
+                task.id ===
+                oldValue
         )
     ) {
         select.value =
@@ -2012,7 +2798,8 @@ function renderManageTasks() {
     }
 
     select.disabled =
-        appData.tasks.length === 0;
+        appData.tasks.length ===
+        0;
 
     if (deleteButton) {
         deleteButton.disabled =
@@ -2020,11 +2807,14 @@ function renderManageTasks() {
     }
 }
 
-function deleteTask(taskId) {
+function deleteTask(
+    taskId
+) {
     const task =
         appData.tasks.find(
             item =>
-                item.id === taskId
+                item.id ===
+                taskId
         );
 
     if (!task) {
@@ -2043,15 +2833,23 @@ function deleteTask(taskId) {
     appData.tasks =
         appData.tasks.filter(
             item =>
-                item.id !== taskId
+                item.id !==
+                taskId
         );
 
-    if (
-        appData.milestoneTaskId ===
-        taskId
-    ) {
-        appData.milestoneTaskId = null;
-    }
+    /*
+    被刪除的加分事項如果原本有勾里程碑，
+    一併從顯示清單移除。
+    */
+    appData.milestoneTaskIds =
+        (
+            appData.milestoneTaskIds ||
+            []
+        ).filter(
+            id =>
+                id !==
+                taskId
+        );
 
     saveData();
 
@@ -2064,7 +2862,10 @@ function deleteSelectedTask() {
             "taskDeleteSelect"
         );
 
-    if (!select || !select.value) {
+    if (
+        !select ||
+        !select.value
+    ) {
         alert(
             "請先選擇要刪除的加分事項。"
         );
@@ -2103,8 +2904,9 @@ if (taskDeleteSelect) {
     taskDeleteSelect.addEventListener(
         "change",
         function () {
-
-            if (deleteTaskButton) {
+            if (
+                deleteTaskButton
+            ) {
                 deleteTaskButton.disabled =
                     !taskDeleteSelect.value;
             }
@@ -2167,7 +2969,10 @@ function addShortTask() {
     const today =
         getDateKey();
 
-    if (date < today) {
+    if (
+        date <
+        today
+    ) {
         alert(
             "短期任務不能設定在已經過去的日期。"
         );
@@ -2178,8 +2983,10 @@ function addShortTask() {
     const alreadyExists =
         appData.shortTasks.some(
             task =>
-                task.name === name &&
-                task.date === date
+                task.name ===
+                    name &&
+                task.date ===
+                    date
         );
 
     if (alreadyExists) {
@@ -2191,15 +2998,23 @@ function addShortTask() {
     }
 
     appData.shortTasks.push({
-        id: createId(),
-        name,
-        date
+        id:
+            createId(),
+
+        name:
+            name,
+
+        date:
+            date
     });
 
     saveData();
 
-    nameInput.value = "";
-    dateInput.value = "";
+    nameInput.value =
+        "";
+
+    dateInput.value =
+        "";
 
     renderAll();
 
@@ -2233,13 +3048,14 @@ function renderManageShortTasks() {
         [...appData.shortTasks]
             .filter(
                 task =>
-                    task.date >= today
+                    task.date >=
+                    today
             )
             .sort(
                 (a, b) => {
-
                     if (
-                        a.date !== b.date
+                        a.date !==
+                        b.date
                     ) {
                         return a.date.localeCompare(
                             b.date
@@ -2253,17 +3069,20 @@ function renderManageShortTasks() {
                 }
             );
 
-    select.innerHTML = "";
+    select.innerHTML =
+        "";
 
     const placeholder =
         document.createElement(
             "option"
         );
 
-    placeholder.value = "";
+    placeholder.value =
+        "";
 
     placeholder.textContent =
-        futureTasks.length === 0
+        futureTasks.length ===
+        0
             ? "目前沒有已安排任務"
             : "請選擇短期任務";
 
@@ -2271,28 +3090,30 @@ function renderManageShortTasks() {
         placeholder
     );
 
-    futureTasks.forEach(task => {
+    futureTasks.forEach(
+        task => {
+            const option =
+                document.createElement(
+                    "option"
+                );
 
-        const option =
-            document.createElement(
-                "option"
+            option.value =
+                task.id;
+
+            option.textContent =
+                `${formatDateKeyShort(task.date)}　${task.name}`;
+
+            select.appendChild(
+                option
             );
-
-        option.value =
-            task.id;
-
-        option.textContent =
-            `${formatDateKeyShort(task.date)}　${task.name}`;
-
-        select.appendChild(
-            option
-        );
-    });
+        }
+    );
 
     if (
         futureTasks.some(
             task =>
-                task.id === oldValue
+                task.id ===
+                oldValue
         )
     ) {
         select.value =
@@ -2300,7 +3121,8 @@ function renderManageShortTasks() {
     }
 
     select.disabled =
-        futureTasks.length === 0;
+        futureTasks.length ===
+        0;
 
     if (deleteButton) {
         deleteButton.disabled =
@@ -2308,11 +3130,14 @@ function renderManageShortTasks() {
     }
 }
 
-function deleteShortTask(taskId) {
+function deleteShortTask(
+    taskId
+) {
     const task =
         appData.shortTasks.find(
             item =>
-                item.id === taskId
+                item.id ===
+                taskId
         );
 
     if (!task) {
@@ -2331,7 +3156,8 @@ function deleteShortTask(taskId) {
     appData.shortTasks =
         appData.shortTasks.filter(
             item =>
-                item.id !== taskId
+                item.id !==
+                taskId
         );
 
     saveData();
@@ -2345,7 +3171,10 @@ function deleteSelectedShortTask() {
             "shortTaskDeleteSelect"
         );
 
-    if (!select || !select.value) {
+    if (
+        !select ||
+        !select.value
+    ) {
         alert(
             "請先選擇要刪除的短期任務。"
         );
@@ -2384,8 +3213,9 @@ if (shortTaskDeleteSelect) {
     shortTaskDeleteSelect.addEventListener(
         "change",
         function () {
-
-            if (deleteShortTaskButton) {
+            if (
+                deleteShortTaskButton
+            ) {
                 deleteShortTaskButton.disabled =
                     !shortTaskDeleteSelect.value;
             }
@@ -2435,17 +3265,20 @@ function renderBackfillOptions() {
         const oldValue =
             taskSelect.value;
 
-        taskSelect.innerHTML = "";
+        taskSelect.innerHTML =
+            "";
 
         const placeholder =
             document.createElement(
                 "option"
             );
 
-        placeholder.value = "";
+        placeholder.value =
+            "";
 
         placeholder.textContent =
-            appData.tasks.length === 0
+            appData.tasks.length ===
+            0
                 ? "目前沒有加分事項"
                 : "選擇加分事項";
 
@@ -2453,23 +3286,24 @@ function renderBackfillOptions() {
             placeholder
         );
 
-        appData.tasks.forEach(task => {
+        appData.tasks.forEach(
+            task => {
+                const option =
+                    document.createElement(
+                        "option"
+                    );
 
-            const option =
-                document.createElement(
-                    "option"
+                option.value =
+                    task.id;
+
+                option.textContent =
+                    task.name;
+
+                taskSelect.appendChild(
+                    option
                 );
-
-            option.value =
-                task.id;
-
-            option.textContent =
-                task.name;
-
-            taskSelect.appendChild(
-                option
-            );
-        });
+            }
+        );
 
         const newOption =
             document.createElement(
@@ -2489,7 +3323,8 @@ function renderBackfillOptions() {
         if (
             appData.tasks.some(
                 task =>
-                    task.id === oldValue
+                    task.id ===
+                    oldValue
             )
         ) {
             taskSelect.value =
@@ -2501,17 +3336,20 @@ function renderBackfillOptions() {
         const oldValue =
             goalSelect.value;
 
-        goalSelect.innerHTML = "";
+        goalSelect.innerHTML =
+            "";
 
         const placeholder =
             document.createElement(
                 "option"
             );
 
-        placeholder.value = "";
+        placeholder.value =
+            "";
 
         placeholder.textContent =
-            appData.goals.length === 0
+            appData.goals.length ===
+            0
                 ? "目前沒有獎勵"
                 : "選擇獎勵";
 
@@ -2522,25 +3360,27 @@ function renderBackfillOptions() {
         [...appData.goals]
             .sort(
                 (a, b) =>
-                    a.points - b.points
+                    a.points -
+                    b.points
             )
-            .forEach(goal => {
+            .forEach(
+                goal => {
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
 
-                const option =
-                    document.createElement(
-                        "option"
+                    option.value =
+                        goal.id;
+
+                    option.textContent =
+                        `${goal.name} — ${goal.points} 點`;
+
+                    goalSelect.appendChild(
+                        option
                     );
-
-                option.value =
-                    goal.id;
-
-                option.textContent =
-                    `${goal.name} — ${goal.points} 點`;
-
-                goalSelect.appendChild(
-                    option
-                );
-            });
+                }
+            );
 
         const newOption =
             document.createElement(
@@ -2560,7 +3400,8 @@ function renderBackfillOptions() {
         if (
             appData.goals.some(
                 goal =>
-                    goal.id === oldValue
+                    goal.id ===
+                    oldValue
             )
         ) {
             goalSelect.value =
@@ -2572,7 +3413,8 @@ function renderBackfillOptions() {
         pointsInput &&
         !pointsInput.value
     ) {
-        pointsInput.value = "1";
+        pointsInput.value =
+            "1";
     }
 
     const yesterday =
@@ -2581,21 +3423,25 @@ function renderBackfillOptions() {
     [
         taskDateInput,
         goalDateInput
-    ].forEach(input => {
+    ].forEach(
+        input => {
+            if (!input) {
+                return;
+            }
 
-        if (!input) {
-            return;
+            input.max =
+                yesterday;
+
+            if (
+                !input.value ||
+                input.value >=
+                    getDateKey()
+            ) {
+                input.value =
+                    yesterday;
+            }
         }
-
-        input.max = yesterday;
-
-        if (
-            !input.value ||
-            input.value >= getDateKey()
-        ) {
-            input.value = yesterday;
-        }
-    });
+    );
 }
 
 function askToCreateTask() {
@@ -2605,7 +3451,8 @@ function askToCreateTask() {
         );
 
     if (select) {
-        select.value = "";
+        select.value =
+            "";
     }
 
     openModal({
@@ -2635,7 +3482,8 @@ function askToCreateGoal() {
         );
 
     if (select) {
-        select.value = "";
+        select.value =
+            "";
     }
 
     openModal({
@@ -2658,7 +3506,9 @@ function askToCreateGoal() {
     });
 }
 
-function validateBackfillDate(date) {
+function validateBackfillDate(
+    date
+) {
     const today =
         getDateKey();
 
@@ -2670,7 +3520,10 @@ function validateBackfillDate(date) {
         return false;
     }
 
-    if (date >= today) {
+    if (
+        date >=
+        today
+    ) {
         alert(
             "補登只能選擇今天以前的日期。"
         );
@@ -2718,13 +3571,15 @@ function requestBackfillPoints() {
         SPECIAL_NEW_TASK
     ) {
         askToCreateTask();
+
         return;
     }
 
     const task =
         appData.tasks.find(
             item =>
-                item.id === select.value
+                item.id ===
+                select.value
         );
 
     const amount =
@@ -2746,8 +3601,11 @@ function requestBackfillPoints() {
     }
 
     if (
-        !Number.isInteger(amount) ||
-        amount <= 0
+        !Number.isInteger(
+            amount
+        ) ||
+        amount <=
+        0
     ) {
         alert(
             "「加幾點」請輸入 1 以上的整數。"
@@ -2757,7 +3615,9 @@ function requestBackfillPoints() {
     }
 
     if (
-        !validateBackfillDate(date)
+        !validateBackfillDate(
+            date
+        )
     ) {
         return;
     }
@@ -2794,7 +3654,8 @@ function commitBackfillPoints(
     const task =
         appData.tasks.find(
             item =>
-                item.id === taskId
+                item.id ===
+                taskId
         );
 
     if (!task) {
@@ -2808,25 +3669,48 @@ function commitBackfillPoints(
     }
 
     if (
-        !validateBackfillDate(date)
+        !validateBackfillDate(
+            date
+        )
     ) {
         return;
     }
 
-    appData.points += amount;
+    appData.points +=
+        amount;
 
     appData.records.push({
-        id: createId(),
-        timestamp: new Date().toISOString(),
-        date,
-        type: "task",
-        name: task.name,
-        delta: amount,
-        undone: false,
-        manual: true,
+        id:
+            createId(),
+
+        timestamp:
+            new Date()
+                .toISOString(),
+
+        date:
+            date,
+
+        type:
+            "task",
+
+        name:
+            task.name,
+
+        delta:
+            amount,
+
+        undone:
+            false,
+
+        manual:
+            true,
+
         manualCreatedAt:
-            new Date().toISOString(),
-        taskId: task.id
+            new Date()
+                .toISOString(),
+
+        taskId:
+            task.id
     });
 
     saveData();
@@ -2871,13 +3755,15 @@ function requestBackfillRedeem() {
         SPECIAL_NEW_GOAL
     ) {
         askToCreateGoal();
+
         return;
     }
 
     const goal =
         appData.goals.find(
             item =>
-                item.id === select.value
+                item.id ===
+                select.value
         );
 
     const date =
@@ -2894,7 +3780,9 @@ function requestBackfillRedeem() {
     }
 
     if (
-        !validateBackfillDate(date)
+        !validateBackfillDate(
+            date
+        )
     ) {
         return;
     }
@@ -2940,7 +3828,8 @@ function commitBackfillRedeem(
     const goal =
         appData.goals.find(
             item =>
-                item.id === goalId
+                item.id ===
+                goalId
         );
 
     if (!goal) {
@@ -2954,7 +3843,9 @@ function commitBackfillRedeem(
     }
 
     if (
-        !validateBackfillDate(date)
+        !validateBackfillDate(
+            date
+        )
     ) {
         return;
     }
@@ -2970,27 +3861,51 @@ function commitBackfillRedeem(
         return;
     }
 
-    appData.points -= goal.points;
+    appData.points -=
+        goal.points;
 
     appData.records.push({
-        id: createId(),
-        timestamp: new Date().toISOString(),
-        date,
-        type: "redeem",
-        name: `兌換：${goal.name}`,
-        delta: -goal.points,
-        goalId: goal.id,
-        goalName: goal.name,
-        goalPoints: goal.points,
-        manual: true,
+        id:
+            createId(),
+
+        timestamp:
+            new Date()
+                .toISOString(),
+
+        date:
+            date,
+
+        type:
+            "redeem",
+
+        name:
+            `兌換：${goal.name}`,
+
+        delta:
+            -goal.points,
+
+        goalId:
+            goal.id,
+
+        goalName:
+            goal.name,
+
+        goalPoints:
+            goal.points,
+
+        manual:
+            true,
+
         manualCreatedAt:
-            new Date().toISOString()
+            new Date()
+                .toISOString()
     });
 
     appData.goals =
         appData.goals.filter(
             item =>
-                item.id !== goal.id
+                item.id !==
+                goal.id
         );
 
     saveData();
@@ -3021,11 +3936,13 @@ function resetBackfillPointForm() {
         );
 
     if (select) {
-        select.value = "";
+        select.value =
+            "";
     }
 
     if (pointsInput) {
-        pointsInput.value = "1";
+        pointsInput.value =
+            "1";
     }
 
     if (dateInput) {
@@ -3046,7 +3963,8 @@ function resetBackfillGoalForm() {
         );
 
     if (select) {
-        select.value = "";
+        select.value =
+            "";
     }
 
     if (dateInput) {
@@ -3079,7 +3997,6 @@ if (backfillTaskSelect) {
     backfillTaskSelect.addEventListener(
         "change",
         function () {
-
             if (
                 backfillTaskSelect.value ===
                 SPECIAL_NEW_TASK
@@ -3094,7 +4011,6 @@ if (backfillGoalSelect) {
     backfillGoalSelect.addEventListener(
         "change",
         function () {
-
             if (
                 backfillGoalSelect.value ===
                 SPECIAL_NEW_GOAL
@@ -3138,7 +4054,9 @@ if (previousWeekButton) {
     previousWeekButton.addEventListener(
         "click",
         function () {
-            currentWeekOffset -= 1;
+            currentWeekOffset -=
+                1;
+
             renderWeeklyRecord();
         }
     );
@@ -3148,7 +4066,9 @@ if (nextWeekButton) {
     nextWeekButton.addEventListener(
         "click",
         function () {
-            currentWeekOffset += 1;
+            currentWeekOffset +=
+                1;
+
             renderWeeklyRecord();
         }
     );
@@ -3172,7 +4092,8 @@ function renderWeeklyRecord() {
         return;
     }
 
-    weeklyRecord.innerHTML = "";
+    weeklyRecord.innerHTML =
+        "";
 
     let monday =
         getMonday(
@@ -3182,7 +4103,8 @@ function renderWeeklyRecord() {
     monday =
         addDays(
             monday,
-            currentWeekOffset * 7
+            currentWeekOffset *
+            7
         );
 
     const sunday =
@@ -3216,16 +4138,22 @@ function renderWeeklyRecord() {
             );
 
         const dateKey =
-            getDateKey(date);
+            getDateKey(
+                date
+            );
 
         const dayBlock =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         dayBlock.className =
             "record-day";
 
         const title =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         title.className =
             "record-day-title";
@@ -3240,15 +4168,24 @@ function renderWeeklyRecord() {
         const records =
             appData.records.filter(
                 record =>
-                    record.date === dateKey &&
-                    record.type !== "undo" &&
-                    record.undone !== true
+                    record.date ===
+                        dateKey &&
+
+                    record.type !==
+                        "undo" &&
+
+                    record.undone !==
+                        true
             );
 
-        if (records.length === 0) {
-
+        if (
+            records.length ===
+            0
+        ) {
             const empty =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             empty.className =
                 "record-empty";
@@ -3261,105 +4198,120 @@ function renderWeeklyRecord() {
             );
 
         } else {
-
-            records.forEach(record => {
-
-                const item =
-                    document.createElement("div");
-
-                item.className =
-                    "record-item";
-
-                const name =
-                    document.createElement("span");
-
-                name.textContent =
-                    record.name;
-
-                const delta =
-                    document.createElement("span");
-
-                delta.textContent =
-                    record.delta > 0
-                        ? `+${record.delta}`
-                        : String(record.delta);
-
-                item.appendChild(name);
-
-                const canUndo =
-                    record.type === "redeem" ||
-                    (
-                        [
-                            "task",
-                            "shortTask",
-                            "achievement"
-                        ].includes(
-                            record.type
-                        ) &&
-                        Number(record.delta) > 0
-                    );
-
-                if (canUndo) {
-
-                    const rightArea =
-                        document.createElement("div");
-
-                    rightArea.className =
-                        "record-actions";
-
-                    const undoRecordButton =
+            records.forEach(
+                record => {
+                    const item =
                         document.createElement(
-                            "button"
+                            "div"
                         );
 
-                    undoRecordButton.className =
-                        "undo-record-button";
+                    item.className =
+                        "record-item";
 
-                    undoRecordButton.textContent =
-                        "撤銷";
+                    const name =
+                        document.createElement(
+                            "span"
+                        );
 
-                    undoRecordButton.addEventListener(
-                        "click",
-                        function () {
+                    name.textContent =
+                        record.name;
 
-                            if (
-                                record.type ===
-                                "redeem"
-                            ) {
-                                undoRedeem(
-                                    record.id
-                                );
+                    const delta =
+                        document.createElement(
+                            "span"
+                        );
 
-                            } else {
-                                undoTaskRecord(
-                                    record.id
-                                );
+                    delta.textContent =
+                        record.delta >
+                        0
+                            ? `+${record.delta}`
+                            : String(
+                                record.delta
+                            );
+
+                    item.appendChild(
+                        name
+                    );
+
+                    const canUndo =
+                        record.type ===
+                            "redeem" ||
+                        (
+                            [
+                                "task",
+                                "shortTask",
+                                "achievement"
+                            ].includes(
+                                record.type
+                            ) &&
+                            Number(
+                                record.delta
+                            ) >
+                            0
+                        );
+
+                    if (canUndo) {
+                        const rightArea =
+                            document.createElement(
+                                "div"
+                            );
+
+                        rightArea.className =
+                            "record-actions";
+
+                        const undoRecordButton =
+                            document.createElement(
+                                "button"
+                            );
+
+                        undoRecordButton.className =
+                            "undo-record-button";
+
+                        undoRecordButton.textContent =
+                            "撤銷";
+
+                        undoRecordButton.addEventListener(
+                            "click",
+                            function () {
+                                if (
+                                    record.type ===
+                                    "redeem"
+                                ) {
+                                    undoRedeem(
+                                        record.id
+                                    );
+
+                                } else {
+                                    undoTaskRecord(
+                                        record.id
+                                    );
+                                }
                             }
-                        }
-                    );
+                        );
 
-                    rightArea.appendChild(
-                        delta
-                    );
+                        rightArea.appendChild(
+                            delta
+                        );
 
-                    rightArea.appendChild(
-                        undoRecordButton
-                    );
+                        rightArea.appendChild(
+                            undoRecordButton
+                        );
 
-                    item.appendChild(
-                        rightArea
-                    );
+                        item.appendChild(
+                            rightArea
+                        );
 
-                } else {
-                    item.appendChild(
-                        delta
+                    } else {
+                        item.appendChild(
+                            delta
+                        );
+                    }
+
+                    dayBlock.appendChild(
+                        item
                     );
                 }
-
-                dayBlock.appendChild(
-                    item
-                );
-            });
+            );
         }
 
         weeklyRecord.appendChild(
@@ -3380,8 +4332,13 @@ function downloadFile(
 ) {
     const blob =
         new Blob(
-            [content],
-            { type }
+            [
+                content
+            ],
+            {
+                type:
+                    type
+            }
         );
 
     const url =
@@ -3390,16 +4347,22 @@ function downloadFile(
         );
 
     const link =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
 
-    link.href = url;
-    link.download = fileName;
+    link.href =
+        url;
+
+    link.download =
+        fileName;
 
     document.body.appendChild(
         link
     );
 
     link.click();
+
     link.remove();
 
     URL.revokeObjectURL(
@@ -3445,7 +4408,8 @@ function exportBackup({
             BACKUP_VERSION,
 
         exportedAt:
-            new Date().toISOString(),
+            new Date()
+                .toISOString(),
 
         backupRange: {
             startDate,
@@ -3476,31 +4440,49 @@ function exportBackup({
     }
 }
 
-function isValidBackupData(data) {
+function isValidBackupData(
+    data
+) {
     if (
         !data ||
-        typeof data !== "object" ||
-        Array.isArray(data)
+        typeof data !==
+            "object" ||
+        Array.isArray(
+            data
+        )
     ) {
         return false;
     }
 
     if (
-        typeof data.points !== "number" ||
-        !Number.isFinite(data.points)
+        typeof data.points !==
+            "number" ||
+        !Number.isFinite(
+            data.points
+        )
     ) {
         return false;
     }
 
     return (
-        Array.isArray(data.goals) &&
-        Array.isArray(data.tasks) &&
-        Array.isArray(data.shortTasks) &&
-        Array.isArray(data.records)
+        Array.isArray(
+            data.goals
+        ) &&
+        Array.isArray(
+            data.tasks
+        ) &&
+        Array.isArray(
+            data.shortTasks
+        ) &&
+        Array.isArray(
+            data.records
+        )
     );
 }
 
-async function importBackupFile(file) {
+async function importBackupFile(
+    file
+) {
     if (!file) {
         return;
     }
@@ -3510,7 +4492,9 @@ async function importBackupFile(file) {
             await file.text();
 
         const backup =
-            JSON.parse(text);
+            JSON.parse(
+                text
+            );
 
         if (
             !backup ||
@@ -3526,7 +4510,7 @@ async function importBackupFile(file) {
 
         if (
             backup.version !==
-                BACKUP_VERSION
+            BACKUP_VERSION
         ) {
             alert(
                 "無法匯入。\n\n這份備份的版本目前不支援。"
@@ -3550,8 +4534,9 @@ async function importBackupFile(file) {
         let backupDate =
             "未知";
 
-        if (backup.exportedAt) {
-
+        if (
+            backup.exportedAt
+        ) {
             const parsedDate =
                 new Date(
                     backup.exportedAt
@@ -3601,7 +4586,8 @@ async function importBackupFile(file) {
 
         saveData();
 
-        currentWeekOffset = 0;
+        currentWeekOffset =
+            0;
 
         currentManageSection =
             "data";
@@ -3613,7 +4599,6 @@ async function importBackupFile(file) {
         );
 
     } catch (error) {
-
         console.error(
             "匯入備份失敗：",
             error
@@ -3634,11 +4619,16 @@ function downloadData() {
     const filteredRecords =
         appData.records.filter(
             record =>
-                record.type !== "undo" &&
-                record.undone !== true
+                record.type !==
+                    "undo" &&
+                record.undone !==
+                    true
         );
 
-    if (filteredRecords.length === 0) {
+    if (
+        filteredRecords.length ===
+        0
+    ) {
         alert(
             "目前還沒有任何可下載的數據。"
         );
@@ -3667,7 +4657,6 @@ function downloadData() {
 
     filteredRecords.forEach(
         record => {
-
             const date =
                 new Date(
                     `${record.date}T00:00:00`
@@ -3685,7 +4674,8 @@ function downloadData() {
                 );
 
             const displayPoints =
-                record.delta > 0
+                record.delta >
+                0
                     ? `+${record.delta}`
                     : record.delta;
 
@@ -3712,8 +4702,11 @@ function downloadData() {
             .join("\n");
 
     downloadFile(
-        "\uFEFF" + csvContent,
+        "\uFEFF" +
+        csvContent,
+
         "text/csv;charset=utf-8;",
+
         `我的點數_數據_${getDateKey()}.csv`
     );
 }
@@ -3738,7 +4731,9 @@ const downloadDataButton =
         "downloadDataButton"
     );
 
-if (exportBackupButton) {
+if (
+    exportBackupButton
+) {
     exportBackupButton.addEventListener(
         "click",
         function () {
@@ -3754,8 +4749,8 @@ if (
     importBackupButton.addEventListener(
         "click",
         function () {
-
-            importBackupInput.value = "";
+            importBackupInput.value =
+                "";
 
             importBackupInput.click();
         }
@@ -3764,17 +4759,20 @@ if (
     importBackupInput.addEventListener(
         "change",
         function () {
-
             const file =
                 importBackupInput.files &&
                 importBackupInput.files[0];
 
-            importBackupFile(file);
+            importBackupFile(
+                file
+            );
         }
     );
 }
 
-if (downloadDataButton) {
+if (
+    downloadDataButton
+) {
     downloadDataButton.addEventListener(
         "click",
         downloadData
@@ -3849,60 +4847,88 @@ function getPreviousWeekRecords() {
 
     return appData.records.filter(
         record =>
-            record.date >= start &&
-            record.date <= end &&
-            record.type !== "undo" &&
-            record.undone !== true
+            record.date >=
+                start &&
+
+            record.date <=
+                end &&
+
+            record.type !==
+                "undo" &&
+
+            record.undone !==
+                true
     );
 }
 
-function buildWeeklyTaskSummary(records) {
+function buildWeeklyTaskSummary(
+    records
+) {
     const summary =
         new Map();
 
-    records.forEach(record => {
+    records.forEach(
+        record => {
+            if (
+                record.type !==
+                "task"
+            ) {
+                return;
+            }
 
-        if (record.type !== "task") {
-            return;
+            const amount =
+                Number(
+                    record.delta
+                );
+
+            const name =
+                String(
+                    record.name ||
+                    ""
+                ).trim();
+
+            if (
+                !name ||
+                !Number.isFinite(
+                    amount
+                ) ||
+                amount <=
+                    0
+            ) {
+                return;
+            }
+
+            summary.set(
+                name,
+                (
+                    summary.get(
+                        name
+                    ) ||
+                    0
+                ) +
+                amount
+            );
         }
-
-        const amount =
-            Number(record.delta);
-
-        const name =
-            String(
-                record.name || ""
-            ).trim();
-
-        if (
-            !name ||
-            !Number.isFinite(amount) ||
-            amount <= 0
-        ) {
-            return;
-        }
-
-        summary.set(
-            name,
-            (
-                summary.get(name) ||
-                0
-            ) +
-            amount
-        );
-    });
+    );
 
     return [
         ...summary.entries()
     ].map(
-        ([name, count]) => ({
+        (
+            [
+                name,
+                count
+            ]
+        ) => ({
             name,
             count
         })
     );
 }
 
-function openWeeklySummary(records) {
+function openWeeklySummary(
+    records
+) {
     if (
         !weeklySummaryModal ||
         !weeklySummaryEarned ||
@@ -3914,20 +4940,23 @@ function openWeeklySummary(records) {
 
     const earnedPoints =
         records.reduce(
-            (total, record) => {
-
+            (
+                total,
+                record
+            ) => {
                 const amount =
                     Number(
                         record.delta
                     );
 
                 return (
-                    Number.isFinite(amount) &&
+                    Number.isFinite(
+                        amount
+                    ) &&
                     amount > 0
                 )
                     ? total + amount
                     : total;
-
             },
             0
         );
@@ -3940,9 +4969,13 @@ function openWeeklySummary(records) {
     weeklySummaryEarned.textContent =
         `${earnedPoints} 點`;
 
-    weeklySummaryTasks.innerHTML = "";
+    weeklySummaryTasks.innerHTML =
+        "";
 
-    if (taskSummary.length === 0) {
+    if (
+        taskSummary.length ===
+        0
+    ) {
         weeklySummaryTaskSection.hidden =
             true;
 
@@ -3950,45 +4983,51 @@ function openWeeklySummary(records) {
         weeklySummaryTaskSection.hidden =
             false;
 
-        taskSummary.forEach(item => {
+        taskSummary.forEach(
+            item => {
+                const row =
+                    document.createElement(
+                        "div"
+                    );
 
-            const row =
-                document.createElement(
-                    "div"
+                row.className =
+                    "weekly-summary-task-row";
+
+                const name =
+                    document.createElement(
+                        "span"
+                    );
+
+                name.className =
+                    "weekly-summary-task-name";
+
+                name.textContent =
+                    item.name;
+
+                const count =
+                    document.createElement(
+                        "span"
+                    );
+
+                count.className =
+                    "weekly-summary-task-count";
+
+                count.textContent =
+                    `${item.count} 次`;
+
+                row.appendChild(
+                    name
                 );
 
-            row.className =
-                "weekly-summary-task-row";
-
-            const name =
-                document.createElement(
-                    "span"
+                row.appendChild(
+                    count
                 );
 
-            name.className =
-                "weekly-summary-task-name";
-
-            name.textContent =
-                item.name;
-
-            const count =
-                document.createElement(
-                    "span"
+                weeklySummaryTasks.appendChild(
+                    row
                 );
-
-            count.className =
-                "weekly-summary-task-count";
-
-            count.textContent =
-                `${item.count} 次`;
-
-            row.appendChild(name);
-            row.appendChild(count);
-
-            weeklySummaryTasks.appendChild(
-                row
-            );
-        });
+            }
+        );
     }
 
     weeklySummaryModal.hidden =
@@ -3998,7 +5037,9 @@ function openWeeklySummary(records) {
         "modal-open"
     );
 
-    if (weeklySummaryButton) {
+    if (
+        weeklySummaryButton
+    ) {
         weeklySummaryButton.focus();
     }
 
@@ -4006,7 +5047,9 @@ function openWeeklySummary(records) {
 }
 
 function closeWeeklySummary() {
-    if (!weeklySummaryModal) {
+    if (
+        !weeklySummaryModal
+    ) {
         return;
     }
 
@@ -4051,7 +5094,9 @@ function checkWeeklySummary() {
     );
 }
 
-if (weeklySummaryButton) {
+if (
+    weeklySummaryButton
+) {
     weeklySummaryButton.addEventListener(
         "click",
         closeWeeklySummary
@@ -4094,7 +5139,9 @@ const lastBackupStatus =
     );
 
 function renderBackupStatus() {
-    if (!lastBackupStatus) {
+    if (
+        !lastBackupStatus
+    ) {
         return;
     }
 
@@ -4134,7 +5181,9 @@ function openBackupReminder() {
         "modal-open"
     );
 
-    if (backupReminderNowButton) {
+    if (
+        backupReminderNowButton
+    ) {
         backupReminderNowButton.focus();
     }
 
@@ -4142,7 +5191,9 @@ function openBackupReminder() {
 }
 
 function closeBackupReminder() {
-    if (!backupReminderModal) {
+    if (
+        !backupReminderModal
+    ) {
         return;
     }
 
@@ -4162,7 +5213,9 @@ function postponeBackupReminder() {
         );
 
     appData.nextBackupReminderDate =
-        getDateKey(nextDate);
+        getDateKey(
+            nextDate
+        );
 
     saveData();
 
@@ -4171,8 +5224,11 @@ function postponeBackupReminder() {
 
 function backupFromReminder() {
     exportBackup({
-        throughYesterday: true,
-        fromReminder: true
+        throughYesterday:
+            true,
+
+        fromReminder:
+            true
     });
 }
 
@@ -4205,14 +5261,18 @@ function checkBackupReminder() {
     return openBackupReminder();
 }
 
-if (backupReminderLaterButton) {
+if (
+    backupReminderLaterButton
+) {
     backupReminderLaterButton.addEventListener(
         "click",
         postponeBackupReminder
     );
 }
 
-if (backupReminderNowButton) {
+if (
+    backupReminderNowButton
+) {
     backupReminderNowButton.addEventListener(
         "click",
         backupFromReminder
@@ -4224,22 +5284,25 @@ if (backupReminderNowButton) {
    PWA Service Worker
 ===================================================== */
 
-if ("serviceWorker" in navigator) {
+if (
+    "serviceWorker" in
+    navigator
+) {
     window.addEventListener(
         "load",
         function () {
-
             navigator.serviceWorker
                 .register(
                     "./service-worker.js"
                 )
-                .catch(error => {
-
-                    console.log(
-                        "Service Worker 尚未啟用：",
-                        error
-                    );
-                });
+                .catch(
+                    error => {
+                        console.log(
+                            "Service Worker 尚未啟用：",
+                            error
+                        );
+                    }
+                );
         }
     );
 }
@@ -4258,7 +5321,7 @@ function renderAll() {
 
     renderTasks();
     renderShortTasks();
-    renderMilestone();
+    renderMilestones();
 
     renderManageGoals();
     renderManageTasks();
@@ -4284,6 +5347,8 @@ renderAll();
 const weeklySummaryOpened =
     checkWeeklySummary();
 
-if (!weeklySummaryOpened) {
+if (
+    !weeklySummaryOpened
+) {
     checkBackupReminder();
 }

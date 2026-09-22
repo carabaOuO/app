@@ -440,6 +440,11 @@ main {
     margin-bottom: 14px;
 }
 
+.milestone-list {
+    display: flex;
+    flex-direction: column;
+}
+
 .milestone-row {
     width: 100%;
     display: flex;
@@ -773,6 +778,134 @@ main {
 
 
 /* =====================================================
+   設定：里程碑勾選
+===================================================== */
+
+.milestone-manage-note {
+    margin-bottom: 14px;
+}
+
+.milestone-checklist {
+    overflow: hidden;
+
+    border:
+        1px solid
+        #d5d5d5;
+
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.milestone-check-row {
+    position: relative;
+
+    width: 100%;
+    min-height: 54px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 13px 14px;
+
+    border-bottom:
+        1px solid
+        #e5e5e5;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
+.milestone-check-row:last-child {
+    border-bottom: none;
+}
+
+.milestone-check-row:active {
+    background: #f2f2f2;
+}
+
+
+/*
+真正的 checkbox 留在畫面中，
+但視覺上隱藏，
+由下面的自訂方框顯示。
+*/
+
+.milestone-check-row input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.milestone-check-box {
+    width: 22px;
+    height: 22px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border:
+        1.5px solid
+        #9a9a9a;
+
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+.milestone-check-row input:checked +
+.milestone-check-box {
+    border-color: #222222;
+    background: #222222;
+}
+
+.milestone-check-row input:checked +
+.milestone-check-box::after {
+    content: "✓";
+
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.milestone-check-row input:focus-visible +
+.milestone-check-box {
+    outline:
+        2px solid
+        #777777;
+
+    outline-offset: 2px;
+}
+
+.milestone-check-name {
+    flex: 1;
+    min-width: 0;
+
+    color: #333333;
+
+    font-size: 17px;
+
+    word-break: break-word;
+}
+
+.milestone-checklist-empty {
+    padding: 16px 14px;
+
+    color: #999999;
+
+    font-size: 15px;
+
+    text-align: center;
+}
+
+
+/* =====================================================
    設定：補登功能
 ===================================================== */
 
@@ -780,7 +913,8 @@ main {
     padding-bottom: 4px;
 }
 
-.backfill-block + .backfill-block {
+.backfill-block +
+.backfill-block {
     padding-top: 8px;
 
     border-top:
@@ -797,14 +931,23 @@ main {
 
 .backfill-submit-button {
     align-self: flex-end;
+
     min-width: 76px;
+
     margin-top: 8px;
+
     padding: 10px 20px;
+
     border: none;
+
     border-radius: 9px;
+
     background: #222222;
+
     color: #ffffff;
+
     font-size: 16px;
+
     cursor: pointer;
 }
 
@@ -826,9 +969,11 @@ main {
 .data-action-button {
     width: 100%;
     min-height: 50px;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     padding: 12px 16px;
 
     border:
@@ -836,10 +981,14 @@ main {
         #cccccc;
 
     border-radius: 10px;
+
     background: #ffffff;
+
     color: #333333;
+
     font-size: 16px;
     font-weight: 500;
+
     cursor: pointer;
 
     transition:
@@ -864,7 +1013,9 @@ main {
 .weekly-summary-modal,
 .backup-reminder-modal {
     position: fixed;
+
     inset: 0;
+
     z-index: 520;
 
     display: flex;
@@ -897,14 +1048,20 @@ main {
 .weekly-summary-card,
 .backup-reminder-card {
     width: 100%;
+
     max-width: 360px;
-    padding: 24px 22px 20px;
+
+    padding:
+        24px
+        22px
+        20px;
 
     border:
         1px solid
         #e0e0e0;
 
     border-radius: 16px;
+
     background: #ffffff;
 
     box-shadow:
@@ -920,9 +1077,13 @@ main {
 .weekly-summary-title,
 .backup-reminder-title {
     margin-bottom: 24px;
+
     color: #111111;
+
     font-size: 22px;
+
     font-weight: 700;
+
     text-align: center;
 }
 
@@ -931,9 +1092,13 @@ main {
 
 .weekly-summary-earned-row {
     display: flex;
+
     justify-content: space-between;
+
     align-items: baseline;
+
     gap: 18px;
+
     padding-bottom: 18px;
 
     border-bottom:
@@ -943,15 +1108,21 @@ main {
 
 .weekly-summary-earned-label {
     color: #333333;
+
     font-size: 17px;
+
     font-weight: 500;
 }
 
 .weekly-summary-earned-value {
     flex-shrink: 0;
+
     color: #111111;
+
     font-size: 20px;
+
     font-weight: 700;
+
     white-space: nowrap;
 }
 
@@ -961,21 +1132,29 @@ main {
 
 .weekly-summary-subtitle {
     margin-bottom: 10px;
+
     color: #444444;
+
     font-size: 15px;
+
     font-weight: 600;
 }
 
 #weeklySummaryTasks {
     display: flex;
+
     flex-direction: column;
 }
 
 .weekly-summary-task-row {
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
+
     gap: 16px;
+
     padding: 10px 0;
 
     border-bottom:
@@ -991,30 +1170,41 @@ main {
 
 .weekly-summary-task-name {
     flex: 1;
+
     min-width: 0;
+
     color: #333333;
+
     word-break: break-word;
 }
 
 .weekly-summary-task-count {
     flex-shrink: 0;
+
     color: #666666;
+
     white-space: nowrap;
 }
 
 .weekly-summary-button {
     width: 100%;
+
     min-height: 46px;
+
     margin-top: 24px;
+
     padding: 10px 18px;
 
     border: none;
+
     border-radius: 10px;
 
     background: #222222;
+
     color: #ffffff;
 
     font-size: 16px;
+
     font-weight: 600;
 
     cursor: pointer;
@@ -1033,13 +1223,17 @@ main {
 
 .backup-reminder-text {
     color: #555555;
+
     font-size: 15px;
+
     line-height: 1.65;
+
     text-align: center;
 }
 
 .backup-reminder-info {
     margin-top: 20px;
+
     padding: 16px 0;
 
     border-top:
@@ -1055,38 +1249,50 @@ main {
 
 .backup-reminder-label {
     margin-bottom: 7px;
+
     color: #777777;
+
     font-size: 13px;
 }
 
 .backup-reminder-range {
     color: #222222;
+
     font-size: 17px;
+
     font-weight: 600;
 }
 
 .backup-reminder-last-date {
     margin-top: 9px;
+
     color: #777777;
+
     font-size: 13px;
 }
 
 .backup-reminder-actions {
     display: flex;
+
     justify-content: flex-end;
+
     gap: 10px;
+
     margin-top: 22px;
 }
 
 .backup-reminder-later,
 .backup-reminder-now {
     min-width: 92px;
+
     min-height: 42px;
+
     padding: 9px 16px;
 
     border-radius: 9px;
 
     font-size: 15px;
+
     cursor: pointer;
 }
 
@@ -1096,12 +1302,15 @@ main {
         #cccccc;
 
     background: #ffffff;
+
     color: #555555;
 }
 
 .backup-reminder-now {
     border: none;
+
     background: #222222;
+
     color: #ffffff;
 }
 
@@ -1112,6 +1321,7 @@ main {
 
 .backup-status {
     margin-top: 12px;
+
     text-align: center;
 }
 
@@ -1123,11 +1333,15 @@ main {
 .app-modal,
 .modal-overlay {
     position: fixed;
+
     inset: 0;
+
     z-index: 500;
 
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
     padding:
@@ -1156,7 +1370,9 @@ main {
 .app-modal-card,
 .modal-card {
     width: 100%;
+
     max-width: 360px;
+
     padding: 22px;
 
     border:
@@ -1164,6 +1380,7 @@ main {
         #e0e0e0;
 
     border-radius: 16px;
+
     background: #ffffff;
 
     box-shadow:
@@ -1179,27 +1396,39 @@ main {
 .app-modal-title,
 .modal-title {
     margin-bottom: 14px;
+
     color: #111111;
+
     font-size: 20px;
+
     font-weight: 700;
+
     text-align: center;
 }
 
 .app-modal-message,
 .modal-message {
     min-height: 48px;
+
     color: #444444;
+
     font-size: 16px;
+
     line-height: 1.65;
+
     text-align: center;
+
     white-space: pre-line;
 }
 
 .app-modal-actions,
 .modal-actions {
     display: flex;
+
     justify-content: flex-end;
+
     gap: 10px;
+
     margin-top: 22px;
 }
 
@@ -1207,12 +1436,15 @@ main {
 .app-modal-confirm,
 .modal-button {
     min-width: 82px;
+
     min-height: 42px;
+
     padding: 9px 16px;
 
     border-radius: 9px;
 
     font-size: 15px;
+
     cursor: pointer;
 }
 
@@ -1223,13 +1455,16 @@ main {
         #cccccc;
 
     background: #ffffff;
+
     color: #555555;
 }
 
 .app-modal-confirm,
 .modal-confirm-button {
     border: none;
+
     background: #222222;
+
     color: #ffffff;
 }
 
@@ -1246,8 +1481,11 @@ main {
 
 .bottom-nav {
     position: fixed;
+
     left: 0;
+
     right: 0;
+
     bottom: 0;
 
     height:
@@ -1284,9 +1522,11 @@ main {
 
 .nav-button {
     flex: 1;
+
     min-width: 0;
 
     border: none;
+
     background: transparent;
 
     color: #888888;
@@ -1294,14 +1534,17 @@ main {
     padding: 0 4px;
 
     font-size: 15px;
+
     font-weight: 500;
 
     white-space: nowrap;
+
     cursor: pointer;
 }
 
 .nav-button.active {
     color: #111111;
+
     font-weight: 700;
 }
 
