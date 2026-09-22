@@ -41,10 +41,6 @@
         >
 
 
-            <!-- =========================
-                 目前點數
-            ========================== -->
-
             <div class="points-area">
 
                 <div class="section-title">
@@ -67,10 +63,6 @@
             </div>
 
 
-
-            <!-- =========================
-                 今日功績
-            ========================== -->
 
             <div class="achievement-area">
 
@@ -152,10 +144,6 @@
 
 
 
-            <!-- =========================
-                 獎勵兌換處
-            ========================== -->
-
             <div class="goal-area">
 
                 <div class="section-title">
@@ -185,10 +173,6 @@
         >
 
 
-            <!-- =========================
-                 今日進度
-            ========================== -->
-
             <div class="section-title">
                 今日進度
             </div>
@@ -205,10 +189,6 @@
             </div>
 
 
-
-            <!-- =========================
-                 短期任務
-            ========================== -->
 
             <div
                 id="shortTaskSection"
@@ -228,10 +208,6 @@
 
 
 
-            <!-- =========================
-                 加分選項
-            ========================== -->
-
             <div class="section-title add-title">
                 加分選項
             </div>
@@ -241,11 +217,6 @@
             </div>
 
 
-
-            <!--
-            取消上一筆維持原本位置：
-            就在加分選項最後面
-            -->
 
             <button
                 id="undoButton"
@@ -264,13 +235,6 @@
             </button>
 
 
-
-            <!-- =========================
-                 里程碑
-
-                 沒有設定追蹤項目時
-                 整區隱藏
-            ========================== -->
 
             <div
                 id="milestoneSection"
@@ -375,9 +339,7 @@
         >
 
 
-            <!-- =================================================
-                 1. 獎勵
-            ================================================== -->
+            <!-- 1. 獎勵 -->
 
             <div class="manage-accordion-section">
 
@@ -500,9 +462,7 @@
 
 
 
-            <!-- =================================================
-                 2. 加分事項
-            ================================================== -->
+            <!-- 2. 加分事項 -->
 
             <div class="manage-accordion-section">
 
@@ -610,9 +570,7 @@
 
 
 
-            <!-- =================================================
-                 3. 短期任務
-            ================================================== -->
+            <!-- 3. 短期任務 -->
 
             <div class="manage-accordion-section">
 
@@ -732,9 +690,7 @@
 
 
 
-            <!-- =================================================
-                 4. 里程碑
-            ================================================== -->
+            <!-- 4. 里程碑 -->
 
             <div class="manage-accordion-section">
 
@@ -815,9 +771,7 @@
 
 
 
-            <!-- =================================================
-                 5. 補登功能
-            ================================================== -->
+            <!-- 5. 補登功能 -->
 
             <div class="manage-accordion-section">
 
@@ -840,10 +794,6 @@
                     hidden
                 >
 
-
-                    <!-- =========================
-                         補加分
-                    ========================== -->
 
                     <div class="manage-subsection">
 
@@ -917,10 +867,6 @@
 
 
 
-                    <!-- =========================
-                         補兌換獎勵
-                    ========================== -->
-
                     <div class="manage-subsection">
 
 
@@ -985,9 +931,7 @@
 
 
 
-            <!-- =================================================
-                 6. 資料
-            ================================================== -->
+            <!-- 6. 資料 -->
 
             <div class="manage-accordion-section">
 
@@ -1010,10 +954,6 @@
                     hidden
                 >
 
-
-                    <!-- =========================
-                         備份與還原
-                    ========================== -->
 
                     <div class="manage-subsection">
 
@@ -1055,13 +995,17 @@
 
                         </div>
 
+
+                        <div
+                            id="lastBackupStatus"
+                            class="manage-note backup-status"
+                        >
+                            目前尚未建立備份
+                        </div>
+
                     </div>
 
 
-
-                    <!-- =========================
-                         數據
-                    ========================== -->
 
                     <div class="manage-subsection">
 
@@ -1152,11 +1096,175 @@
 
 
     <!-- =====================================================
-         App 自訂確認視窗
+         上週成果卡
+    ====================================================== -->
 
-         用於：
-         補登確認
-         找不到項目 → 前往新增
+    <div
+        id="weeklySummaryModal"
+        class="weekly-summary-modal"
+        hidden
+    >
+
+        <div
+            class="weekly-summary-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="weeklySummaryTitle"
+        >
+
+
+            <div
+                id="weeklySummaryTitle"
+                class="weekly-summary-title"
+            >
+                上週成果卡
+            </div>
+
+
+            <div class="weekly-summary-earned-row">
+
+
+                <span class="weekly-summary-earned-label">
+                    上週獲得
+                </span>
+
+
+                <span
+                    id="weeklySummaryEarned"
+                    class="weekly-summary-earned-value"
+                >
+                    0 點
+                </span>
+
+
+            </div>
+
+
+            <div
+                id="weeklySummaryTaskSection"
+                class="weekly-summary-task-section"
+            >
+
+
+                <div class="weekly-summary-subtitle">
+                    完成事項
+                </div>
+
+
+                <div id="weeklySummaryTasks">
+                </div>
+
+
+            </div>
+
+
+            <button
+                id="weeklySummaryButton"
+                class="weekly-summary-button"
+                type="button"
+            >
+                太好了!
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- =====================================================
+         每月備份提醒
+    ====================================================== -->
+
+    <div
+        id="backupReminderModal"
+        class="backup-reminder-modal"
+        hidden
+    >
+
+        <div
+            class="backup-reminder-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="backupReminderTitle"
+        >
+
+
+            <div
+                id="backupReminderTitle"
+                class="backup-reminder-title"
+            >
+                資料備份
+            </div>
+
+
+            <div class="backup-reminder-text">
+                建議定期備份，避免更換裝置或瀏覽器資料遺失時無法復原。
+            </div>
+
+
+            <div class="backup-reminder-info">
+
+
+                <div class="backup-reminder-label">
+                    本次備份紀錄範圍
+                </div>
+
+
+                <div
+                    id="backupReminderRange"
+                    class="backup-reminder-range"
+                >
+                </div>
+
+
+                <div
+                    id="backupReminderLastDate"
+                    class="backup-reminder-last-date"
+                >
+                </div>
+
+
+            </div>
+
+
+            <div class="backup-reminder-actions">
+
+
+                <button
+                    id="backupReminderLaterButton"
+                    class="backup-reminder-later"
+                    type="button"
+                >
+                    稍後
+                </button>
+
+
+                <button
+                    id="backupReminderNowButton"
+                    class="backup-reminder-now"
+                    type="button"
+                >
+                    立即備份
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- =====================================================
+         App 自訂確認視窗
     ====================================================== -->
 
     <div
@@ -1218,10 +1326,6 @@
 
 
 
-
-    <!-- =====================================================
-         JavaScript
-    ====================================================== -->
 
     <script src="app.js"></script>
 

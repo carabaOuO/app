@@ -3,11 +3,6 @@
    style.css
 ===================================================== */
 
-
-/* =====================================================
-   基本設定
-===================================================== */
-
 * {
     box-sizing: border-box;
 }
@@ -863,10 +858,266 @@ main {
 
 
 /* =====================================================
-   自訂確認視窗
+   上週成果卡 / 每月備份提醒
+===================================================== */
 
-   app-modal 是目前 index.html 使用的名稱。
-   modal-overlay 等舊名稱一併保留相容。
+.weekly-summary-modal,
+.backup-reminder-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 520;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding:
+        24px
+        20px
+        calc(
+            24px +
+            env(safe-area-inset-bottom)
+        );
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.34
+        );
+
+    -webkit-backdrop-filter:
+        blur(3px);
+
+    backdrop-filter:
+        blur(3px);
+}
+
+.weekly-summary-card,
+.backup-reminder-card {
+    width: 100%;
+    max-width: 360px;
+    padding: 24px 22px 20px;
+
+    border:
+        1px solid
+        #e0e0e0;
+
+    border-radius: 16px;
+    background: #ffffff;
+
+    box-shadow:
+        0 16px 45px
+        rgba(
+            0,
+            0,
+            0,
+            0.18
+        );
+}
+
+.weekly-summary-title,
+.backup-reminder-title {
+    margin-bottom: 24px;
+    color: #111111;
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+}
+
+
+/* 上週成果卡 */
+
+.weekly-summary-earned-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 18px;
+    padding-bottom: 18px;
+
+    border-bottom:
+        1px solid
+        #e2e2e2;
+}
+
+.weekly-summary-earned-label {
+    color: #333333;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.weekly-summary-earned-value {
+    flex-shrink: 0;
+    color: #111111;
+    font-size: 20px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.weekly-summary-task-section {
+    margin-top: 20px;
+}
+
+.weekly-summary-subtitle {
+    margin-bottom: 10px;
+    color: #444444;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+#weeklySummaryTasks {
+    display: flex;
+    flex-direction: column;
+}
+
+.weekly-summary-task-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 0;
+
+    border-bottom:
+        1px solid
+        #eeeeee;
+
+    font-size: 16px;
+}
+
+.weekly-summary-task-row:last-child {
+    border-bottom: none;
+}
+
+.weekly-summary-task-name {
+    flex: 1;
+    min-width: 0;
+    color: #333333;
+    word-break: break-word;
+}
+
+.weekly-summary-task-count {
+    flex-shrink: 0;
+    color: #666666;
+    white-space: nowrap;
+}
+
+.weekly-summary-button {
+    width: 100%;
+    min-height: 46px;
+    margin-top: 24px;
+    padding: 10px 18px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #222222;
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.weekly-summary-button:active {
+    transform: scale(0.98);
+}
+
+
+/* 每月備份提醒 */
+
+.backup-reminder-title {
+    margin-bottom: 14px;
+}
+
+.backup-reminder-text {
+    color: #555555;
+    font-size: 15px;
+    line-height: 1.65;
+    text-align: center;
+}
+
+.backup-reminder-info {
+    margin-top: 20px;
+    padding: 16px 0;
+
+    border-top:
+        1px solid
+        #e5e5e5;
+
+    border-bottom:
+        1px solid
+        #e5e5e5;
+
+    text-align: center;
+}
+
+.backup-reminder-label {
+    margin-bottom: 7px;
+    color: #777777;
+    font-size: 13px;
+}
+
+.backup-reminder-range {
+    color: #222222;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.backup-reminder-last-date {
+    margin-top: 9px;
+    color: #777777;
+    font-size: 13px;
+}
+
+.backup-reminder-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.backup-reminder-later,
+.backup-reminder-now {
+    min-width: 92px;
+    min-height: 42px;
+    padding: 9px 16px;
+
+    border-radius: 9px;
+
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.backup-reminder-later {
+    border:
+        1px solid
+        #cccccc;
+
+    background: #ffffff;
+    color: #555555;
+}
+
+.backup-reminder-now {
+    border: none;
+    background: #222222;
+    color: #ffffff;
+}
+
+.backup-reminder-later:active,
+.backup-reminder-now:active {
+    transform: scale(0.97);
+}
+
+.backup-status {
+    margin-top: 12px;
+    text-align: center;
+}
+
+
+/* =====================================================
+   自訂確認視窗
 ===================================================== */
 
 .app-modal,
@@ -887,10 +1138,19 @@ main {
             env(safe-area-inset-bottom)
         );
 
-    background: rgba(0, 0, 0, 0.34);
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.34
+        );
 
-    -webkit-backdrop-filter: blur(3px);
-    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter:
+        blur(3px);
+
+    backdrop-filter:
+        blur(3px);
 }
 
 .app-modal-card,
@@ -908,7 +1168,12 @@ main {
 
     box-shadow:
         0 16px 45px
-        rgba(0, 0, 0, 0.18);
+        rgba(
+            0,
+            0,
+            0,
+            0.18
+        );
 }
 
 .app-modal-title,
@@ -944,7 +1209,9 @@ main {
     min-width: 82px;
     min-height: 42px;
     padding: 9px 16px;
+
     border-radius: 9px;
+
     font-size: 15px;
     cursor: pointer;
 }
@@ -1006,20 +1273,29 @@ main {
         1px solid
         #dddddd;
 
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
     z-index: 100;
 }
 
 .nav-button {
     flex: 1;
     min-width: 0;
+
     border: none;
     background: transparent;
+
     color: #888888;
+
     padding: 0 4px;
+
     font-size: 15px;
     font-weight: 500;
+
     white-space: nowrap;
     cursor: pointer;
 }
@@ -1100,6 +1376,8 @@ main {
         font-size: 14px;
     }
 
+    .weekly-summary-card,
+    .backup-reminder-card,
     .app-modal-card,
     .modal-card {
         padding: 20px;
