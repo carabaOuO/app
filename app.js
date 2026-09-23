@@ -22,33 +22,9 @@ let modalConfirmAction = null;
 const defaultData = {
     points: 0,
 
-    goals: [
-        {
-            id: createId(),
-            name: "地瓜球",
-            points: 3
-        },
-        {
-            id: createId(),
-            name: "泡麵",
-            points: 10
-        }
-    ],
+    goals: [],
 
-    tasks: [
-        {
-            id: createId(),
-            name: "讀書30分鐘"
-        },
-        {
-            id: createId(),
-            name: "洗衣服"
-        },
-        {
-            id: createId(),
-            name: "曬衣服"
-        }
-    ],
+    tasks: [],
 
     shortTasks: [],
 
