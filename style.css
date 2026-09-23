@@ -87,12 +87,11 @@ main {
 
 
 /* =====================================================
-   共用標題
+   共用
 ===================================================== */
 
 .section-title {
     margin-bottom: 18px;
-
     font-size: 22px;
     font-weight: 700;
 }
@@ -159,9 +158,13 @@ main {
 .open-achievement-button {
     border: none;
     background: transparent;
+
     color: #555555;
+
     padding: 8px 2px;
+
     font-size: 15px;
+
     cursor: pointer;
 }
 
@@ -178,20 +181,25 @@ main {
         #d3d3d3;
 
     border-radius: 12px;
+
     background: #ffffff;
 }
 
 .achievement-form label {
     display: block;
+
     margin-bottom: 10px;
+
     font-size: 15px;
     font-weight: 500;
+
     color: #444444;
 }
 
 .achievement-form input {
     width: 100%;
     min-height: 48px;
+
     padding: 12px 14px;
 
     border:
@@ -199,9 +207,12 @@ main {
         #cccccc;
 
     border-radius: 10px;
+
     background: #ffffff;
     color: #222222;
+
     font-size: 17px;
+
     outline: none;
 }
 
@@ -215,18 +226,25 @@ main {
 
 .achievement-form-actions {
     display: flex;
+
     justify-content: flex-end;
     align-items: center;
+
     gap: 10px;
+
     margin-top: 12px;
 }
 
 .achievement-cancel-button {
     border: none;
     background: transparent;
+
     color: #777777;
+
     padding: 9px 12px;
+
     font-size: 15px;
+
     cursor: pointer;
 }
 
@@ -236,12 +254,18 @@ main {
 
 .achievement-add-button {
     min-width: 64px;
+
     padding: 9px 17px;
+
     border: none;
+
     border-radius: 9px;
+
     background: #222222;
     color: #ffffff;
+
     font-size: 16px;
+
     cursor: pointer;
 }
 
@@ -250,7 +274,7 @@ main {
 }
 
 
-/* 獎勵兌換處 */
+/* 獎勵 */
 
 .goal-area {
     margin-top: 10px;
@@ -262,9 +286,12 @@ main {
 
 .goal-item {
     display: flex;
+
     justify-content: space-between;
     align-items: center;
+
     gap: 12px;
+
     padding: 16px 2px;
 
     border-bottom:
@@ -276,30 +303,43 @@ main {
 
 .goal-name {
     flex: 1;
+
     min-width: 0;
+
     font-weight: 500;
+
     word-break: break-word;
 }
 
 .goal-actions {
     display: flex;
+
     align-items: center;
+
     gap: 12px;
+
     flex-shrink: 0;
 }
 
 .goal-points {
     color: #555555;
+
     white-space: nowrap;
 }
 
 .redeem-button {
     border: none;
+
     border-radius: 8px;
+
     padding: 8px 14px;
+
     background: #222222;
+
     color: #ffffff;
+
     font-size: 14px;
+
     cursor: pointer;
 }
 
@@ -309,7 +349,9 @@ main {
 
 .redeem-button:disabled {
     background: #dddddd;
+
     color: #999999;
+
     cursor: default;
 }
 
@@ -320,10 +362,16 @@ main {
 
 .daily-progress {
     display: flex;
+
     justify-content: space-between;
     align-items: center;
+
     max-width: 360px;
-    margin: 12px auto 50px;
+
+    margin:
+        12px
+        auto
+        50px;
 }
 
 .progress-light {
@@ -335,6 +383,7 @@ main {
         #999999;
 
     border-radius: 50%;
+
     background: #ffffff;
 
     transition:
@@ -345,7 +394,9 @@ main {
 
 .progress-light.active {
     background: #222222;
+
     border-color: #222222;
+
     transform: scale(1.04);
 }
 
@@ -360,7 +411,9 @@ main {
 #shortTaskList,
 #taskList {
     display: flex;
+
     flex-direction: column;
+
     gap: 14px;
 }
 
@@ -374,10 +427,14 @@ main {
 
 .task-button {
     width: 100%;
+
     display: flex;
+
     justify-content: space-between;
     align-items: center;
+
     gap: 14px;
+
     padding: 18px;
 
     border:
@@ -385,14 +442,19 @@ main {
         #d0d0d0;
 
     border-radius: 12px;
+
     background: #ffffff;
+
     color: #222222;
+
     font-size: 18px;
+
     cursor: pointer;
 }
 
 .task-button > span:first-child {
     min-width: 0;
+
     word-break: break-word;
 }
 
@@ -402,15 +464,20 @@ main {
 
 .task-button:active {
     transform: scale(0.98);
+
     background: #eeeeee;
 }
 
 .undo-button {
     width: 100%;
+
     display: flex;
+
     justify-content: space-between;
     align-items: center;
+
     margin-top: 42px;
+
     padding: 17px 18px;
 
     border:
@@ -418,19 +485,26 @@ main {
         #d0d0d0;
 
     border-radius: 12px;
+
     background: #ffffff;
+
     color: #555555;
+
     font-size: 17px;
+
     cursor: pointer;
 }
 
 .undo-button:active {
     transform: scale(0.98);
+
     background: #eeeeee;
 }
 
 
-/* 里程碑 */
+/* =====================================================
+   里程碑
+===================================================== */
 
 .milestone-section {
     margin-top: 46px;
@@ -442,16 +516,24 @@ main {
 
 .milestone-list {
     display: flex;
+
     flex-direction: column;
 }
 
 .milestone-row {
     width: 100%;
+
     display: flex;
+
     justify-content: space-between;
     align-items: center;
+
     gap: 18px;
-    padding: 14px 2px 16px;
+
+    padding:
+        14px
+        2px
+        16px;
 
     border-bottom:
         1px solid
@@ -460,22 +542,31 @@ main {
 
 .milestone-name {
     flex: 1;
+
     min-width: 0;
 
     overflow: hidden;
+
     text-overflow: ellipsis;
+
     white-space: nowrap;
 
     color: #222222;
+
     font-size: 18px;
+
     font-weight: 500;
 }
 
 .milestone-count {
     flex-shrink: 0;
+
     color: #666666;
+
     font-size: 17px;
+
     font-weight: 500;
+
     white-space: nowrap;
 }
 
@@ -486,16 +577,23 @@ main {
 
 .week-navigation {
     display: flex;
+
     justify-content: space-between;
+
     margin-bottom: 32px;
 }
 
 .week-navigation button {
     border: none;
+
     background: transparent;
+
     color: #333333;
+
     padding: 8px 0;
+
     font-size: 16px;
+
     cursor: pointer;
 }
 
@@ -505,8 +603,11 @@ main {
 
 .week-range {
     margin-top: -8px;
+
     margin-bottom: 34px;
+
     color: #666666;
+
     font-size: 16px;
 }
 
@@ -516,22 +617,30 @@ main {
 
 .record-day-title {
     margin-bottom: 12px;
+
     font-size: 18px;
+
     font-weight: 700;
 }
 
 .record-item {
     display: flex;
+
     justify-content: space-between;
     align-items: center;
+
     gap: 16px;
+
     padding: 8px 0;
+
     font-size: 17px;
 }
 
 .record-item > span:first-child {
     flex: 1;
+
     min-width: 0;
+
     word-break: break-word;
 }
 
@@ -541,23 +650,33 @@ main {
 
 .record-empty {
     padding: 4px 0;
+
     color: #999999;
+
     font-size: 16px;
 }
 
 .record-actions {
     display: flex;
+
     align-items: center;
+
     gap: 12px;
+
     flex-shrink: 0;
 }
 
 .undo-record-button {
     border: none;
+
     background: transparent;
+
     color: #777777;
+
     padding: 4px;
+
     font-size: 14px;
+
     cursor: pointer;
 }
 
@@ -572,15 +691,20 @@ main {
 
 .manage-accordion-section {
     width: 100%;
+
     margin-bottom: 10px;
 }
 
 .manage-accordion-toggle {
     width: 100%;
+
     min-height: 58px;
+
     display: flex;
+
     justify-content: center;
     align-items: center;
+
     padding: 14px 10px;
 
     border: none;
@@ -590,11 +714,17 @@ main {
         #d7d7d7;
 
     border-radius: 0;
+
     background: transparent;
+
     color: #333333;
+
     font-size: 20px;
+
     font-weight: 500;
+
     text-align: center;
+
     cursor: pointer;
 
     transition:
@@ -604,16 +734,26 @@ main {
 }
 
 .manage-accordion-toggle:active {
-    background: rgba(0, 0, 0, 0.025);
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.025
+        );
 }
 
 .manage-accordion-toggle.active {
     color: #111111;
+
     font-weight: 700;
 }
 
 .manage-accordion-content {
-    padding: 28px 2px 18px;
+    padding:
+        28px
+        2px
+        18px;
 }
 
 .manage-accordion-content:not([hidden]) {
@@ -630,40 +770,55 @@ main {
 
 .manage-subtitle {
     margin-bottom: 16px;
+
     font-size: 17px;
+
     font-weight: 600;
+
     color: #333333;
 }
 
 .manage-note {
     margin-top: 2px;
+
     color: #777777;
+
     font-size: 14px;
+
     line-height: 1.65;
 }
 
 
-/* 設定：一般表單 */
+/* =====================================================
+   設定表單
+===================================================== */
 
 .form-area,
 .backfill-form {
     display: flex;
+
     flex-direction: column;
+
     gap: 10px;
 }
 
 .form-area label,
 .backfill-form label {
     margin-top: 4px;
+
     font-size: 15px;
+
     font-weight: 500;
+
     color: #444444;
 }
 
 .form-area input,
 .backfill-form input {
     width: 100%;
+
     min-height: 48px;
+
     padding: 12px 14px;
 
     border:
@@ -671,9 +826,13 @@ main {
         #cccccc;
 
     border-radius: 10px;
+
     background: #ffffff;
+
     color: #222222;
+
     font-size: 17px;
+
     outline: none;
 }
 
@@ -690,21 +849,33 @@ main {
 .form-area input[type="date"],
 .backfill-form input[type="date"] {
     width: 100%;
+
     min-height: 48px;
+
     background: #ffffff;
+
     color: #222222;
 }
 
 .form-area button {
     align-self: flex-end;
+
     min-width: 76px;
+
     margin-top: 8px;
+
     padding: 10px 20px;
+
     border: none;
+
     border-radius: 9px;
+
     background: #222222;
+
     color: #ffffff;
+
     font-size: 16px;
+
     cursor: pointer;
 }
 
@@ -713,28 +884,43 @@ main {
 }
 
 
-/* 設定：下拉選單 / 刪除 */
+/* =====================================================
+   下拉選單 / 刪除
+===================================================== */
 
 .delete-control {
     display: flex;
+
     flex-direction: column;
+
     gap: 12px;
 }
 
 .manage-select {
     width: 100%;
+
     min-height: 48px;
-    padding: 0 42px 0 14px;
+
+    padding:
+        0
+        42px
+        0
+        14px;
 
     border:
         1px solid
         #cccccc;
 
     border-radius: 10px;
+
     background-color: #ffffff;
+
     color: #222222;
+
     font-size: 17px;
+
     outline: none;
+
     cursor: pointer;
 }
 
@@ -744,13 +930,17 @@ main {
 
 .manage-select:disabled {
     background: #f3f3f3;
+
     color: #aaaaaa;
+
     cursor: default;
 }
 
 .delete-manage-button {
     align-self: flex-end;
+
     min-width: 76px;
+
     padding: 9px 19px;
 
     border:
@@ -758,21 +948,29 @@ main {
         #bbbbbb;
 
     border-radius: 9px;
+
     background: #ffffff;
+
     color: #555555;
+
     font-size: 15px;
+
     cursor: pointer;
 }
 
 .delete-manage-button:active:not(:disabled) {
     transform: scale(0.97);
+
     background: #eeeeee;
 }
 
 .delete-manage-button:disabled {
     border-color: #dddddd;
+
     background: #f3f3f3;
+
     color: #bbbbbb;
+
     cursor: default;
 }
 
@@ -793,6 +991,7 @@ main {
         #d5d5d5;
 
     border-radius: 12px;
+
     background: #ffffff;
 }
 
@@ -800,10 +999,13 @@ main {
     position: relative;
 
     width: 100%;
+
     min-height: 54px;
 
     display: flex;
+
     align-items: center;
+
     gap: 12px;
 
     padding: 13px 14px;
@@ -826,27 +1028,25 @@ main {
     background: #f2f2f2;
 }
 
-
-/*
-真正的 checkbox 留在畫面中，
-但視覺上隱藏，
-由下面的自訂方框顯示。
-*/
-
 .milestone-check-row input {
     position: absolute;
+
     opacity: 0;
+
     pointer-events: none;
 }
 
 .milestone-check-box {
     width: 22px;
+
     height: 22px;
 
     flex-shrink: 0;
 
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
     border:
@@ -854,12 +1054,14 @@ main {
         #9a9a9a;
 
     border-radius: 6px;
+
     background: #ffffff;
 }
 
 .milestone-check-row input:checked +
 .milestone-check-box {
     border-color: #222222;
+
     background: #222222;
 }
 
@@ -870,7 +1072,9 @@ main {
     color: #ffffff;
 
     font-size: 15px;
+
     font-weight: 700;
+
     line-height: 1;
 }
 
@@ -885,6 +1089,7 @@ main {
 
 .milestone-check-name {
     flex: 1;
+
     min-width: 0;
 
     color: #333333;
@@ -906,7 +1111,7 @@ main {
 
 
 /* =====================================================
-   設定：補登功能
+   補登
 ===================================================== */
 
 .backfill-block {
@@ -924,8 +1129,11 @@ main {
 
 .field-note {
     margin-top: -2px;
+
     color: #888888;
+
     font-size: 13px;
+
     line-height: 1.5;
 }
 
@@ -957,21 +1165,26 @@ main {
 
 
 /* =====================================================
-   設定：資料
+   資料
 ===================================================== */
 
 .data-action-list {
     display: flex;
+
     flex-direction: column;
+
     gap: 12px;
 }
 
 .data-action-button {
     width: 100%;
+
     min-height: 50px;
 
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
     padding: 12px 16px;
@@ -987,6 +1200,7 @@ main {
     color: #333333;
 
     font-size: 16px;
+
     font-weight: 500;
 
     cursor: pointer;
@@ -998,6 +1212,7 @@ main {
 
 .data-action-button:active {
     background: #eeeeee;
+
     transform: scale(0.98);
 }
 
@@ -1005,9 +1220,15 @@ main {
     display: none;
 }
 
+.backup-status {
+    margin-top: 12px;
+
+    text-align: center;
+}
+
 
 /* =====================================================
-   上週成果卡 / 每月備份提醒
+   上週成果卡
 ===================================================== */
 
 .weekly-summary-modal,
@@ -1019,7 +1240,9 @@ main {
     z-index: 520;
 
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
     padding:
@@ -1050,6 +1273,18 @@ main {
     width: 100%;
 
     max-width: 360px;
+
+    max-height:
+        calc(
+            100vh -
+            48px -
+            env(safe-area-inset-bottom)
+        );
+
+    overflow-y: auto;
+
+    -webkit-overflow-scrolling:
+        touch;
 
     padding:
         24px
@@ -1087,9 +1322,6 @@ main {
     text-align: center;
 }
 
-
-/* 上週成果卡 */
-
 .weekly-summary-earned-row {
     display: flex;
 
@@ -1126,7 +1358,10 @@ main {
     white-space: nowrap;
 }
 
-.weekly-summary-task-section {
+
+/* 每一區共用 */
+
+.weekly-summary-section {
     margin-top: 20px;
 }
 
@@ -1139,6 +1374,38 @@ main {
 
     font-weight: 600;
 }
+
+
+/* 上週功績 */
+
+#weeklySummaryAchievements {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.weekly-summary-achievement-row {
+    padding: 9px 0;
+
+    border-bottom:
+        1px solid
+        #eeeeee;
+
+    color: #333333;
+
+    font-size: 16px;
+
+    line-height: 1.5;
+
+    word-break: break-word;
+}
+
+.weekly-summary-achievement-row:last-child {
+    border-bottom: none;
+}
+
+
+/* 完成事項 */
 
 #weeklySummaryTasks {
     display: flex;
@@ -1186,6 +1453,38 @@ main {
     white-space: nowrap;
 }
 
+
+/* 短期任務 */
+
+#weeklySummaryShortTasks {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.weekly-summary-short-task-row {
+    padding: 9px 0;
+
+    border-bottom:
+        1px solid
+        #eeeeee;
+
+    color: #333333;
+
+    font-size: 16px;
+
+    line-height: 1.5;
+
+    word-break: break-word;
+}
+
+.weekly-summary-short-task-row:last-child {
+    border-bottom: none;
+}
+
+
+/* 成果卡按鈕 */
+
 .weekly-summary-button {
     width: 100%;
 
@@ -1215,7 +1514,9 @@ main {
 }
 
 
-/* 每月備份提醒 */
+/* =====================================================
+   每月備份提醒
+===================================================== */
 
 .backup-reminder-title {
     margin-bottom: 14px;
@@ -1317,12 +1618,6 @@ main {
 .backup-reminder-later:active,
 .backup-reminder-now:active {
     transform: scale(0.97);
-}
-
-.backup-status {
-    margin-top: 12px;
-
-    text-align: center;
 }
 
 
@@ -1476,7 +1771,7 @@ main {
 
 
 /* =====================================================
-   底部導覽列
+   底部導覽
 ===================================================== */
 
 .bottom-nav {
@@ -1579,6 +1874,7 @@ main {
 
     .redeem-button {
         padding: 7px 11px;
+
         font-size: 13px;
     }
 
@@ -1596,6 +1892,7 @@ main {
 
     .manage-accordion-toggle {
         min-height: 56px;
+
         font-size: 19px;
     }
 
@@ -1629,18 +1926,20 @@ main {
 
 
 /* =====================================================
-   特別窄的手機
+   特別窄手機
 ===================================================== */
 
 @media (max-width: 360px) {
 
     .nav-button {
         padding: 0 2px;
+
         font-size: 13px;
     }
 
     .progress-light {
         width: 34px;
+
         height: 34px;
     }
 
@@ -1653,20 +1952,36 @@ main {
     .app-modal-confirm,
     .modal-button {
         min-width: 74px;
+
         padding-left: 12px;
+
+        padding-right: 12px;
+    }
+
+    .backup-reminder-actions {
+        gap: 8px;
+    }
+
+    .backup-reminder-later,
+    .backup-reminder-now {
+        min-width: 82px;
+
+        padding-left: 12px;
+
         padding-right: 12px;
     }
 }
 
 
 /* =====================================================
-   大一點的手機 / 平板
+   平板
 ===================================================== */
 
 @media (min-width: 600px) {
 
     .page {
         padding-left: 36px;
+
         padding-right: 36px;
     }
 }

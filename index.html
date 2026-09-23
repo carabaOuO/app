@@ -64,6 +64,8 @@
 
 
 
+            <!-- 今日功績 -->
+
             <div class="achievement-area">
 
 
@@ -144,6 +146,8 @@
 
 
 
+            <!-- 獎勵兌換處 -->
+
             <div class="goal-area">
 
                 <div class="section-title">
@@ -181,14 +185,20 @@
             <div class="daily-progress">
 
                 <span class="progress-light"></span>
+
                 <span class="progress-light"></span>
+
                 <span class="progress-light"></span>
+
                 <span class="progress-light"></span>
+
                 <span class="progress-light"></span>
 
             </div>
 
 
+
+            <!-- 短期任務 -->
 
             <div
                 id="shortTaskSection"
@@ -207,6 +217,8 @@
             </div>
 
 
+
+            <!-- 加分選項 -->
 
             <div class="section-title add-title">
                 加分選項
@@ -235,6 +247,8 @@
             </button>
 
 
+
+            <!-- 里程碑 -->
 
             <div
                 id="milestoneSection"
@@ -328,7 +342,7 @@
 
 
             <!-- =================================================
-                 1. 獎勵
+                 獎勵
             ================================================== -->
 
             <div class="manage-accordion-section">
@@ -453,7 +467,7 @@
 
 
             <!-- =================================================
-                 2. 加分事項
+                 加分事項
             ================================================== -->
 
             <div class="manage-accordion-section">
@@ -563,7 +577,7 @@
 
 
             <!-- =================================================
-                 3. 短期任務
+                 短期任務
             ================================================== -->
 
             <div class="manage-accordion-section">
@@ -685,7 +699,7 @@
 
 
             <!-- =================================================
-                 4. 里程碑
+                 里程碑
             ================================================== -->
 
             <div class="manage-accordion-section">
@@ -719,7 +733,7 @@
 
 
                         <div class="manage-note milestone-manage-note">
-                            勾選想顯示的加分事項。勾選或取消後會立即儲存，不需要另外按儲存。
+                            勾選想顯示的加分事項。勾選或取消後會立即儲存。
                         </div>
 
 
@@ -743,7 +757,7 @@
 
 
             <!-- =================================================
-                 5. 補登功能
+                 補登功能
             ================================================== -->
 
             <div class="manage-accordion-section">
@@ -767,6 +781,8 @@
                     hidden
                 >
 
+
+                    <!-- 補加分 -->
 
                     <div class="manage-subsection">
 
@@ -840,6 +856,8 @@
 
 
 
+                    <!-- 補兌換 -->
+
                     <div class="manage-subsection">
 
 
@@ -905,7 +923,7 @@
 
 
             <!-- =================================================
-                 6. 資料
+                 資料
             ================================================== -->
 
             <div class="manage-accordion-section">
@@ -1096,6 +1114,9 @@
             </div>
 
 
+
+            <!-- 上週獲得 -->
+
             <div class="weekly-summary-earned-row">
 
 
@@ -1115,9 +1136,35 @@
             </div>
 
 
+
+            <!-- 上週功績 -->
+
+            <div
+                id="weeklySummaryAchievementSection"
+                class="weekly-summary-section"
+                hidden
+            >
+
+
+                <div class="weekly-summary-subtitle">
+                    上週功績
+                </div>
+
+
+                <div id="weeklySummaryAchievements">
+                </div>
+
+
+            </div>
+
+
+
+            <!-- 完成事項 -->
+
             <div
                 id="weeklySummaryTaskSection"
-                class="weekly-summary-task-section"
+                class="weekly-summary-section"
+                hidden
             >
 
 
@@ -1131,6 +1178,29 @@
 
 
             </div>
+
+
+
+            <!-- 完成短期任務 -->
+
+            <div
+                id="weeklySummaryShortTaskSection"
+                class="weekly-summary-section"
+                hidden
+            >
+
+
+                <div class="weekly-summary-subtitle">
+                    完成短期任務
+                </div>
+
+
+                <div id="weeklySummaryShortTasks">
+                </div>
+
+
+            </div>
+
 
 
             <button
@@ -1239,7 +1309,7 @@
 
 
     <!-- =====================================================
-         App 自訂確認視窗
+         自訂確認視窗
     ====================================================== -->
 
     <div
