@@ -2,1378 +2,1147 @@
 <html lang="zh-TW">
 
 <head>
+  <meta charset="UTF-8">
 
-    <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+  <title>我的點數</title>
 
-    <title>我的點數</title>
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
-    <link
-        rel="manifest"
-        href="manifest.json"
-    >
-
+  <link
+    rel="manifest"
+    href="manifest.json"
+  >
 </head>
 
 
 <body>
 
+  <main>
 
-    <main>
+
+    <!-- 第一頁：能量艙 -->
+
+    <section
+      id="page-home"
+      class="page active"
+    >
+
+      <div class="points-area">
+
+        <div class="section-title">
+          目前點數
+        </div>
+
+        <div class="total-points">
+
+          <span id="totalPoints">
+            0
+          </span>
+
+          <span class="point-unit">
+            點
+          </span>
+
+        </div>
+
+      </div>
 
 
-        <!-- =====================================================
-             第一頁：能量艙
-        ====================================================== -->
 
-        <section
-            id="page-home"
-            class="page active"
+      <!-- 今日功績 -->
+
+      <div class="achievement-area">
+
+        <div
+          id="achievementDisplay"
+          class="achievement-display"
+          hidden
         >
 
+          <div class="section-title achievement-title">
+            今日功績
+          </div>
 
-            <div class="points-area">
+          <div id="achievementList">
+          </div>
 
-                <div class="section-title">
-                    目前點數
-                </div>
-
-
-                <div class="total-points">
-
-                    <span id="totalPoints">
-                        0
-                    </span>
-
-                    <span class="point-unit">
-                        點
-                    </span>
-
-                </div>
-
-            </div>
+        </div>
 
 
-
-            <!-- 今日功績 -->
-
-            <div class="achievement-area">
-
-
-                <div
-                    id="achievementDisplay"
-                    class="achievement-display"
-                    hidden
-                >
-
-                    <div class="section-title achievement-title">
-                        今日功績
-                    </div>
+        <button
+          id="openAchievementFormButton"
+          class="open-achievement-button"
+          type="button"
+        >
+          ＋ 新增今日功績
+        </button>
 
 
-                    <div id="achievementList">
-                    </div>
-
-                </div>
-
-
-
-                <button
-                    id="openAchievementFormButton"
-                    class="open-achievement-button"
-                    type="button"
-                >
-                    ＋ 新增今日功績
-                </button>
-
-
-
-                <div
-                    id="achievementForm"
-                    class="achievement-form"
-                    hidden
-                >
-
-                    <label for="achievementInput">
-                        今天做了什麼值得肯定的事？
-                    </label>
-
-
-                    <input
-                        type="text"
-                        id="achievementInput"
-                        placeholder="輸入今天做到的事"
-                        autocomplete="off"
-                    >
-
-
-                    <div class="achievement-form-actions">
-
-
-                        <button
-                            id="cancelAchievementButton"
-                            class="achievement-cancel-button"
-                            type="button"
-                        >
-                            取消
-                        </button>
-
-
-                        <button
-                            id="addAchievementButton"
-                            class="achievement-add-button"
-                            type="button"
-                        >
-                            +1
-                        </button>
-
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- 獎勵兌換處 -->
-
-            <div class="goal-area">
-
-                <div class="section-title">
-                    獎勵兌換處
-                </div>
-
-
-                <div id="goalList">
-                </div>
-
-            </div>
-
-
-        </section>
-
-
-
-
-
-        <!-- =====================================================
-             第二頁：賺經驗
-        ====================================================== -->
-
-        <section
-            id="page-add"
-            class="page"
+        <div
+          id="achievementForm"
+          class="achievement-form"
+          hidden
         >
 
+          <label for="achievementInput">
+            今天做了什麼值得肯定的事？
+          </label>
 
-            <div class="section-title">
-                今日進度
-            </div>
+          <input
+            type="text"
+            id="achievementInput"
+            placeholder="輸入今天做到的事"
+            autocomplete="off"
+          >
 
-
-            <div class="daily-progress">
-
-                <span class="progress-light"></span>
-
-                <span class="progress-light"></span>
-
-                <span class="progress-light"></span>
-
-                <span class="progress-light"></span>
-
-                <span class="progress-light"></span>
-
-            </div>
-
-
-
-            <!-- 短期任務 -->
-
-            <div
-                id="shortTaskSection"
-                class="short-task-section"
-                hidden
-            >
-
-                <div class="section-title short-task-title">
-                    短期任務
-                </div>
-
-
-                <div id="shortTaskList">
-                </div>
-
-            </div>
-
-
-
-            <!-- 加分選項 -->
-
-            <div class="section-title add-title">
-                加分選項
-            </div>
-
-
-            <div id="taskList">
-            </div>
-
-
+          <div class="achievement-form-actions">
 
             <button
-                id="undoButton"
-                class="undo-button"
-                type="button"
+              id="cancelAchievementButton"
+              class="achievement-cancel-button"
+              type="button"
             >
-
-                <span>
-                    取消上一筆
-                </span>
-
-                <span>
-                    -1
-                </span>
-
+              取消
             </button>
-
-
-
-            <!-- 里程碑 -->
-
-            <div
-                id="milestoneSection"
-                class="milestone-section"
-                hidden
-            >
-
-                <div class="section-title milestone-title">
-                    里程碑
-                </div>
-
-
-                <div
-                    id="milestoneList"
-                    class="milestone-list"
-                >
-                </div>
-
-            </div>
-
-
-        </section>
-
-
-
-
-
-        <!-- =====================================================
-             第三頁：戰績
-        ====================================================== -->
-
-        <section
-            id="page-record"
-            class="page"
-        >
-
-
-            <div class="week-navigation">
-
-
-                <button
-                    id="previousWeek"
-                    type="button"
-                >
-                    上一週
-                </button>
-
-
-                <button
-                    id="nextWeek"
-                    type="button"
-                >
-                    下一週
-                </button>
-
-
-            </div>
-
-
-
-            <div class="section-title">
-                本週戰績
-            </div>
-
-
-            <div
-                id="weekRange"
-                class="week-range"
-            >
-            </div>
-
-
-            <div id="weeklyRecord">
-            </div>
-
-
-        </section>
-
-
-
-
-
-        <!-- =====================================================
-             第四頁：設定
-        ====================================================== -->
-
-        <section
-            id="page-manage"
-            class="page"
-        >
-
-
-            <!-- =================================================
-                 獎勵
-            ================================================== -->
-
-            <div class="manage-accordion-section">
-
-
-                <button
-                    id="manageGoalToggle"
-                    class="manage-accordion-toggle"
-                    type="button"
-                    aria-expanded="false"
-                    aria-controls="manageGoalContent"
-                >
-                    獎勵
-                </button>
-
-
-
-                <div
-                    id="manageGoalContent"
-                    class="manage-accordion-content"
-                    hidden
-                >
-
-
-                    <div class="manage-subsection">
-
-                        <div class="manage-subtitle">
-                            新增獎勵
-                        </div>
-
-
-                        <div class="form-area">
-
-
-                            <label for="goalName">
-                                獎勵名稱
-                            </label>
-
-
-                            <input
-                                type="text"
-                                id="goalName"
-                                placeholder="輸入獎勵名稱"
-                                autocomplete="off"
-                            >
-
-
-
-                            <label for="goalPoints">
-                                所需點數
-                            </label>
-
-
-                            <input
-                                type="number"
-                                id="goalPoints"
-                                placeholder="輸入點數"
-                                min="1"
-                                inputmode="numeric"
-                            >
-
-
-
-                            <button
-                                id="addGoalButton"
-                                type="button"
-                            >
-                                新增
-                            </button>
-
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="manage-subsection">
-
-                        <div class="manage-subtitle">
-                            管理現有獎勵
-                        </div>
-
-
-                        <div class="delete-control">
-
-
-                            <select
-                                id="goalDeleteSelect"
-                                class="manage-select"
-                            >
-
-                                <option value="">
-                                    請選擇獎勵
-                                </option>
-
-                            </select>
-
-
-                            <button
-                                id="deleteGoalButton"
-                                class="delete-manage-button"
-                                type="button"
-                                disabled
-                            >
-                                刪除
-                            </button>
-
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-
-
-
-
-            <!-- =================================================
-                 加分事項
-            ================================================== -->
-
-            <div class="manage-accordion-section">
-
-
-                <button
-                    id="manageTaskToggle"
-                    class="manage-accordion-toggle"
-                    type="button"
-                    aria-expanded="false"
-                    aria-controls="manageTaskContent"
-                >
-                    加分事項
-                </button>
-
-
-
-                <div
-                    id="manageTaskContent"
-                    class="manage-accordion-content"
-                    hidden
-                >
-
-
-                    <div class="manage-subsection">
-
-                        <div class="manage-subtitle">
-                            新增加分事項
-                        </div>
-
-
-                        <div class="form-area">
-
-
-                            <label for="taskName">
-                                事項名稱
-                            </label>
-
-
-                            <input
-                                type="text"
-                                id="taskName"
-                                placeholder="輸入事項名稱"
-                                autocomplete="off"
-                            >
-
-
-
-                            <button
-                                id="addTaskButton"
-                                type="button"
-                            >
-                                新增
-                            </button>
-
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="manage-subsection">
-
-                        <div class="manage-subtitle">
-                            管理現有加分事項
-                        </div>
-
-
-                        <div class="delete-control">
-
-
-                            <select
-                                id="taskDeleteSelect"
-                                class="manage-select"
-                            >
-
-                                <option value="">
-                                    請選擇加分事項
-                                </option>
-
-                            </select>
-
-
-                            <button
-                                id="deleteTaskButton"
-                                class="delete-manage-button"
-                                type="button"
-                                disabled
-                            >
-                                刪除
-                            </button>
-
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-
-
-
-
-            <!-- =================================================
-                 短期任務
-            ================================================== -->
-
-            <div class="manage-accordion-section">
-
-
-                <button
-                    id="manageShortTaskToggle"
-                    class="manage-accordion-toggle"
-                    type="button"
-                    aria-expanded="false"
-                    aria-controls="manageShortTaskContent"
-                >
-                    短期任務
-                </button>
-
-
-
-                <div
-                    id="manageShortTaskContent"
-                    class="manage-accordion-content"
-                    hidden
-                >
-
-
-                    <div class="manage-subsection">
-
-                        <div class="manage-subtitle">
-                            新增短期任務
-                        </div>
-
-
-                        <div class="form-area">
-
-
-                            <label for="shortTaskName">
-                                任務名稱
-                            </label>
-
-
-                            <input
-                                type="text"
-                                id="shortTaskName"
-                                placeholder="例如：丟垃圾"
-                                autocomplete="off"
-                            >
-
-
-
-                            <label for="shortTaskDate">
-                                日期
-                            </label>
-
-
-                            <input
-                                type="date"
-                                id="shortTaskDate"
-                            >
-
-
-
-                            <button
-                                id="addShortTaskButton"
-                                type="button"
-                            >
-                                新增
-                            </button>
-
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="manage-subsection">
-
-                        <div class="manage-subtitle">
-                            管理已安排任務
-                        </div>
-
-
-                        <div class="delete-control">
-
-
-                            <select
-                                id="shortTaskDeleteSelect"
-                                class="manage-select"
-                            >
-
-                                <option value="">
-                                    請選擇短期任務
-                                </option>
-
-                            </select>
-
-
-                            <button
-                                id="deleteShortTaskButton"
-                                class="delete-manage-button"
-                                type="button"
-                                disabled
-                            >
-                                刪除
-                            </button>
-
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-
-
-
-
-            <!-- =================================================
-                 里程碑
-            ================================================== -->
-
-            <div class="manage-accordion-section">
-
-
-                <button
-                    id="manageMilestoneToggle"
-                    class="manage-accordion-toggle"
-                    type="button"
-                    aria-expanded="false"
-                    aria-controls="manageMilestoneContent"
-                >
-                    里程碑
-                </button>
-
-
-
-                <div
-                    id="manageMilestoneContent"
-                    class="manage-accordion-content"
-                    hidden
-                >
-
-
-                    <div class="manage-subsection">
-
-
-                        <div class="manage-subtitle">
-                            顯示項目
-                        </div>
-
-
-                        <div class="manage-note milestone-manage-note">
-                            勾選想顯示的加分事項。勾選或取消後會立即儲存。
-                        </div>
-
-
-                        <div
-                            id="milestoneChecklist"
-                            class="milestone-checklist"
-                        >
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-
-
-
-
-            <!-- =================================================
-                 補登功能
-            ================================================== -->
-
-            <div class="manage-accordion-section">
-
-
-                <button
-                    id="manageBackfillToggle"
-                    class="manage-accordion-toggle"
-                    type="button"
-                    aria-expanded="false"
-                    aria-controls="manageBackfillContent"
-                >
-                    補登功能
-                </button>
-
-
-
-                <div
-                    id="manageBackfillContent"
-                    class="manage-accordion-content"
-                    hidden
-                >
-
-
-                    <!-- 補加分 -->
-
-                    <div class="manage-subsection">
-
-
-                        <div class="manage-subtitle">
-                            補加分
-                        </div>
-
-
-                        <div class="form-area">
-
-
-                            <label for="backfillTaskSelect">
-                                加分事項
-                            </label>
-
-
-                            <select
-                                id="backfillTaskSelect"
-                                class="manage-select"
-                            >
-
-                                <option value="">
-                                    選擇加分事項
-                                </option>
-
-                            </select>
-
-
-
-                            <label for="backfillPointsInput">
-                                加幾點
-                            </label>
-
-
-                            <input
-                                id="backfillPointsInput"
-                                type="number"
-                                min="1"
-                                step="1"
-                                value="1"
-                                inputmode="numeric"
-                            >
-
-
-
-                            <label for="backfillTaskDate">
-                                日期
-                            </label>
-
-
-                            <input
-                                id="backfillTaskDate"
-                                type="date"
-                            >
-
-
-
-                            <button
-                                id="backfillTaskButton"
-                                type="button"
-                            >
-                                確定
-                            </button>
-
-
-                        </div>
-
-
-                    </div>
-
-
-
-                    <!-- 補兌換 -->
-
-                    <div class="manage-subsection">
-
-
-                        <div class="manage-subtitle">
-                            補兌換獎勵
-                        </div>
-
-
-                        <div class="form-area">
-
-
-                            <label for="backfillGoalSelect">
-                                獎勵
-                            </label>
-
-
-                            <select
-                                id="backfillGoalSelect"
-                                class="manage-select"
-                            >
-
-                                <option value="">
-                                    選擇獎勵
-                                </option>
-
-                            </select>
-
-
-
-                            <label for="backfillGoalDate">
-                                日期
-                            </label>
-
-
-                            <input
-                                id="backfillGoalDate"
-                                type="date"
-                            >
-
-
-
-                            <button
-                                id="backfillGoalButton"
-                                type="button"
-                            >
-                                確定
-                            </button>
-
-
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-
-
-
-
-            <!-- =================================================
-                 資料
-            ================================================== -->
-
-            <div class="manage-accordion-section">
-
-
-                <button
-                    id="manageDataToggle"
-                    class="manage-accordion-toggle"
-                    type="button"
-                    aria-expanded="false"
-                    aria-controls="manageDataContent"
-                >
-                    資料
-                </button>
-
-
-
-                <div
-                    id="manageDataContent"
-                    class="manage-accordion-content"
-                    hidden
-                >
-
-
-                    <div class="manage-subsection">
-
-                        <div class="manage-subtitle">
-                            備份與還原
-                        </div>
-
-
-                        <div class="data-action-list">
-
-
-                            <button
-                                id="exportBackupButton"
-                                class="data-action-button"
-                                type="button"
-                            >
-                                匯出備份
-                            </button>
-
-
-
-                            <button
-                                id="importBackupButton"
-                                class="data-action-button"
-                                type="button"
-                            >
-                                匯入備份
-                            </button>
-
-
-
-                            <input
-                                id="importBackupInput"
-                                type="file"
-                                accept=".json,application/json"
-                                hidden
-                            >
-
-
-                        </div>
-
-
-                        <div
-                            id="lastBackupStatus"
-                            class="manage-note backup-status"
-                        >
-                            目前尚未建立備份
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="manage-subsection">
-
-                        <div class="manage-subtitle">
-                            數據
-                        </div>
-
-
-                        <div class="data-action-list">
-
-
-                            <button
-                                id="downloadDataButton"
-                                class="data-action-button"
-                                type="button"
-                            >
-                                下載數據
-                            </button>
-
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-
-        </section>
-
-
-    </main>
-
-
-
-
-
-    <!-- =====================================================
-         底部導覽列
-    ====================================================== -->
-
-    <nav class="bottom-nav">
-
-
-        <button
-            class="nav-button active"
-            data-page="home"
-            type="button"
-        >
-            能量艙
-        </button>
-
-
-        <button
-            class="nav-button"
-            data-page="add"
-            type="button"
-        >
-            賺經驗
-        </button>
-
-
-        <button
-            class="nav-button"
-            data-page="record"
-            type="button"
-        >
-            戰績
-        </button>
-
-
-        <button
-            class="nav-button"
-            data-page="manage"
-            type="button"
-        >
-            設定
-        </button>
-
-
-    </nav>
-
-
-
-
-
-    <!-- =====================================================
-         上週成果卡
-    ====================================================== -->
-
-    <div
-        id="weeklySummaryModal"
-        class="weekly-summary-modal"
-        hidden
-    >
-
-        <div
-            class="weekly-summary-card"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="weeklySummaryTitle"
-        >
-
-
-            <div
-                id="weeklySummaryTitle"
-                class="weekly-summary-title"
-            >
-                上週成果卡
-            </div>
-
-
-
-            <!-- 上週獲得 -->
-
-            <div class="weekly-summary-earned-row">
-
-
-                <span class="weekly-summary-earned-label">
-                    上週獲得
-                </span>
-
-
-                <span
-                    id="weeklySummaryEarned"
-                    class="weekly-summary-earned-value"
-                >
-                    0 點
-                </span>
-
-
-            </div>
-
-
-
-            <!-- 上週功績 -->
-
-            <div
-                id="weeklySummaryAchievementSection"
-                class="weekly-summary-section"
-                hidden
-            >
-
-
-                <div class="weekly-summary-subtitle">
-                    上週功績
-                </div>
-
-
-                <div id="weeklySummaryAchievements">
-                </div>
-
-
-            </div>
-
-
-
-            <!-- 完成事項 -->
-
-            <div
-                id="weeklySummaryTaskSection"
-                class="weekly-summary-section"
-                hidden
-            >
-
-
-                <div class="weekly-summary-subtitle">
-                    完成事項
-                </div>
-
-
-                <div id="weeklySummaryTasks">
-                </div>
-
-
-            </div>
-
-
-
-            <!-- 完成短期任務 -->
-
-            <div
-                id="weeklySummaryShortTaskSection"
-                class="weekly-summary-section"
-                hidden
-            >
-
-
-                <div class="weekly-summary-subtitle">
-                    完成短期任務
-                </div>
-
-
-                <div id="weeklySummaryShortTasks">
-                </div>
-
-
-            </div>
-
-
 
             <button
-                id="weeklySummaryButton"
-                class="weekly-summary-button"
-                type="button"
+              id="addAchievementButton"
+              class="achievement-add-button"
+              type="button"
             >
-                太好了!
+              +1
             </button>
 
+          </div>
 
         </div>
 
-    </div>
+      </div>
 
 
 
+      <!-- 獎勵兌換處 -->
+
+      <div class="goal-area">
+
+        <div class="section-title">
+          獎勵兌換處
+        </div>
+
+        <div id="goalList">
+        </div>
+
+      </div>
+
+    </section>
 
 
-    <!-- =====================================================
-         每月備份提醒
-    ====================================================== -->
 
-    <div
-        id="backupReminderModal"
-        class="backup-reminder-modal"
-        hidden
+    <!-- 第二頁：賺經驗 -->
+
+    <section
+      id="page-add"
+      class="page"
     >
 
-        <div
-            class="backup-reminder-card"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="backupReminderTitle"
-        >
+      <div class="section-title">
+        今日進度
+      </div>
 
 
-            <div
-                id="backupReminderTitle"
-                class="backup-reminder-title"
-            >
-                資料備份
-            </div>
+      <div class="daily-progress">
+
+        <span class="progress-light"></span>
+
+        <span class="progress-light"></span>
+
+        <span class="progress-light"></span>
+
+        <span class="progress-light"></span>
+
+        <span class="progress-light"></span>
+
+      </div>
 
 
-            <div class="backup-reminder-text">
-                建議定期備份，避免更換裝置或瀏覽器資料遺失時無法復原。
-            </div>
 
+      <!-- 未完待續 -->
 
-            <div class="backup-reminder-info">
+      <div
+        id="carryoverTaskSection"
+        class="carryover-task-section"
+        hidden
+      >
 
-
-                <div class="backup-reminder-label">
-                    本次備份紀錄範圍
-                </div>
-
-
-                <div
-                    id="backupReminderRange"
-                    class="backup-reminder-range"
-                >
-                </div>
-
-
-                <div
-                    id="backupReminderLastDate"
-                    class="backup-reminder-last-date"
-                >
-                </div>
-
-
-            </div>
-
-
-            <div class="backup-reminder-actions">
-
-
-                <button
-                    id="backupReminderLaterButton"
-                    class="backup-reminder-later"
-                    type="button"
-                >
-                    稍後
-                </button>
-
-
-                <button
-                    id="backupReminderNowButton"
-                    class="backup-reminder-now"
-                    type="button"
-                >
-                    立即備份
-                </button>
-
-
-            </div>
-
-
+        <div class="section-title carryover-task-title">
+          未完待續
         </div>
 
-    </div>
+        <div
+          id="carryoverTaskList"
+          class="carryover-task-list"
+        >
+        </div>
+
+      </div>
 
 
 
+      <!-- 短期任務 -->
 
-
-    <!-- =====================================================
-         自訂確認視窗
-    ====================================================== -->
-
-    <div
-        id="appModal"
-        class="app-modal"
+      <div
+        id="shortTaskSection"
+        class="short-task-section"
         hidden
+      >
+
+        <div class="section-title short-task-title">
+          短期任務
+        </div>
+
+        <div id="shortTaskList">
+        </div>
+
+      </div>
+
+
+
+      <!-- 加分選項 -->
+
+      <div class="section-title add-title">
+        加分選項
+      </div>
+
+      <div id="taskList">
+      </div>
+
+
+      <button
+        id="undoButton"
+        class="undo-button"
+        type="button"
+      >
+
+        <span>
+          取消上一筆
+        </span>
+
+        <span>
+          -1
+        </span>
+
+      </button>
+
+
+
+      <!-- 里程碑 -->
+
+      <div
+        id="milestoneSection"
+        class="milestone-section"
+        hidden
+      >
+
+        <div class="section-title milestone-title">
+          里程碑
+        </div>
+
+        <div
+          id="milestoneList"
+          class="milestone-list"
+        >
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- 第三頁：戰績 -->
+
+    <section
+      id="page-record"
+      class="page"
     >
 
+      <div class="week-navigation">
+
+        <button
+          id="previousWeek"
+          type="button"
+        >
+          上一週
+        </button>
+
+        <button
+          id="nextWeek"
+          type="button"
+        >
+          下一週
+        </button>
+
+      </div>
+
+
+      <div class="section-title">
+        本週戰績
+      </div>
+
+      <div
+        id="weekRange"
+        class="week-range"
+      >
+      </div>
+
+      <div id="weeklyRecord">
+      </div>
+
+    </section>
+
+
+
+    <!-- 第四頁：設定 -->
+
+    <section
+      id="page-manage"
+      class="page"
+    >
+
+
+      <!-- 獎勵 -->
+
+      <div class="manage-accordion-section">
+
+        <button
+          id="manageGoalToggle"
+          class="manage-accordion-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="manageGoalContent"
+        >
+          獎勵
+        </button>
+
+
         <div
-            class="app-modal-card"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="modalTitle"
+          id="manageGoalContent"
+          class="manage-accordion-content"
+          hidden
         >
 
+          <div class="manage-subsection">
 
-            <div
-                id="modalTitle"
-                class="app-modal-title"
-            >
+            <div class="manage-subtitle">
+              新增獎勵
             </div>
 
+            <div class="form-area">
 
-            <div
-                id="modalMessage"
-                class="app-modal-message"
-            >
+              <label for="goalName">
+                獎勵名稱
+              </label>
+
+              <input
+                type="text"
+                id="goalName"
+                placeholder="輸入獎勵名稱"
+                autocomplete="off"
+              >
+
+
+              <label for="goalPoints">
+                所需點數
+              </label>
+
+              <input
+                type="number"
+                id="goalPoints"
+                placeholder="輸入點數"
+                min="1"
+                inputmode="numeric"
+              >
+
+
+              <button
+                id="addGoalButton"
+                type="button"
+              >
+                新增
+              </button>
+
             </div>
 
-
-            <div class="app-modal-actions">
-
-
-                <button
-                    id="modalCancelButton"
-                    class="app-modal-cancel"
-                    type="button"
-                >
-                    取消
-                </button>
+          </div>
 
 
-                <button
-                    id="modalConfirmButton"
-                    class="app-modal-confirm"
-                    type="button"
-                >
-                    確定
-                </button>
+          <div class="manage-subsection">
 
+            <div class="manage-subtitle">
+              管理現有獎勵
+            </div>
+
+            <div class="delete-control">
+
+              <select
+                id="goalDeleteSelect"
+                class="manage-select"
+              >
+                <option value="">
+                  請選擇獎勵
+                </option>
+              </select>
+
+              <button
+                id="deleteGoalButton"
+                class="delete-manage-button"
+                type="button"
+                disabled
+              >
+                刪除
+              </button>
 
             </div>
 
+          </div>
 
         </div>
 
+      </div>
+
+
+
+      <!-- 加分事項 -->
+
+      <div class="manage-accordion-section">
+
+        <button
+          id="manageTaskToggle"
+          class="manage-accordion-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="manageTaskContent"
+        >
+          加分事項
+        </button>
+
+
+        <div
+          id="manageTaskContent"
+          class="manage-accordion-content"
+          hidden
+        >
+
+          <div class="manage-subsection">
+
+            <div class="manage-subtitle">
+              新增加分事項
+            </div>
+
+            <div class="form-area">
+
+              <label for="taskName">
+                事項名稱
+              </label>
+
+              <input
+                type="text"
+                id="taskName"
+                placeholder="輸入事項名稱"
+                autocomplete="off"
+              >
+
+              <button
+                id="addTaskButton"
+                type="button"
+              >
+                新增
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="manage-subsection">
+
+            <div class="manage-subtitle">
+              管理現有加分事項
+            </div>
+
+            <div class="delete-control">
+
+              <select
+                id="taskDeleteSelect"
+                class="manage-select"
+              >
+                <option value="">
+                  請選擇加分事項
+                </option>
+              </select>
+
+              <button
+                id="deleteTaskButton"
+                class="delete-manage-button"
+                type="button"
+                disabled
+              >
+                刪除
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- 短期任務 -->
+
+      <div class="manage-accordion-section">
+
+        <button
+          id="manageShortTaskToggle"
+          class="manage-accordion-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="manageShortTaskContent"
+        >
+          短期任務
+        </button>
+
+
+        <div
+          id="manageShortTaskContent"
+          class="manage-accordion-content"
+          hidden
+        >
+
+          <div class="manage-subsection">
+
+            <div class="manage-subtitle">
+              新增短期任務
+            </div>
+
+            <div class="form-area">
+
+              <label for="shortTaskName">
+                任務名稱
+              </label>
+
+              <input
+                type="text"
+                id="shortTaskName"
+                placeholder="例如：丟垃圾"
+                autocomplete="off"
+              >
+
+
+              <label for="shortTaskDate">
+                日期
+              </label>
+
+              <input
+                type="date"
+                id="shortTaskDate"
+              >
+
+
+              <button
+                id="addShortTaskButton"
+                type="button"
+              >
+                新增
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="manage-subsection">
+
+            <div class="manage-subtitle">
+              管理已安排任務
+            </div>
+
+            <div class="delete-control">
+
+              <select
+                id="shortTaskDeleteSelect"
+                class="manage-select"
+              >
+                <option value="">
+                  請選擇短期任務
+                </option>
+              </select>
+
+              <button
+                id="deleteShortTaskButton"
+                class="delete-manage-button"
+                type="button"
+                disabled
+              >
+                刪除
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- 里程碑 -->
+
+      <div class="manage-accordion-section">
+
+        <button
+          id="manageMilestoneToggle"
+          class="manage-accordion-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="manageMilestoneContent"
+        >
+          里程碑
+        </button>
+
+
+        <div
+          id="manageMilestoneContent"
+          class="manage-accordion-content"
+          hidden
+        >
+
+          <div class="manage-subsection">
+
+            <div class="manage-subtitle">
+              顯示項目
+            </div>
+
+            <div class="manage-note milestone-manage-note">
+              勾選想顯示的加分事項。勾選或取消後會立即儲存。
+            </div>
+
+            <div
+              id="milestoneChecklist"
+              class="milestone-checklist"
+            >
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- 補登功能 -->
+
+      <div class="manage-accordion-section">
+
+        <button
+          id="manageBackfillToggle"
+          class="manage-accordion-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="manageBackfillContent"
+        >
+          補登功能
+        </button>
+
+
+        <div
+          id="manageBackfillContent"
+          class="manage-accordion-content"
+          hidden
+        >
+
+          <div class="manage-subsection">
+
+            <div class="manage-subtitle">
+              補加分
+            </div>
+
+            <div class="form-area">
+
+              <label for="backfillTaskSelect">
+                加分事項
+              </label>
+
+              <select
+                id="backfillTaskSelect"
+                class="manage-select"
+              >
+                <option value="">
+                  選擇加分事項
+                </option>
+              </select>
+
+
+              <label for="backfillPointsInput">
+                加幾點
+              </label>
+
+              <input
+                id="backfillPointsInput"
+                type="number"
+                min="1"
+                step="1"
+                value="1"
+                inputmode="numeric"
+              >
+
+
+              <label for="backfillTaskDate">
+                日期
+              </label>
+
+              <input
+                id="backfillTaskDate"
+                type="date"
+              >
+
+
+              <button
+                id="backfillTaskButton"
+                type="button"
+              >
+                確定
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="manage-subsection">
+
+            <div class="manage-subtitle">
+              補兌換獎勵
+            </div>
+
+            <div class="form-area">
+
+              <label for="backfillGoalSelect">
+                獎勵
+              </label>
+
+              <select
+                id="backfillGoalSelect"
+                class="manage-select"
+              >
+                <option value="">
+                  選擇獎勵
+                </option>
+              </select>
+
+
+              <label for="backfillGoalDate">
+                日期
+              </label>
+
+              <input
+                id="backfillGoalDate"
+                type="date"
+              >
+
+
+              <button
+                id="backfillGoalButton"
+                type="button"
+              >
+                確定
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- 資料 -->
+
+      <div class="manage-accordion-section">
+
+        <button
+          id="manageDataToggle"
+          class="manage-accordion-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="manageDataContent"
+        >
+          資料
+        </button>
+
+
+        <div
+          id="manageDataContent"
+          class="manage-accordion-content"
+          hidden
+        >
+
+          <div class="manage-subsection">
+
+            <div class="manage-subtitle">
+              備份與還原
+            </div>
+
+            <div class="data-action-list">
+
+              <button
+                id="exportBackupButton"
+                class="data-action-button"
+                type="button"
+              >
+                匯出備份
+              </button>
+
+              <button
+                id="importBackupButton"
+                class="data-action-button"
+                type="button"
+              >
+                匯入備份
+              </button>
+
+              <input
+                id="importBackupInput"
+                type="file"
+                accept=".json,application/json"
+                hidden
+              >
+
+            </div>
+
+            <div
+              id="lastBackupStatus"
+              class="manage-note backup-status"
+            >
+              目前尚未建立備份
+            </div>
+
+          </div>
+
+
+          <div class="manage-subsection">
+
+            <div class="manage-subtitle">
+              數據
+            </div>
+
+            <div class="data-action-list">
+
+              <button
+                id="downloadDataButton"
+                class="data-action-button"
+                type="button"
+              >
+                下載數據
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- 底部導覽列 -->
+
+  <nav class="bottom-nav">
+
+    <button
+      class="nav-button active"
+      data-page="home"
+      type="button"
+    >
+      能量艙
+    </button>
+
+    <button
+      class="nav-button"
+      data-page="add"
+      type="button"
+    >
+      賺經驗
+    </button>
+
+    <button
+      class="nav-button"
+      data-page="record"
+      type="button"
+    >
+      戰績
+    </button>
+
+    <button
+      class="nav-button"
+      data-page="manage"
+      type="button"
+    >
+      設定
+    </button>
+
+  </nav>
+
+
+
+  <!-- 上週成果卡 -->
+
+  <div
+    id="weeklySummaryModal"
+    class="weekly-summary-modal"
+    hidden
+  >
+
+    <div
+      class="weekly-summary-card"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="weeklySummaryTitle"
+    >
+
+      <div
+        id="weeklySummaryTitle"
+        class="weekly-summary-title"
+      >
+        上週成果卡
+      </div>
+
+
+      <div class="weekly-summary-earned-row">
+
+        <span class="weekly-summary-earned-label">
+          上週獲得
+        </span>
+
+        <span
+          id="weeklySummaryEarned"
+          class="weekly-summary-earned-value"
+        >
+          0 點
+        </span>
+
+      </div>
+
+
+      <div
+        id="weeklySummaryAchievementSection"
+        class="weekly-summary-section"
+        hidden
+      >
+
+        <div class="weekly-summary-subtitle">
+          上週功績
+        </div>
+
+        <div id="weeklySummaryAchievements">
+        </div>
+
+      </div>
+
+
+      <div
+        id="weeklySummaryTaskSection"
+        class="weekly-summary-section"
+        hidden
+      >
+
+        <div class="weekly-summary-subtitle">
+          完成事項
+        </div>
+
+        <div id="weeklySummaryTasks">
+        </div>
+
+      </div>
+
+
+      <div
+        id="weeklySummaryShortTaskSection"
+        class="weekly-summary-section"
+        hidden
+      >
+
+        <div class="weekly-summary-subtitle">
+          完成短期任務
+        </div>
+
+        <div id="weeklySummaryShortTasks">
+        </div>
+
+      </div>
+
+
+      <button
+        id="weeklySummaryButton"
+        class="weekly-summary-button"
+        type="button"
+      >
+        太好了!
+      </button>
+
     </div>
 
+  </div>
 
 
 
+  <!-- 每月備份提醒 -->
 
-    <script src="app.js"></script>
+  <div
+    id="backupReminderModal"
+    class="backup-reminder-modal"
+    hidden
+  >
 
+    <div
+      class="backup-reminder-card"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="backupReminderTitle"
+    >
+
+      <div
+        id="backupReminderTitle"
+        class="backup-reminder-title"
+      >
+        資料備份
+      </div>
+
+
+      <div class="backup-reminder-text">
+        建議定期備份，避免更換裝置或瀏覽器資料遺失時無法復原。
+      </div>
+
+
+      <div class="backup-reminder-info">
+
+        <div class="backup-reminder-label">
+          本次備份紀錄範圍
+        </div>
+
+        <div
+          id="backupReminderRange"
+          class="backup-reminder-range"
+        >
+        </div>
+
+        <div
+          id="backupReminderLastDate"
+          class="backup-reminder-last-date"
+        >
+        </div>
+
+      </div>
+
+
+      <div class="backup-reminder-actions">
+
+        <button
+          id="backupReminderLaterButton"
+          class="backup-reminder-later"
+          type="button"
+        >
+          稍後
+        </button>
+
+        <button
+          id="backupReminderNowButton"
+          class="backup-reminder-now"
+          type="button"
+        >
+          立即備份
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- 自訂確認視窗 -->
+
+  <div
+    id="appModal"
+    class="app-modal"
+    hidden
+  >
+
+    <div
+      class="app-modal-card"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalTitle"
+    >
+
+      <div
+        id="modalTitle"
+        class="app-modal-title"
+      >
+      </div>
+
+      <div
+        id="modalMessage"
+        class="app-modal-message"
+      >
+      </div>
+
+      <div class="app-modal-actions">
+
+        <button
+          id="modalCancelButton"
+          class="app-modal-cancel"
+          type="button"
+        >
+          取消
+        </button>
+
+        <button
+          id="modalConfirmButton"
+          class="app-modal-confirm"
+          type="button"
+        >
+          確定
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script src="app.js"></script>
 
 </body>
 

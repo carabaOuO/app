@@ -1,58 +1,54 @@
-/* =====================================================
-   我的點數 App
-   style.css
-===================================================== */
-
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html,
 body {
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
 
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        "Microsoft JhengHei",
-        sans-serif;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Microsoft JhengHei",
+    sans-serif;
 
-    background: #f7f7f7;
-    color: #222222;
+  background: #f7f7f7;
+  color: #222222;
 }
 
 body {
-    padding-bottom:
-        calc(
-            82px +
-            env(safe-area-inset-bottom)
-        );
+  padding-bottom:
+    calc(
+      82px +
+      env(safe-area-inset-bottom)
+    );
 }
 
 body.modal-open {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 button,
 input,
 select {
-    font: inherit;
+  font: inherit;
 }
 
 button,
 select {
-    -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color:
+    transparent;
 }
 
 button {
-    touch-action: manipulation;
+  touch-action: manipulation;
 }
 
 [hidden] {
-    display: none !important;
+  display: none !important;
 }
 
 
@@ -61,28 +57,28 @@ button {
 ===================================================== */
 
 main {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .page {
-    display: none;
+  display: none;
 
-    min-height:
-        calc(
-            100vh -
-            82px
-        );
+  min-height:
+    calc(
+      100vh -
+      82px
+    );
 
-    padding:
-        32px
-        22px
-        120px;
+  padding:
+    32px
+    22px
+    120px;
 }
 
 .page.active {
-    display: block;
+  display: block;
 }
 
 
@@ -91,268 +87,277 @@ main {
 ===================================================== */
 
 .section-title {
-    margin-bottom: 18px;
-    font-size: 22px;
-    font-weight: 700;
+  margin-bottom: 18px;
+
+  font-size: 22px;
+  font-weight: 700;
 }
 
 
 /* =====================================================
-   第一頁：能量艙
+   第一頁
 ===================================================== */
 
 .points-area {
-    margin-bottom: 42px;
+  margin-bottom: 42px;
 }
 
 .total-points {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-top: 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+
+  margin-top: 12px;
 }
 
 #totalPoints {
-    font-size: 64px;
-    font-weight: 700;
-    line-height: 1;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .point-unit {
-    font-size: 22px;
-    font-weight: 500;
+  font-size: 22px;
+  font-weight: 500;
 }
 
 
 /* 今日功績 */
 
 .achievement-area {
-    margin-bottom: 42px;
+  margin-bottom: 42px;
 }
 
 .achievement-display {
-    margin-bottom: 14px;
+  margin-bottom: 14px;
 }
 
 .achievement-title {
-    margin-bottom: 14px;
+  margin-bottom: 14px;
 }
 
 #achievementList {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .achievement-item {
-    padding: 11px 2px;
+  padding: 11px 2px;
 
-    border-bottom:
-        1px solid
-        #dddddd;
+  border-bottom:
+    1px solid
+    #dddddd;
 
-    font-size: 17px;
-    line-height: 1.45;
-    word-break: break-word;
+  font-size: 17px;
+  line-height: 1.45;
+
+  word-break: break-word;
 }
 
 .open-achievement-button {
-    border: none;
-    background: transparent;
+  border: none;
 
-    color: #555555;
+  background: transparent;
 
-    padding: 8px 2px;
+  color: #555555;
 
-    font-size: 15px;
+  padding: 8px 2px;
 
-    cursor: pointer;
+  font-size: 15px;
+
+  cursor: pointer;
 }
 
 .open-achievement-button:active {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 .achievement-form {
-    margin-top: 10px;
-    padding: 16px;
+  margin-top: 10px;
 
-    border:
-        1px solid
-        #d3d3d3;
+  padding: 16px;
 
-    border-radius: 12px;
+  border:
+    1px solid
+    #d3d3d3;
 
-    background: #ffffff;
+  border-radius: 12px;
+
+  background: #ffffff;
 }
 
 .achievement-form label {
-    display: block;
+  display: block;
 
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 
-    font-size: 15px;
-    font-weight: 500;
+  font-size: 15px;
+  font-weight: 500;
 
-    color: #444444;
+  color: #444444;
 }
 
 .achievement-form input {
-    width: 100%;
-    min-height: 48px;
+  width: 100%;
 
-    padding: 12px 14px;
+  min-height: 48px;
 
-    border:
-        1px solid
-        #cccccc;
+  padding: 12px 14px;
 
-    border-radius: 10px;
+  border:
+    1px solid
+    #cccccc;
 
-    background: #ffffff;
-    color: #222222;
+  border-radius: 10px;
 
-    font-size: 17px;
+  background: #ffffff;
 
-    outline: none;
+  color: #222222;
+
+  font-size: 17px;
+
+  outline: none;
 }
 
 .achievement-form input:focus {
-    border-color: #555555;
+  border-color: #555555;
 }
 
 .achievement-form input::placeholder {
-    color: #aaaaaa;
+  color: #aaaaaa;
 }
 
 .achievement-form-actions {
-    display: flex;
+  display: flex;
 
-    justify-content: flex-end;
-    align-items: center;
+  justify-content: flex-end;
+  align-items: center;
 
-    gap: 10px;
+  gap: 10px;
 
-    margin-top: 12px;
+  margin-top: 12px;
 }
 
 .achievement-cancel-button {
-    border: none;
-    background: transparent;
+  border: none;
 
-    color: #777777;
+  background: transparent;
 
-    padding: 9px 12px;
+  color: #777777;
 
-    font-size: 15px;
+  padding: 9px 12px;
 
-    cursor: pointer;
+  font-size: 15px;
+
+  cursor: pointer;
 }
 
 .achievement-cancel-button:active {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 .achievement-add-button {
-    min-width: 64px;
+  min-width: 64px;
 
-    padding: 9px 17px;
+  padding: 9px 17px;
 
-    border: none;
+  border: none;
 
-    border-radius: 9px;
+  border-radius: 9px;
 
-    background: #222222;
-    color: #ffffff;
+  background: #222222;
 
-    font-size: 16px;
+  color: #ffffff;
 
-    cursor: pointer;
+  font-size: 16px;
+
+  cursor: pointer;
 }
 
 .achievement-add-button:active {
-    transform: scale(0.97);
+  transform: scale(0.97);
 }
 
 
 /* 獎勵 */
 
 .goal-area {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 #goalList {
-    width: 100%;
+  width: 100%;
 }
 
 .goal-item {
-    display: flex;
+  display: flex;
 
-    justify-content: space-between;
-    align-items: center;
+  justify-content: space-between;
+  align-items: center;
 
-    gap: 12px;
+  gap: 12px;
 
-    padding: 16px 2px;
+  padding: 16px 2px;
 
-    border-bottom:
-        1px solid
-        #dddddd;
+  border-bottom:
+    1px solid
+    #dddddd;
 
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .goal-name {
-    flex: 1;
+  flex: 1;
 
-    min-width: 0;
+  min-width: 0;
 
-    font-weight: 500;
+  font-weight: 500;
 
-    word-break: break-word;
+  word-break: break-word;
 }
 
 .goal-actions {
-    display: flex;
+  display: flex;
 
-    align-items: center;
+  align-items: center;
 
-    gap: 12px;
+  gap: 12px;
 
-    flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .goal-points {
-    color: #555555;
+  color: #555555;
 
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 .redeem-button {
-    border: none;
+  border: none;
 
-    border-radius: 8px;
+  border-radius: 8px;
 
-    padding: 8px 14px;
+  padding: 8px 14px;
 
-    background: #222222;
+  background: #222222;
 
-    color: #ffffff;
+  color: #ffffff;
 
-    font-size: 14px;
+  font-size: 14px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .redeem-button:active {
-    transform: scale(0.96);
+  transform: scale(0.96);
 }
 
 .redeem-button:disabled {
-    background: #dddddd;
+  background: #dddddd;
 
-    color: #999999;
+  color: #999999;
 
-    cursor: default;
+  cursor: default;
 }
 
 
@@ -361,144 +366,241 @@ main {
 ===================================================== */
 
 .daily-progress {
-    display: flex;
+  display: flex;
 
-    justify-content: space-between;
-    align-items: center;
+  justify-content: space-between;
+  align-items: center;
 
-    max-width: 360px;
+  max-width: 360px;
 
-    margin:
-        12px
-        auto
-        50px;
+  margin:
+    12px
+    auto
+    50px;
 }
 
 .progress-light {
-    width: 42px;
-    height: 42px;
+  width: 42px;
+  height: 42px;
 
-    border:
-        2px solid
-        #999999;
+  border:
+    2px solid
+    #999999;
 
-    border-radius: 50%;
+  border-radius: 50%;
 
-    background: #ffffff;
+  background: #ffffff;
 
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.15s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
 }
 
 .progress-light.active {
-    background: #222222;
+  background: #222222;
 
-    border-color: #222222;
+  border-color: #222222;
 
-    transform: scale(1.04);
+  transform: scale(1.04);
 }
 
+
+/* =====================================================
+   未完待續
+===================================================== */
+
+.carryover-task-section {
+  margin-bottom: 44px;
+}
+
+.carryover-task-title {
+  margin-bottom: 16px;
+}
+
+.carryover-task-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.carryover-task-item {
+  padding:
+    2px
+    2px
+    14px;
+
+  border-bottom:
+    1px solid
+    #e5e5e5;
+}
+
+.carryover-task-item:last-child {
+  border-bottom: none;
+}
+
+.carryover-task-name {
+  color: #333333;
+
+  font-size: 17px;
+
+  line-height: 1.5;
+
+  word-break: break-word;
+}
+
+.carryover-task-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-top: 8px;
+}
+
+.carryover-task-continue,
+.carryover-task-drop {
+  min-height: 30px;
+
+  padding:
+    3px
+    0;
+
+  border: none;
+
+  background: transparent;
+
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+.carryover-task-continue {
+  color: #333333;
+
+  font-weight: 600;
+}
+
+.carryover-task-drop {
+  color: #888888;
+}
+
+.carryover-task-divider {
+  color: #c5c5c5;
+
+  font-size: 13px;
+}
+
+.carryover-task-continue:active,
+.carryover-task-drop:active {
+  opacity: 0.5;
+}
+
+
+/* 短期任務 */
+
 .short-task-section {
-    margin-bottom: 44px;
+  margin-bottom: 44px;
 }
 
 .short-task-title {
-    margin-bottom: 16px;
+  margin-bottom: 16px;
 }
 
 #shortTaskList,
 #taskList {
-    display: flex;
+  display: flex;
 
-    flex-direction: column;
+  flex-direction: column;
 
-    gap: 14px;
+  gap: 14px;
 }
 
 .short-task-button {
-    border-color: #bdbdbd;
+  border-color: #bdbdbd;
 }
 
 .add-title {
-    margin-top: 12px;
+  margin-top: 12px;
 }
 
 .task-button {
-    width: 100%;
+  width: 100%;
 
-    display: flex;
+  display: flex;
 
-    justify-content: space-between;
-    align-items: center;
+  justify-content: space-between;
+  align-items: center;
 
-    gap: 14px;
+  gap: 14px;
 
-    padding: 18px;
+  padding: 18px;
 
-    border:
-        1px solid
-        #d0d0d0;
+  border:
+    1px solid
+    #d0d0d0;
 
-    border-radius: 12px;
+  border-radius: 12px;
 
-    background: #ffffff;
+  background: #ffffff;
 
-    color: #222222;
+  color: #222222;
 
-    font-size: 18px;
+  font-size: 18px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .task-button > span:first-child {
-    min-width: 0;
+  min-width: 0;
 
-    word-break: break-word;
+  word-break: break-word;
 }
 
 .task-button > span:last-child {
-    flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .task-button:active {
-    transform: scale(0.98);
+  transform: scale(0.98);
 
-    background: #eeeeee;
+  background: #eeeeee;
 }
 
 .undo-button {
-    width: 100%;
+  width: 100%;
 
-    display: flex;
+  display: flex;
 
-    justify-content: space-between;
-    align-items: center;
+  justify-content: space-between;
+  align-items: center;
 
-    margin-top: 42px;
+  margin-top: 42px;
 
-    padding: 17px 18px;
+  padding: 17px 18px;
 
-    border:
-        1px solid
-        #d0d0d0;
+  border:
+    1px solid
+    #d0d0d0;
 
-    border-radius: 12px;
+  border-radius: 12px;
 
-    background: #ffffff;
+  background: #ffffff;
 
-    color: #555555;
+  color: #555555;
 
-    font-size: 17px;
+  font-size: 17px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .undo-button:active {
-    transform: scale(0.98);
+  transform: scale(0.98);
 
-    background: #eeeeee;
+  background: #eeeeee;
 }
 
 
@@ -507,285 +609,285 @@ main {
 ===================================================== */
 
 .milestone-section {
-    margin-top: 46px;
+  margin-top: 46px;
 }
 
 .milestone-title {
-    margin-bottom: 14px;
+  margin-bottom: 14px;
 }
 
 .milestone-list {
-    display: flex;
+  display: flex;
 
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .milestone-row {
-    width: 100%;
+  width: 100%;
 
-    display: flex;
+  display: flex;
 
-    justify-content: space-between;
-    align-items: center;
+  justify-content: space-between;
+  align-items: center;
 
-    gap: 18px;
+  gap: 18px;
 
-    padding:
-        14px
-        2px
-        16px;
+  padding:
+    14px
+    2px
+    16px;
 
-    border-bottom:
-        1px solid
-        #dddddd;
+  border-bottom:
+    1px solid
+    #dddddd;
 }
 
 .milestone-name {
-    flex: 1;
+  flex: 1;
 
-    min-width: 0;
+  min-width: 0;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    text-overflow: ellipsis;
+  text-overflow: ellipsis;
 
-    white-space: nowrap;
+  white-space: nowrap;
 
-    color: #222222;
+  color: #222222;
 
-    font-size: 18px;
+  font-size: 18px;
 
-    font-weight: 500;
+  font-weight: 500;
 }
 
 .milestone-count {
-    flex-shrink: 0;
+  flex-shrink: 0;
 
-    color: #666666;
+  color: #666666;
 
-    font-size: 17px;
+  font-size: 17px;
 
-    font-weight: 500;
+  font-weight: 500;
 
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 
 /* =====================================================
-   第三頁：戰績
+   戰績
 ===================================================== */
 
 .week-navigation {
-    display: flex;
+  display: flex;
 
-    justify-content: space-between;
+  justify-content: space-between;
 
-    margin-bottom: 32px;
+  margin-bottom: 32px;
 }
 
 .week-navigation button {
-    border: none;
+  border: none;
 
-    background: transparent;
+  background: transparent;
 
-    color: #333333;
+  color: #333333;
 
-    padding: 8px 0;
+  padding: 8px 0;
 
-    font-size: 16px;
+  font-size: 16px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .week-navigation button:active {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 .week-range {
-    margin-top: -8px;
+  margin-top: -8px;
 
-    margin-bottom: 34px;
+  margin-bottom: 34px;
 
-    color: #666666;
+  color: #666666;
 
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .record-day {
-    margin-bottom: 34px;
+  margin-bottom: 34px;
 }
 
 .record-day-title {
-    margin-bottom: 12px;
+  margin-bottom: 12px;
 
-    font-size: 18px;
+  font-size: 18px;
 
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .record-item {
-    display: flex;
+  display: flex;
 
-    justify-content: space-between;
-    align-items: center;
+  justify-content: space-between;
+  align-items: center;
 
-    gap: 16px;
+  gap: 16px;
 
-    padding: 8px 0;
+  padding: 8px 0;
 
-    font-size: 17px;
+  font-size: 17px;
 }
 
 .record-item > span:first-child {
-    flex: 1;
+  flex: 1;
 
-    min-width: 0;
+  min-width: 0;
 
-    word-break: break-word;
+  word-break: break-word;
 }
 
 .record-item > span:last-child {
-    flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .record-empty {
-    padding: 4px 0;
+  padding: 4px 0;
 
-    color: #999999;
+  color: #999999;
 
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .record-actions {
-    display: flex;
+  display: flex;
 
-    align-items: center;
+  align-items: center;
 
-    gap: 12px;
+  gap: 12px;
 
-    flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .undo-record-button {
-    border: none;
+  border: none;
 
-    background: transparent;
+  background: transparent;
 
-    color: #777777;
+  color: #777777;
 
-    padding: 4px;
+  padding: 4px;
 
-    font-size: 14px;
+  font-size: 14px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .undo-record-button:active {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 
 /* =====================================================
-   第四頁：設定
+   設定
 ===================================================== */
 
 .manage-accordion-section {
-    width: 100%;
+  width: 100%;
 
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .manage-accordion-toggle {
-    width: 100%;
+  width: 100%;
 
-    min-height: 58px;
+  min-height: 58px;
 
-    display: flex;
+  display: flex;
 
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
 
-    padding: 14px 10px;
+  padding: 14px 10px;
 
-    border: none;
+  border: none;
 
-    border-bottom:
-        1px solid
-        #d7d7d7;
+  border-bottom:
+    1px solid
+    #d7d7d7;
 
-    border-radius: 0;
+  border-radius: 0;
 
-    background: transparent;
+  background: transparent;
 
-    color: #333333;
+  color: #333333;
 
-    font-size: 20px;
+  font-size: 20px;
 
-    font-weight: 500;
+  font-weight: 500;
 
-    text-align: center;
+  text-align: center;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    transition:
-        color 0.15s ease,
-        font-weight 0.15s ease,
-        background 0.15s ease;
+  transition:
+    color 0.15s ease,
+    font-weight 0.15s ease,
+    background 0.15s ease;
 }
 
 .manage-accordion-toggle:active {
-    background:
-        rgba(
-            0,
-            0,
-            0,
-            0.025
-        );
+  background:
+    rgba(
+      0,
+      0,
+      0,
+      0.025
+    );
 }
 
 .manage-accordion-toggle.active {
-    color: #111111;
+  color: #111111;
 
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .manage-accordion-content {
-    padding:
-        28px
-        2px
-        18px;
+  padding:
+    28px
+    2px
+    18px;
 }
 
 .manage-accordion-content:not([hidden]) {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 .manage-subsection {
-    margin-bottom: 38px;
+  margin-bottom: 38px;
 }
 
 .manage-subsection:last-child {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 .manage-subtitle {
-    margin-bottom: 16px;
+  margin-bottom: 16px;
 
-    font-size: 17px;
+  font-size: 17px;
 
-    font-weight: 600;
+  font-weight: 600;
 
-    color: #333333;
+  color: #333333;
 }
 
 .manage-note {
-    margin-top: 2px;
+  margin-top: 2px;
 
-    color: #777777;
+  color: #777777;
 
-    font-size: 14px;
+  font-size: 14px;
 
-    line-height: 1.65;
+  line-height: 1.65;
 }
 
 
@@ -795,92 +897,92 @@ main {
 
 .form-area,
 .backfill-form {
-    display: flex;
+  display: flex;
 
-    flex-direction: column;
+  flex-direction: column;
 
-    gap: 10px;
+  gap: 10px;
 }
 
 .form-area label,
 .backfill-form label {
-    margin-top: 4px;
+  margin-top: 4px;
 
-    font-size: 15px;
+  font-size: 15px;
 
-    font-weight: 500;
+  font-weight: 500;
 
-    color: #444444;
+  color: #444444;
 }
 
 .form-area input,
 .backfill-form input {
-    width: 100%;
+  width: 100%;
 
-    min-height: 48px;
+  min-height: 48px;
 
-    padding: 12px 14px;
+  padding: 12px 14px;
 
-    border:
-        1px solid
-        #cccccc;
+  border:
+    1px solid
+    #cccccc;
 
-    border-radius: 10px;
+  border-radius: 10px;
 
-    background: #ffffff;
+  background: #ffffff;
 
-    color: #222222;
+  color: #222222;
 
-    font-size: 17px;
+  font-size: 17px;
 
-    outline: none;
+  outline: none;
 }
 
 .form-area input:focus,
 .backfill-form input:focus {
-    border-color: #555555;
+  border-color: #555555;
 }
 
 .form-area input::placeholder,
 .backfill-form input::placeholder {
-    color: #aaaaaa;
+  color: #aaaaaa;
 }
 
 .form-area input[type="date"],
 .backfill-form input[type="date"] {
-    width: 100%;
+  width: 100%;
 
-    min-height: 48px;
+  min-height: 48px;
 
-    background: #ffffff;
+  background: #ffffff;
 
-    color: #222222;
+  color: #222222;
 }
 
 .form-area button {
-    align-self: flex-end;
+  align-self: flex-end;
 
-    min-width: 76px;
+  min-width: 76px;
 
-    margin-top: 8px;
+  margin-top: 8px;
 
-    padding: 10px 20px;
+  padding: 10px 20px;
 
-    border: none;
+  border: none;
 
-    border-radius: 9px;
+  border-radius: 9px;
 
-    background: #222222;
+  background: #222222;
 
-    color: #ffffff;
+  color: #ffffff;
 
-    font-size: 16px;
+  font-size: 16px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .form-area button:active {
-    transform: scale(0.97);
+  transform: scale(0.97);
 }
 
 
@@ -889,224 +991,224 @@ main {
 ===================================================== */
 
 .delete-control {
-    display: flex;
+  display: flex;
 
-    flex-direction: column;
+  flex-direction: column;
 
-    gap: 12px;
+  gap: 12px;
 }
 
 .manage-select {
-    width: 100%;
+  width: 100%;
 
-    min-height: 48px;
+  min-height: 48px;
 
-    padding:
-        0
-        42px
-        0
-        14px;
+  padding:
+    0
+    42px
+    0
+    14px;
 
-    border:
-        1px solid
-        #cccccc;
+  border:
+    1px solid
+    #cccccc;
 
-    border-radius: 10px;
+  border-radius: 10px;
 
-    background-color: #ffffff;
+  background-color: #ffffff;
 
-    color: #222222;
+  color: #222222;
 
-    font-size: 17px;
+  font-size: 17px;
 
-    outline: none;
+  outline: none;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .manage-select:focus {
-    border-color: #555555;
+  border-color: #555555;
 }
 
 .manage-select:disabled {
-    background: #f3f3f3;
+  background: #f3f3f3;
 
-    color: #aaaaaa;
+  color: #aaaaaa;
 
-    cursor: default;
+  cursor: default;
 }
 
 .delete-manage-button {
-    align-self: flex-end;
+  align-self: flex-end;
 
-    min-width: 76px;
+  min-width: 76px;
 
-    padding: 9px 19px;
+  padding: 9px 19px;
 
-    border:
-        1px solid
-        #bbbbbb;
+  border:
+    1px solid
+    #bbbbbb;
 
-    border-radius: 9px;
+  border-radius: 9px;
 
-    background: #ffffff;
+  background: #ffffff;
 
-    color: #555555;
+  color: #555555;
 
-    font-size: 15px;
+  font-size: 15px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .delete-manage-button:active:not(:disabled) {
-    transform: scale(0.97);
+  transform: scale(0.97);
 
-    background: #eeeeee;
+  background: #eeeeee;
 }
 
 .delete-manage-button:disabled {
-    border-color: #dddddd;
+  border-color: #dddddd;
 
-    background: #f3f3f3;
+  background: #f3f3f3;
 
-    color: #bbbbbb;
+  color: #bbbbbb;
 
-    cursor: default;
+  cursor: default;
 }
 
 
 /* =====================================================
-   設定：里程碑勾選
+   設定：里程碑
 ===================================================== */
 
 .milestone-manage-note {
-    margin-bottom: 14px;
+  margin-bottom: 14px;
 }
 
 .milestone-checklist {
-    overflow: hidden;
+  overflow: hidden;
 
-    border:
-        1px solid
-        #d5d5d5;
+  border:
+    1px solid
+    #d5d5d5;
 
-    border-radius: 12px;
+  border-radius: 12px;
 
-    background: #ffffff;
+  background: #ffffff;
 }
 
 .milestone-check-row {
-    position: relative;
+  position: relative;
 
-    width: 100%;
+  width: 100%;
 
-    min-height: 54px;
+  min-height: 54px;
 
-    display: flex;
+  display: flex;
 
-    align-items: center;
+  align-items: center;
 
-    gap: 12px;
+  gap: 12px;
 
-    padding: 13px 14px;
+  padding: 13px 14px;
 
-    border-bottom:
-        1px solid
-        #e5e5e5;
+  border-bottom:
+    1px solid
+    #e5e5e5;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    -webkit-tap-highlight-color:
-        transparent;
+  -webkit-tap-highlight-color:
+    transparent;
 }
 
 .milestone-check-row:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .milestone-check-row:active {
-    background: #f2f2f2;
+  background: #f2f2f2;
 }
 
 .milestone-check-row input {
-    position: absolute;
+  position: absolute;
 
-    opacity: 0;
+  opacity: 0;
 
-    pointer-events: none;
+  pointer-events: none;
 }
 
 .milestone-check-box {
-    width: 22px;
+  width: 22px;
 
-    height: 22px;
+  height: 22px;
 
-    flex-shrink: 0;
+  flex-shrink: 0;
 
-    display: flex;
+  display: flex;
 
-    justify-content: center;
+  justify-content: center;
 
-    align-items: center;
+  align-items: center;
 
-    border:
-        1.5px solid
-        #9a9a9a;
+  border:
+    1.5px solid
+    #9a9a9a;
 
-    border-radius: 6px;
+  border-radius: 6px;
 
-    background: #ffffff;
+  background: #ffffff;
 }
 
 .milestone-check-row input:checked +
 .milestone-check-box {
-    border-color: #222222;
+  border-color: #222222;
 
-    background: #222222;
+  background: #222222;
 }
 
 .milestone-check-row input:checked +
 .milestone-check-box::after {
-    content: "✓";
+  content: "✓";
 
-    color: #ffffff;
+  color: #ffffff;
 
-    font-size: 15px;
+  font-size: 15px;
 
-    font-weight: 700;
+  font-weight: 700;
 
-    line-height: 1;
+  line-height: 1;
 }
 
 .milestone-check-row input:focus-visible +
 .milestone-check-box {
-    outline:
-        2px solid
-        #777777;
+  outline:
+    2px solid
+    #777777;
 
-    outline-offset: 2px;
+  outline-offset: 2px;
 }
 
 .milestone-check-name {
-    flex: 1;
+  flex: 1;
 
-    min-width: 0;
+  min-width: 0;
 
-    color: #333333;
+  color: #333333;
 
-    font-size: 17px;
+  font-size: 17px;
 
-    word-break: break-word;
+  word-break: break-word;
 }
 
 .milestone-checklist-empty {
-    padding: 16px 14px;
+  padding: 16px 14px;
 
-    color: #999999;
+  color: #999999;
 
-    font-size: 15px;
+  font-size: 15px;
 
-    text-align: center;
+  text-align: center;
 }
 
 
@@ -1115,52 +1217,52 @@ main {
 ===================================================== */
 
 .backfill-block {
-    padding-bottom: 4px;
+  padding-bottom: 4px;
 }
 
 .backfill-block +
 .backfill-block {
-    padding-top: 8px;
+  padding-top: 8px;
 
-    border-top:
-        1px solid
-        #e2e2e2;
+  border-top:
+    1px solid
+    #e2e2e2;
 }
 
 .field-note {
-    margin-top: -2px;
+  margin-top: -2px;
 
-    color: #888888;
+  color: #888888;
 
-    font-size: 13px;
+  font-size: 13px;
 
-    line-height: 1.5;
+  line-height: 1.5;
 }
 
 .backfill-submit-button {
-    align-self: flex-end;
+  align-self: flex-end;
 
-    min-width: 76px;
+  min-width: 76px;
 
-    margin-top: 8px;
+  margin-top: 8px;
 
-    padding: 10px 20px;
+  padding: 10px 20px;
 
-    border: none;
+  border: none;
 
-    border-radius: 9px;
+  border-radius: 9px;
 
-    background: #222222;
+  background: #222222;
 
-    color: #ffffff;
+  color: #ffffff;
 
-    font-size: 16px;
+  font-size: 16px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .backfill-submit-button:active {
-    transform: scale(0.97);
+  transform: scale(0.97);
 }
 
 
@@ -1169,455 +1271,457 @@ main {
 ===================================================== */
 
 .data-action-list {
-    display: flex;
+  display: flex;
 
-    flex-direction: column;
+  flex-direction: column;
 
-    gap: 12px;
+  gap: 12px;
 }
 
 .data-action-button {
-    width: 100%;
+  width: 100%;
 
-    min-height: 50px;
+  min-height: 50px;
 
-    display: flex;
+  display: flex;
 
-    justify-content: center;
+  justify-content: center;
 
-    align-items: center;
+  align-items: center;
 
-    padding: 12px 16px;
+  padding: 12px 16px;
 
-    border:
-        1px solid
-        #cccccc;
+  border:
+    1px solid
+    #cccccc;
 
-    border-radius: 10px;
+  border-radius: 10px;
 
-    background: #ffffff;
+  background: #ffffff;
 
-    color: #333333;
+  color: #333333;
 
-    font-size: 16px;
+  font-size: 16px;
 
-    font-weight: 500;
+  font-weight: 500;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    transition:
-        background 0.15s ease,
-        transform 0.1s ease;
+  transition:
+    background 0.15s ease,
+    transform 0.1s ease;
 }
 
 .data-action-button:active {
-    background: #eeeeee;
+  background: #eeeeee;
 
-    transform: scale(0.98);
+  transform: scale(0.98);
 }
 
 #importBackupInput {
-    display: none;
+  display: none;
 }
 
 .backup-status {
-    margin-top: 12px;
+  margin-top: 12px;
 
-    text-align: center;
+  text-align: center;
 }
 
 
 /* =====================================================
-   上週成果卡
+   上週成果卡 + 備份提醒
 ===================================================== */
 
 .weekly-summary-modal,
 .backup-reminder-modal {
-    position: fixed;
+  position: fixed;
 
-    inset: 0;
+  inset: 0;
 
-    z-index: 520;
+  z-index: 520;
 
-    display: flex;
+  display: flex;
 
-    justify-content: center;
+  justify-content: center;
 
-    align-items: center;
+  align-items: center;
 
-    padding:
-        24px
-        20px
-        calc(
-            24px +
-            env(safe-area-inset-bottom)
-        );
+  padding:
+    24px
+    20px
+    calc(
+      24px +
+      env(safe-area-inset-bottom)
+    );
 
-    background:
-        rgba(
-            0,
-            0,
-            0,
-            0.34
-        );
+  background:
+    rgba(
+      0,
+      0,
+      0,
+      0.34
+    );
 
-    -webkit-backdrop-filter:
-        blur(3px);
+  -webkit-backdrop-filter:
+    blur(3px);
 
-    backdrop-filter:
-        blur(3px);
+  backdrop-filter:
+    blur(3px);
 }
 
 .weekly-summary-card,
 .backup-reminder-card {
-    width: 100%;
+  width: 100%;
 
-    max-width: 360px;
+  max-width: 360px;
 
-    max-height:
-        calc(
-            100vh -
-            48px -
-            env(safe-area-inset-bottom)
-        );
+  max-height:
+    calc(
+      100vh -
+      48px -
+      env(safe-area-inset-bottom)
+    );
 
-    overflow-y: auto;
+  overflow-y: auto;
 
-    -webkit-overflow-scrolling:
-        touch;
+  -webkit-overflow-scrolling:
+    touch;
 
-    padding:
-        24px
-        22px
-        20px;
+  padding:
+    24px
+    22px
+    20px;
 
-    border:
-        1px solid
-        #e0e0e0;
+  border:
+    1px solid
+    #e0e0e0;
 
-    border-radius: 16px;
+  border-radius: 16px;
 
-    background: #ffffff;
+  background: #ffffff;
 
-    box-shadow:
-        0 16px 45px
-        rgba(
-            0,
-            0,
-            0,
-            0.18
-        );
+  box-shadow:
+    0
+    16px
+    45px
+    rgba(
+      0,
+      0,
+      0,
+      0.18
+    );
 }
 
 .weekly-summary-title,
 .backup-reminder-title {
-    margin-bottom: 24px;
+  margin-bottom: 24px;
 
-    color: #111111;
+  color: #111111;
 
-    font-size: 22px;
+  font-size: 22px;
 
-    font-weight: 700;
+  font-weight: 700;
 
-    text-align: center;
+  text-align: center;
 }
 
+
+/* 上週獲得 */
+
 .weekly-summary-earned-row {
-    display: flex;
+  display: flex;
 
-    justify-content: space-between;
+  justify-content: space-between;
 
-    align-items: baseline;
+  align-items: baseline;
 
-    gap: 18px;
+  gap: 18px;
 
-    padding-bottom: 18px;
+  padding-bottom: 18px;
 
-    border-bottom:
-        1px solid
-        #e2e2e2;
+  border-bottom:
+    1px solid
+    #e2e2e2;
 }
 
 .weekly-summary-earned-label {
-    color: #333333;
+  color: #333333;
 
-    font-size: 17px;
+  font-size: 17px;
 
-    font-weight: 500;
+  font-weight: 500;
 }
 
 .weekly-summary-earned-value {
-    flex-shrink: 0;
+  flex-shrink: 0;
 
-    color: #111111;
+  color: #111111;
 
-    font-size: 20px;
+  font-size: 20px;
 
-    font-weight: 700;
+  font-weight: 700;
 
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
-
-/* 每一區共用 */
-
 .weekly-summary-section {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .weekly-summary-subtitle {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 
-    color: #444444;
+  color: #444444;
 
-    font-size: 15px;
+  font-size: 15px;
 
-    font-weight: 600;
+  font-weight: 600;
 }
 
 
 /* 上週功績 */
 
 #weeklySummaryAchievements {
-    display: flex;
+  display: flex;
 
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .weekly-summary-achievement-row {
-    padding: 9px 0;
+  padding: 9px 0;
 
-    border-bottom:
-        1px solid
-        #eeeeee;
+  border-bottom:
+    1px solid
+    #eeeeee;
 
-    color: #333333;
+  color: #333333;
 
-    font-size: 16px;
+  font-size: 16px;
 
-    line-height: 1.5;
+  line-height: 1.5;
 
-    word-break: break-word;
+  word-break: break-word;
 }
 
 .weekly-summary-achievement-row:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 
 /* 完成事項 */
 
 #weeklySummaryTasks {
-    display: flex;
+  display: flex;
 
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .weekly-summary-task-row {
-    display: flex;
+  display: flex;
 
-    justify-content: space-between;
+  justify-content: space-between;
 
-    align-items: center;
+  align-items: center;
 
-    gap: 16px;
+  gap: 16px;
 
-    padding: 10px 0;
+  padding: 10px 0;
 
-    border-bottom:
-        1px solid
-        #eeeeee;
+  border-bottom:
+    1px solid
+    #eeeeee;
 
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .weekly-summary-task-row:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .weekly-summary-task-name {
-    flex: 1;
+  flex: 1;
 
-    min-width: 0;
+  min-width: 0;
 
-    color: #333333;
+  color: #333333;
 
-    word-break: break-word;
+  word-break: break-word;
 }
 
 .weekly-summary-task-count {
-    flex-shrink: 0;
+  flex-shrink: 0;
 
-    color: #666666;
+  color: #666666;
 
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 
-/* 短期任務 */
+/* 完成短期任務 */
 
 #weeklySummaryShortTasks {
-    display: flex;
+  display: flex;
 
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .weekly-summary-short-task-row {
-    padding: 9px 0;
+  padding: 9px 0;
 
-    border-bottom:
-        1px solid
-        #eeeeee;
+  border-bottom:
+    1px solid
+    #eeeeee;
 
-    color: #333333;
+  color: #333333;
 
-    font-size: 16px;
+  font-size: 16px;
 
-    line-height: 1.5;
+  line-height: 1.5;
 
-    word-break: break-word;
+  word-break: break-word;
 }
 
 .weekly-summary-short-task-row:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 
 /* 成果卡按鈕 */
 
 .weekly-summary-button {
-    width: 100%;
+  width: 100%;
 
-    min-height: 46px;
+  min-height: 46px;
 
-    margin-top: 24px;
+  margin-top: 24px;
 
-    padding: 10px 18px;
+  padding: 10px 18px;
 
-    border: none;
+  border: none;
 
-    border-radius: 10px;
+  border-radius: 10px;
 
-    background: #222222;
+  background: #222222;
 
-    color: #ffffff;
+  color: #ffffff;
 
-    font-size: 16px;
+  font-size: 16px;
 
-    font-weight: 600;
+  font-weight: 600;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .weekly-summary-button:active {
-    transform: scale(0.98);
+  transform: scale(0.98);
 }
 
 
 /* =====================================================
-   每月備份提醒
+   備份提醒
 ===================================================== */
 
 .backup-reminder-title {
-    margin-bottom: 14px;
+  margin-bottom: 14px;
 }
 
 .backup-reminder-text {
-    color: #555555;
+  color: #555555;
 
-    font-size: 15px;
+  font-size: 15px;
 
-    line-height: 1.65;
+  line-height: 1.65;
 
-    text-align: center;
+  text-align: center;
 }
 
 .backup-reminder-info {
-    margin-top: 20px;
+  margin-top: 20px;
 
-    padding: 16px 0;
+  padding: 16px 0;
 
-    border-top:
-        1px solid
-        #e5e5e5;
+  border-top:
+    1px solid
+    #e5e5e5;
 
-    border-bottom:
-        1px solid
-        #e5e5e5;
+  border-bottom:
+    1px solid
+    #e5e5e5;
 
-    text-align: center;
+  text-align: center;
 }
 
 .backup-reminder-label {
-    margin-bottom: 7px;
+  margin-bottom: 7px;
 
-    color: #777777;
+  color: #777777;
 
-    font-size: 13px;
+  font-size: 13px;
 }
 
 .backup-reminder-range {
-    color: #222222;
+  color: #222222;
 
-    font-size: 17px;
+  font-size: 17px;
 
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .backup-reminder-last-date {
-    margin-top: 9px;
+  margin-top: 9px;
 
-    color: #777777;
+  color: #777777;
 
-    font-size: 13px;
+  font-size: 13px;
 }
 
 .backup-reminder-actions {
-    display: flex;
+  display: flex;
 
-    justify-content: flex-end;
+  justify-content: flex-end;
 
-    gap: 10px;
+  gap: 10px;
 
-    margin-top: 22px;
+  margin-top: 22px;
 }
 
 .backup-reminder-later,
 .backup-reminder-now {
-    min-width: 92px;
+  min-width: 92px;
 
-    min-height: 42px;
+  min-height: 42px;
 
-    padding: 9px 16px;
+  padding: 9px 16px;
 
-    border-radius: 9px;
+  border-radius: 9px;
 
-    font-size: 15px;
+  font-size: 15px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .backup-reminder-later {
-    border:
-        1px solid
-        #cccccc;
+  border:
+    1px solid
+    #cccccc;
 
-    background: #ffffff;
+  background: #ffffff;
 
-    color: #555555;
+  color: #555555;
 }
 
 .backup-reminder-now {
-    border: none;
+  border: none;
 
-    background: #222222;
+  background: #222222;
 
-    color: #ffffff;
+  color: #ffffff;
 }
 
 .backup-reminder-later:active,
 .backup-reminder-now:active {
-    transform: scale(0.97);
+  transform: scale(0.97);
 }
 
 
@@ -1627,146 +1731,148 @@ main {
 
 .app-modal,
 .modal-overlay {
-    position: fixed;
+  position: fixed;
 
-    inset: 0;
+  inset: 0;
 
-    z-index: 500;
+  z-index: 500;
 
-    display: flex;
+  display: flex;
 
-    justify-content: center;
+  justify-content: center;
 
-    align-items: center;
+  align-items: center;
 
-    padding:
-        24px
-        20px
-        calc(
-            24px +
-            env(safe-area-inset-bottom)
-        );
+  padding:
+    24px
+    20px
+    calc(
+      24px +
+      env(safe-area-inset-bottom)
+    );
 
-    background:
-        rgba(
-            0,
-            0,
-            0,
-            0.34
-        );
+  background:
+    rgba(
+      0,
+      0,
+      0,
+      0.34
+    );
 
-    -webkit-backdrop-filter:
-        blur(3px);
+  -webkit-backdrop-filter:
+    blur(3px);
 
-    backdrop-filter:
-        blur(3px);
+  backdrop-filter:
+    blur(3px);
 }
 
 .app-modal-card,
 .modal-card {
-    width: 100%;
+  width: 100%;
 
-    max-width: 360px;
+  max-width: 360px;
 
-    padding: 22px;
+  padding: 22px;
 
-    border:
-        1px solid
-        #e0e0e0;
+  border:
+    1px solid
+    #e0e0e0;
 
-    border-radius: 16px;
+  border-radius: 16px;
 
-    background: #ffffff;
+  background: #ffffff;
 
-    box-shadow:
-        0 16px 45px
-        rgba(
-            0,
-            0,
-            0,
-            0.18
-        );
+  box-shadow:
+    0
+    16px
+    45px
+    rgba(
+      0,
+      0,
+      0,
+      0.18
+    );
 }
 
 .app-modal-title,
 .modal-title {
-    margin-bottom: 14px;
+  margin-bottom: 14px;
 
-    color: #111111;
+  color: #111111;
 
-    font-size: 20px;
+  font-size: 20px;
 
-    font-weight: 700;
+  font-weight: 700;
 
-    text-align: center;
+  text-align: center;
 }
 
 .app-modal-message,
 .modal-message {
-    min-height: 48px;
+  min-height: 48px;
 
-    color: #444444;
+  color: #444444;
 
-    font-size: 16px;
+  font-size: 16px;
 
-    line-height: 1.65;
+  line-height: 1.65;
 
-    text-align: center;
+  text-align: center;
 
-    white-space: pre-line;
+  white-space: pre-line;
 }
 
 .app-modal-actions,
 .modal-actions {
-    display: flex;
+  display: flex;
 
-    justify-content: flex-end;
+  justify-content: flex-end;
 
-    gap: 10px;
+  gap: 10px;
 
-    margin-top: 22px;
+  margin-top: 22px;
 }
 
 .app-modal-cancel,
 .app-modal-confirm,
 .modal-button {
-    min-width: 82px;
+  min-width: 82px;
 
-    min-height: 42px;
+  min-height: 42px;
 
-    padding: 9px 16px;
+  padding: 9px 16px;
 
-    border-radius: 9px;
+  border-radius: 9px;
 
-    font-size: 15px;
+  font-size: 15px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .app-modal-cancel,
 .modal-cancel-button {
-    border:
-        1px solid
-        #cccccc;
+  border:
+    1px solid
+    #cccccc;
 
-    background: #ffffff;
+  background: #ffffff;
 
-    color: #555555;
+  color: #555555;
 }
 
 .app-modal-confirm,
 .modal-confirm-button {
-    border: none;
+  border: none;
 
-    background: #222222;
+  background: #222222;
 
-    color: #ffffff;
+  color: #ffffff;
 }
 
 .app-modal-cancel:active,
 .app-modal-confirm:active,
 .modal-button:active {
-    transform: scale(0.97);
+  transform: scale(0.97);
 }
 
 
@@ -1775,72 +1881,70 @@ main {
 ===================================================== */
 
 .bottom-nav {
-    position: fixed;
+  position: fixed;
 
-    left: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
-    right: 0;
+  height:
+    calc(
+      74px +
+      env(safe-area-inset-bottom)
+    );
 
-    bottom: 0;
+  padding-bottom:
+    env(safe-area-inset-bottom);
 
-    height:
-        calc(
-            74px +
-            env(safe-area-inset-bottom)
-        );
+  display: flex;
 
-    padding-bottom:
-        env(safe-area-inset-bottom);
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.96
+    );
 
-    display: flex;
+  border-top:
+    1px solid
+    #dddddd;
 
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            0.96
-        );
+  backdrop-filter:
+    blur(12px);
 
-    border-top:
-        1px solid
-        #dddddd;
+  -webkit-backdrop-filter:
+    blur(12px);
 
-    backdrop-filter:
-        blur(12px);
-
-    -webkit-backdrop-filter:
-        blur(12px);
-
-    z-index: 100;
+  z-index: 100;
 }
 
 .nav-button {
-    flex: 1;
+  flex: 1;
 
-    min-width: 0;
+  min-width: 0;
 
-    border: none;
+  border: none;
 
-    background: transparent;
+  background: transparent;
 
-    color: #888888;
+  color: #888888;
 
-    padding: 0 4px;
+  padding: 0 4px;
 
-    font-size: 15px;
+  font-size: 15px;
 
-    font-weight: 500;
+  font-weight: 500;
 
-    white-space: nowrap;
+  white-space: nowrap;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .nav-button.active {
-    color: #111111;
+  color: #111111;
 
-    font-weight: 700;
+  font-weight: 700;
 }
 
 
@@ -1850,78 +1954,79 @@ main {
 
 @media (max-width: 480px) {
 
-    .page {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
+  .page {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 
-    #totalPoints {
-        font-size: 58px;
-    }
+  #totalPoints {
+    font-size: 58px;
+  }
 
-    .progress-light {
-        width: 38px;
-        height: 38px;
-    }
+  .progress-light {
+    width: 38px;
+    height: 38px;
+  }
 
-    .goal-item {
-        font-size: 17px;
-    }
+  .goal-item {
+    font-size: 17px;
+  }
 
-    .goal-actions {
-        gap: 8px;
-    }
+  .goal-actions {
+    gap: 8px;
+  }
 
-    .redeem-button {
-        padding: 7px 11px;
+  .redeem-button {
+    padding: 7px 11px;
 
-        font-size: 13px;
-    }
+    font-size: 13px;
+  }
 
-    .short-task-section {
-        margin-bottom: 40px;
-    }
+  .short-task-section,
+  .carryover-task-section {
+    margin-bottom: 40px;
+  }
 
-    .achievement-area {
-        margin-bottom: 38px;
-    }
+  .achievement-area {
+    margin-bottom: 38px;
+  }
 
-    .achievement-form {
-        padding: 14px;
-    }
+  .achievement-form {
+    padding: 14px;
+  }
 
-    .manage-accordion-toggle {
-        min-height: 56px;
+  .manage-accordion-toggle {
+    min-height: 56px;
 
-        font-size: 19px;
-    }
+    font-size: 19px;
+  }
 
-    .manage-accordion-content {
-        padding-top: 25px;
-    }
+  .manage-accordion-content {
+    padding-top: 25px;
+  }
 
-    .milestone-row {
-        gap: 12px;
-    }
+  .milestone-row {
+    gap: 12px;
+  }
 
-    .milestone-name {
-        font-size: 17px;
-    }
+  .milestone-name {
+    font-size: 17px;
+  }
 
-    .milestone-count {
-        font-size: 16px;
-    }
+  .milestone-count {
+    font-size: 16px;
+  }
 
-    .nav-button {
-        font-size: 14px;
-    }
+  .nav-button {
+    font-size: 14px;
+  }
 
-    .weekly-summary-card,
-    .backup-reminder-card,
-    .app-modal-card,
-    .modal-card {
-        padding: 20px;
-    }
+  .weekly-summary-card,
+  .backup-reminder-card,
+  .app-modal-card,
+  .modal-card {
+    padding: 20px;
+  }
 }
 
 
@@ -1931,45 +2036,39 @@ main {
 
 @media (max-width: 360px) {
 
-    .nav-button {
-        padding: 0 2px;
+  .nav-button {
+    padding: 0 2px;
 
-        font-size: 13px;
-    }
+    font-size: 13px;
+  }
 
-    .progress-light {
-        width: 34px;
+  .progress-light {
+    width: 34px;
+    height: 34px;
+  }
 
-        height: 34px;
-    }
+  .app-modal-actions,
+  .modal-actions,
+  .backup-reminder-actions {
+    gap: 8px;
+  }
 
-    .app-modal-actions,
-    .modal-actions {
-        gap: 8px;
-    }
+  .app-modal-cancel,
+  .app-modal-confirm,
+  .modal-button {
+    min-width: 74px;
 
-    .app-modal-cancel,
-    .app-modal-confirm,
-    .modal-button {
-        min-width: 74px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 
-        padding-left: 12px;
+  .backup-reminder-later,
+  .backup-reminder-now {
+    min-width: 82px;
 
-        padding-right: 12px;
-    }
-
-    .backup-reminder-actions {
-        gap: 8px;
-    }
-
-    .backup-reminder-later,
-    .backup-reminder-now {
-        min-width: 82px;
-
-        padding-left: 12px;
-
-        padding-right: 12px;
-    }
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 }
 
 
@@ -1979,9 +2078,8 @@ main {
 
 @media (min-width: 600px) {
 
-    .page {
-        padding-left: 36px;
-
-        padding-right: 36px;
-    }
+  .page {
+    padding-left: 36px;
+    padding-right: 36px;
+  }
 }
