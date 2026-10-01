@@ -570,39 +570,6 @@ main {
   background: #eeeeee;
 }
 
-.undo-button {
-  width: 100%;
-
-  display: flex;
-
-  justify-content: space-between;
-  align-items: center;
-
-  margin-top: 42px;
-
-  padding: 17px 18px;
-
-  border:
-    1px solid
-    #d0d0d0;
-
-  border-radius: 12px;
-
-  background: #ffffff;
-
-  color: #555555;
-
-  font-size: 17px;
-
-  cursor: pointer;
-}
-
-.undo-button:active {
-  transform: scale(0.98);
-
-  background: #eeeeee;
-}
-
 
 /* =====================================================
    里程碑
@@ -1850,6 +1817,16 @@ main {
 }
 
 .app-modal-cancel,
+.app-modal-confirm {
+  border:
+    1px solid
+    #cccccc;
+
+  background: #ffffff;
+
+  color: #555555;
+}
+
 .modal-cancel-button {
   border:
     1px solid
@@ -1860,7 +1837,6 @@ main {
   color: #555555;
 }
 
-.app-modal-confirm,
 .modal-confirm-button {
   border: none;
 

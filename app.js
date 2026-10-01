@@ -1255,56 +1255,83 @@ function undoRedeem(
     return;
   }
 
-  if (
-    !confirm(
-      `確定要撤銷「${rewardName}」的兌換嗎？\n\n${rewardPoints} 點會歸還。`
-    )
-  ) {
-    return;
-  }
+  openModal({
+    title:
+      "撤銷",
 
-  appData.points +=
-    rewardPoints;
+    message:
+      `${rewardName}\n` +
+      `${rewardPoints} 點\n\n` +
+      "點數將退還\n" +
+      "此獎勵將重新開放兌換",
 
-  const exists =
-    record.goalId
-      ? appData.goals.some(
-          goal =>
-            goal.id ===
-            record.goalId
-        )
-      : appData.goals.some(
-          goal =>
-            goal.name ===
-              rewardName &&
-            goal.points ===
+    cancelText:
+      "再緩緩",
+
+    confirmText:
+      "確認",
+
+    onConfirm:
+      () => {
+        const latestRecord =
+          appData.records.find(
+            item =>
+              item.id ===
+              recordId
+          );
+
+        if (
+          !latestRecord ||
+          latestRecord.type !==
+            "redeem"
+        ) {
+          return;
+        }
+
+        appData.points +=
+          rewardPoints;
+
+        const exists =
+          latestRecord.goalId
+            ? appData.goals.some(
+                goal =>
+                  goal.id ===
+                  latestRecord.goalId
+              )
+            : appData.goals.some(
+                goal =>
+                  goal.name ===
+                    rewardName &&
+                  goal.points ===
+                    rewardPoints
+              );
+
+        if (!exists) {
+          appData.goals.push({
+            id:
+              latestRecord.goalId ||
+              createId(),
+
+            name:
+              rewardName,
+
+            points:
               rewardPoints
-        );
+          });
+        }
 
-  if (!exists) {
-    appData.goals.push({
-      id:
-        record.goalId ||
-        createId(),
+        appData.records =
+          appData.records.filter(
+            item =>
+              item.id !==
+              recordId
+          );
 
-      name:
-        rewardName,
+        saveData();
 
-      points:
-        rewardPoints
-    });
-  }
-
-  appData.records =
-    appData.records.filter(
-      item =>
-        item.id !==
-        recordId
-    );
-
-  saveData();
-
-  renderAll();
+        renderAll();
+      }
+  });
 }
 
 
@@ -2194,73 +2221,6 @@ function renderDailyProgress() {
    撤銷
 ===================================================== */
 
-function undoLastPoint() {
-  const today =
-    getDateKey();
-
-  const records =
-    appData.records.filter(
-      record =>
-        record.date ===
-          today &&
-        record.type !==
-          "undo" &&
-        record.undone !==
-          true
-    );
-
-  if (
-    records.length ===
-    0
-  ) {
-    alert(
-      "今天沒有可以取消的上一筆紀錄。"
-    );
-
-    return;
-  }
-
-  const lastRecord =
-    records[
-      records.length - 1
-    ];
-
-  const valid =
-    [
-      "task",
-      "shortTask",
-      "achievement"
-    ].includes(
-      lastRecord.type
-    ) &&
-    Number(
-      lastRecord.delta
-    ) === 1;
-
-  if (!valid) {
-    alert(
-      "最近一筆不是加分紀錄，無法取消。"
-    );
-
-    return;
-  }
-
-  if (
-    appData.points <
-    1
-  ) {
-    alert(
-      "目前可用點數不足 1 點。\n\n這筆點數可能已經被兌換使用，請先撤銷相關兌換。"
-    );
-
-    return;
-  }
-
-  reversePointRecord(
-    lastRecord
-  );
-}
-
 function undoTaskRecord(
   recordId
 ) {
@@ -2307,17 +2267,80 @@ function undoTaskRecord(
     return;
   }
 
+  let message =
+    `${record.name}\n` +
+    `+${amount} 點\n\n` +
+    "總點數將自動更新";
+
+  const shortTaskDate =
+    record.shortTaskDate ||
+    record.date;
+
   if (
-    !confirm(
-      `確定要撤銷「${record.name}」這筆加分嗎？\n\n目前點數會扣回 ${amount} 點。`
-    )
+    record.type ===
+      "shortTask" &&
+    shortTaskDate ===
+      getDateKey()
   ) {
-    return;
+    message +=
+      "\n此任務將重新開放挑戰";
   }
 
-  reversePointRecord(
-    record
-  );
+  openModal({
+    title:
+      "撤銷",
+
+    message,
+
+    cancelText:
+      "再緩緩",
+
+    confirmText:
+      "確認",
+
+    onConfirm:
+      () => {
+        const latestRecord =
+          appData.records.find(
+            item =>
+              item.id ===
+              recordId
+          );
+
+        if (!latestRecord) {
+          return;
+        }
+
+        const latestAmount =
+          Number(
+            latestRecord.delta
+          );
+
+        if (
+          !Number.isFinite(
+            latestAmount
+          ) ||
+          latestAmount <= 0
+        ) {
+          return;
+        }
+
+        if (
+          appData.points <
+          latestAmount
+        ) {
+          alert(
+            `目前可用點數不足 ${latestAmount} 點。\n\n這筆點數可能已經被兌換使用，請先撤銷相關兌換後再撤銷這筆加分。`
+          );
+
+          return;
+        }
+
+        reversePointRecord(
+          latestRecord
+        );
+      }
+  });
 }
 
 function reversePointRecord(
@@ -2402,16 +2425,6 @@ function reversePointRecord(
 
   renderAll();
 }
-
-document
-  .getElementById(
-    "undoButton"
-  )
-  ?.addEventListener(
-    "click",
-    undoLastPoint
-  );
-
 
 /* =====================================================
    設定：獎勵
@@ -4745,7 +4758,7 @@ function buildWeeklyTaskSummary(
     record => {
       if (
         record.type !==
-        "task"
+          "task"
       ) {
         return;
       }
